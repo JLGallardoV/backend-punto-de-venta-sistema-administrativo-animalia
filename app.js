@@ -18,6 +18,7 @@ var devolucionesRouter = require('./routes/devoluciones/controlador/devoluciones
 var mediosEntregaRouter = require('./routes/mediosEntrega/controlador/mediosEntregaControlador');
 var popularidadProductosRouter = require('./routes/popularidadProductos/controlador/popularidadProductosControlador');
 var productosRouter = require('./routes/productos/controlador/productosControlador');*/
+var categoriasRouter = require('./routes/categorias/controlador/categoriasControlador');
 var premiosRouter = require('./routes/premios/controlador/premiosControlador');
 
 
@@ -64,6 +65,7 @@ app.use('/devolucionesWS', devolucionesRouter);
 app.use('/mediosEntregaWS', mediosEntregaRouter);
 app.use('/popularidadProductosWS', popularidadProductosRouter);
 app.use('/productosWS', productosRouter);*/
+app.use('/categoriasWS', categoriasRouter);
 app.use('/premiosWS', premiosRouter);
 
 

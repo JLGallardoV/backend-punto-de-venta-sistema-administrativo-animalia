@@ -11,42 +11,66 @@ router.use(function(req,res,next){
 });
 
 
-/*seguridad por jwt*/
-
-/*web service para listar premios*/
-router.get('/listarPremios',function(req,res,next){
-	try {
-		req.getConnection(function(error,db){
-			if (error) {
-				console.log(error);
-				return next(error);
-			}
-			else{
-				let query = 'SELECT * FROM premios where estatusBL = 1';
-				db.query(query,function(error, success){
+/* web service para listar premios -> seguridad por jwt */
+router.get('/listarPremios',jwt.verificarExistenciaToken,function(req,res,next){
+	try
+	{
+		console.log('token', req.token);
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(req,res,next){
+			router.get('/crearToken', function(req,res,next){
+				payload = {
+					nombre	: 'token',
+					tipo: 'seguridad',
+					descripcion: 'cuerpoToken'
+				};
+				jsonWebToken.sign(payload,jwt.claveSecreta, function(error, success){
 					if (error) {
-						console.log('error al ejecutar query', error);
-						return next(error);
+						res.json({
+							estatus: -1,
+							respuesta: error
+						});
 					}
-					else{
-						console.log(success);
-						var resultados = [];
-						console.log(success);
-
-						/*for (var i in success) {
-							success[i].valido = true;
-						}*/
+					else {
 						res.json({
 							estatus: 1,
 							respuesta: success
 						});
 					}
 				});
-			}
-		});
+			});//fin generacion token
+			console.log('imprimiendo req despues de crear token: ',req);
+
+			//consulta
+			req.getConnection(function(error,db){
+				if (error) {
+					console.log(error);
+					return next(error);
+				}
+				else{
+					let query = 'SELECT * FROM premios where estatusBL = 1';
+					db.query(query,function(error, success){
+						if (error) {
+							console.log('error al ejecutar query', error);
+							return next(error);
+						}
+						else{
+							console.log(success);
+							var resultados = [];
+							console.log(success);
+							res.json({
+								estatus: 1,
+								respuesta: success
+							});
+						}
+					});
+				}
+			});//fin consulta
+
+		});//fin verify
 	}
-	catch (error) {
-		next(error); //cualquier error ocurrido lo salta
+	catch (error)
+	{
+		return next(error); //cualquier error ocurrido lo salta
 	}
 });
 
@@ -143,8 +167,7 @@ router.put('/actualizarPremio/:idPremio', function(req, res, next){
 
 /*web service para eliminar premio (boorado logico)*/
 router.delete('/eliminarPremio/:idPremio', function(req, res, next){
-	try
-	{
+	try{
 		let idPremio = req.params.idPremio;
 		req.getConnection(function(error, database){
 			if(error)

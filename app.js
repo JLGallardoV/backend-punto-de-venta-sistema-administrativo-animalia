@@ -5,9 +5,21 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-//rutas:
-var indexRouter = require('./routes/index');
-var premiosRouter = require('./routes/premios');
+//definiendo rutas:
+/*var indexRouter = require('./routes/index');
+var accesosRouter = require('./routes/accesos/controlador/accesosControlador');
+var almacenesRouter = require('./routes/almacenes/controlador/almacenesControlador');
+var carritosRouter = require('./routes/carritos/controlador/carritosControlador');
+var clientesRouter = require('./routes/clientes/controlador/clientesControlador');
+var compensacionesRouter = require('./routes/compensaciones/controlador/compensacionesControlador');
+var comprasRouter = require('./routes/compras/controlador/comprasControlador');
+var detallesTransaccionesRouter = require('./routes/detallesTransacciones/controlador/detallesTransaccionesControlador');
+var devolucionesRouter = require('./routes/devoluciones/controlador/devolucionesControlador');
+var mediosEntregaRouter = require('./routes/mediosEntrega/controlador/mediosEntregaControlador');
+var popularidadProductosRouter = require('./routes/popularidadProductos/controlador/popularidadProductosControlador');
+var productosRouter = require('./routes/productos/controlador/productosControlador');*/
+var premiosRouter = require('./routes/premios/controlador/premiosControlador');
+
 
 //importar dependencias para poder usar mysql
 var mysqlConnection = require('express-myconnection');
@@ -38,9 +50,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-//creando rutas de acceso a web service
-app.use('/', indexRouter);
+
+
+//creando - invocando rutas de acceso a web service
+/*app.use('/', indexRouter);
+app.use('/accesosWS', accesosRouter);
+app.use('/almacenesWS', almacenesRouter);
+app.use('/carritosWS', carritosRouter);
+app.use('/clientesWS', clientesRouter);
+app.use('/compensacionesWS', compensacionesRouter);
+app.use('/detallesTransaccionesWS', detallesTransaccionesRouter);
+app.use('/devolucionesWS', devolucionesRouter);
+app.use('/mediosEntregaWS', mediosEntregaRouter);
+app.use('/popularidadProductosWS', popularidadProductosRouter);
+app.use('/productosWS', productosRouter);*/
 app.use('/premiosWS', premiosRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

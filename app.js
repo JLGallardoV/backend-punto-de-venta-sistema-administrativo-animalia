@@ -16,9 +16,9 @@ var comprasRouter = require('./routes/compras/controlador/comprasControlador');
 var detallesTransaccionesRouter = require('./routes/detallesTransacciones/controlador/detallesTransaccionesControlador');
 var devolucionesRouter = require('./routes/devoluciones/controlador/devolucionesControlador');
 var mediosEntregaRouter = require('./routes/mediosEntrega/controlador/mediosEntregaControlador');
-var popularidadProductosRouter = require('./routes/popularidadProductos/controlador/popularidadProductosControlador');
 var productosRouter = require('./routes/productos/controlador/productosControlador');*/
 var categoriasRouter = require('./routes/categorias/controlador/categoriasControlador');
+var popularidadProductosRouter = require('./routes/popularidadProductos/controlador/popularidadProductosControlador');
 var premiosRouter = require('./routes/premios/controlador/premiosControlador');
 
 
@@ -63,9 +63,9 @@ app.use('/compensacionesWS', compensacionesRouter);
 app.use('/detallesTransaccionesWS', detallesTransaccionesRouter);
 app.use('/devolucionesWS', devolucionesRouter);
 app.use('/mediosEntregaWS', mediosEntregaRouter);
-app.use('/popularidadProductosWS', popularidadProductosRouter);
 app.use('/productosWS', productosRouter);*/
 app.use('/categoriasWS', categoriasRouter);
+app.use('/popularidadProductosWS', popularidadProductosRouter);
 app.use('/premiosWS', premiosRouter);
 
 

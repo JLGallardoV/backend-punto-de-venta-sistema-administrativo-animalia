@@ -22,6 +22,7 @@ var popularidadProductosRouter = require('./routes/popularidadProductos/controla
 var premiosRouter = require('./routes/premios/controlador/premiosControlador');
 var rendimientoVendedoresRouter = require('./routes/rendimientoVendedores/controlador/rendimientoVendedoresControlador');
 var reportesEconomicosRouter = require('./routes/reportesEconomicos/controlador/reportesEconomicosControlador');
+var tiposClientesRouter = require('./routes/tiposClientes/controlador/tiposClientesControlador');
 
 
 //importar dependencias para poder usar mysql
@@ -71,6 +72,7 @@ app.use('/popularidadProductosWS', popularidadProductosRouter);
 app.use('/premiosWS', premiosRouter);
 app.use('/rendimientoVendedoresWS', rendimientoVendedoresRouter);
 app.use('/reportesEconomicosWS', reportesEconomicosRouter);
+app.use('/tiposClientesWS', tiposClientesRouter);
 
 
 

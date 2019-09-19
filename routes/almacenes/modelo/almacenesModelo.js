@@ -6,8 +6,8 @@ respuesta: []/string
 }
 */
 
-/*WEB SERVICE --LISTAR POPULARIDAD PRODUCTOS--*/
-exports.listarPopularidadProductos = function(req) {
+/*WEB SERVICE --LISTAR ALMACENES--*/
+exports.listarAlmacenes = function(req) {
   console.log("listando...");
   //regresaremos una promesa...
   return new Promise((resolve, reject) => {
@@ -20,7 +20,7 @@ exports.listarPopularidadProductos = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'select * from popularidadProductos where estatusBL = 1';
+        var query = 'select * from almacenes where estatusBL = 1';
 
         //ejecutamos el query
         database.query(query, function(error, success) {
@@ -47,11 +47,11 @@ exports.listarPopularidadProductos = function(req) {
       }
     });
   });
-} //fin listarPopularidadProductos
+} //fin listarAlmacenes
 
 
-/*WEB SERVICE --AGREGAR POPULARIDAD PRODUCTOS---*/
-exports.agregarPopularidadProducto = function(req) {
+/*WEB SERVICE --AGREGAR ALMACENES---*/
+exports.agregarAlmacen = function(req) {
   //regresaremos una promesa
   console.log("agregando...");
   return new Promise((resolve, reject) => {
@@ -64,11 +64,15 @@ exports.agregarPopularidadProducto = function(req) {
           respuesta: error
         });
       } else {
-        let query = 'insert into popularidadProductos set ?';
+        let query = 'insert into almacenes set ?';
 
         let requestBody = {
-          popularidadProducto: body.popularidadProducto,
-          descripcionPopularidadProducto: body.descripcionPopularidadProducto,
+          ciudadAlmacen: body.ciudadAlmacen,
+          estadoAlmacen: body.estadoAlmacen,
+          paisAlmacen: body.paisAlmacen,
+          direccionAlmacen: body.direccionAlmacen,
+          referenciaAlmacen: body.referenciaAlmacen,
+          telefonoAlmacen: body.telefonoAlmacen
         };
 
         database.query(query, requestBody, function(error, success) {
@@ -80,24 +84,24 @@ exports.agregarPopularidadProducto = function(req) {
           } else {
             resolve({
               estatus: 1,
-              respuesta: 'popularidadProducto de alta correctamente'
+              respuesta: 'almacen dado de alta correctamente'
             });
           }
         });
       }
     });
   });
-} //fin agregarPopularidadProducto
+} //fin agregarAlmacen
 
 
-/*WEB SERVICE --ACTUALIZAR POPULARIDAD PRODUCTOS--*/
-exports.actualizarPopularidadProducto = function(req) {
+/*WEB SERVICE --ACTUALIZAR ALMACENES--*/
+exports.actualizarAlmacen = function(req) {
   //regresaremos una promesa
   console.log("actualizando...");
   return new Promise((resolve, reject) => {
-    /*web service para editar*/
+    /*web service para actualizar*/
     let body = req.body;
-    let idPopularidadProducto = req.params.idPopularidadProducto;
+    let idAlmacen = req.params.idAlmacen;
     req.getConnection(function(error, database) {
       if (error) {
         reject({
@@ -105,11 +109,15 @@ exports.actualizarPopularidadProducto = function(req) {
           respuesta: error
         });
       } else {
-        let query = `update popularidadProductos set ? where idPopularidadProducto = ${idPopularidadProducto}`; //las comillas son diferentes
+        let query = `update almacenes set ? where idAlmacen = ${idAlmacen}`; //las comillas son diferentes
 
         let requestBody = {
-          popularidadProducto: body.popularidadProducto,
-          descripcionPopularidadProducto: body.descripcionPopularidadProducto,
+          ciudadAlmacen: body.ciudadAlmacen,
+          estadoAlmacen: body.estadoAlmacen,
+          paisAlmacen: body.paisAlmacen,
+          direccionAlmacen: body.direccionAlmacen,
+          referenciaAlmacen: body.referenciaAlmacen,
+          telefonoAlmacen: body.telefonoAlmacen
         };
 
         database.query(query, requestBody, function(error, success) {
@@ -121,23 +129,23 @@ exports.actualizarPopularidadProducto = function(req) {
           } else {
             resolve({
               estatus: 1,
-              respuesta: 'popularidadProducto actualizada correctamente'
+              respuesta: 'almacen actualizado correctamente'
             });
           }
         });
       }
     });
   });
-} //fin actualizarPopularidadProducto
+} //fin actualizarAlmacen
 
 
-/*WEB SERVICE --ELIMINAR POPULARIDAD PRODUCTOS-- CON UN TOQUE DE BORRADO LOGICO*/
-exports.eliminarPopularidadProducto = function(req) {
+/*WEB SERVICE --ELIMINAR ALMACENES-- CON UN TOQUE DE BORRADO LOGICO*/
+exports.eliminarAlmacen = function(req) {
   //regresaremos una promesa
   console.log("eliminando...");
   return new Promise((resolve, reject) => {
     /*web service para eliminar un registro*/
-    let idPopularidadProducto = req.params.idPopularidadProducto;
+    let idAlmacen = req.params.idAlmacen;
     req.getConnection(function(error, database) {
       if (error) {
         reject({
@@ -145,7 +153,7 @@ exports.eliminarPopularidadProducto = function(req) {
           respuesta: error
         });
       } else {
-        let query = `update popularidadProductos set ? where idPopularidadProducto = ${idPopularidadProducto}`; //las comillas son diferentes
+        let query = `update almacenes set ? where idAlmacen = ${idAlmacen}`; //las comillas son diferentes
 
         let requestBody = {
           estatusBL: 0,
@@ -160,11 +168,11 @@ exports.eliminarPopularidadProducto = function(req) {
           } else {
             resolve({
               estatus: 1,
-              respuesta: 'popularidadProducto eliminada correctamente'
+              respuesta: 'almacen eliminado correctamente'
             });
           }
         });
       }
     });
   });
-} //fin eliminarPopularidadProducto
+} //fin eliminarAlmacen

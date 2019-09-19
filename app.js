@@ -8,7 +8,6 @@ var logger = require('morgan');
 //definiendo rutas:
 /*var indexRouter = require('./routes/index');
 var accesosRouter = require('./routes/accesos/controlador/accesosControlador');
-var almacenesRouter = require('./routes/almacenes/controlador/almacenesControlador');
 var carritosRouter = require('./routes/carritos/controlador/carritosControlador');
 var clientesRouter = require('./routes/clientes/controlador/clientesControlador');
 var compensacionesRouter = require('./routes/compensaciones/controlador/compensacionesControlador');
@@ -16,6 +15,7 @@ var comprasRouter = require('./routes/compras/controlador/comprasControlador');
 var detallesTransaccionesRouter = require('./routes/detallesTransacciones/controlador/detallesTransaccionesControlador');
 var devolucionesRouter = require('./routes/devoluciones/controlador/devolucionesControlador');
 var productosRouter = require('./routes/productos/controlador/productosControlador');*/
+var almacenesRouter = require('./routes/almacenes/controlador/almacenesControlador');
 var categoriasRouter = require('./routes/categorias/controlador/categoriasControlador');
 var mediosEntregaRouter = require('./routes/mediosEntrega/controlador/mediosEntregaControlador');
 var popularidadProductosRouter = require('./routes/popularidadProductos/controlador/popularidadProductosControlador');
@@ -56,13 +56,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 //creando - invocando rutas de acceso a web service
 /*app.use('/', indexRouter);
 app.use('/accesosWS', accesosRouter);
-app.use('/almacenesWS', almacenesRouter);
 app.use('/carritosWS', carritosRouter);
 app.use('/clientesWS', clientesRouter);
 app.use('/compensacionesWS', compensacionesRouter);
 app.use('/detallesTransaccionesWS', detallesTransaccionesRouter);
 app.use('/devolucionesWS', devolucionesRouter);
 app.use('/productosWS', productosRouter);*/
+app.use('/almacenesWS', almacenesRouter);
 app.use('/categoriasWS', categoriasRouter);
 app.use('/mediosEntregaWS', mediosEntregaRouter);
 app.use('/popularidadProductosWS', popularidadProductosRouter);

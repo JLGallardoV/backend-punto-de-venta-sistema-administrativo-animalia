@@ -55,7 +55,7 @@ router.put('/actualizarAlmacen/:idAlmacen', function(req, res, next) {
   }
 });
 
-// ELIMINAR POPULARIDAD PRODUCTOS - EXPORTANDO RUTA
+// ELIMINAR ALMACENES - EXPORTANDO RUTA
 router.delete('/eliminarAlmacen/:idAlmacen', function(req, res, next) {
   try {
     //web service

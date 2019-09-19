@@ -20,6 +20,7 @@ var categoriasRouter = require('./routes/categorias/controlador/categoriasContro
 var mediosEntregaRouter = require('./routes/mediosEntrega/controlador/mediosEntregaControlador');
 var popularidadProductosRouter = require('./routes/popularidadProductos/controlador/popularidadProductosControlador');
 var premiosRouter = require('./routes/premios/controlador/premiosControlador');
+var rendimientoVendedoresRouter = require('./routes/rendimientoVendedores/controlador/rendimientoVendedoresControlador');
 
 
 //importar dependencias para poder usar mysql
@@ -67,6 +68,8 @@ app.use('/categoriasWS', categoriasRouter);
 app.use('/mediosEntregaWS', mediosEntregaRouter);
 app.use('/popularidadProductosWS', popularidadProductosRouter);
 app.use('/premiosWS', premiosRouter);
+app.use('/rendimientoVendedoresWS', rendimientoVendedoresRouter);
+
 
 
 // catch 404 and forward to error handler

@@ -6,8 +6,8 @@ respuesta: []/string
 }
 */
 
-/*WEB SERVICE --LISTAR COMPRAS--*/
-exports.listarCompras = function(req) {
+/*WEB SERVICE --LISTAR TIPOS DE PAGOS--*/
+exports.listarTiposPagos = function(req) {
   console.log("listando...");
   //regresaremos una promesa...
   return new Promise((resolve, reject) => {
@@ -20,7 +20,7 @@ exports.listarCompras = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'select * from compras where estatusBL = 1';
+        var query = 'select * from tiposDePagos where estatusBL = 1';
 
         //ejecutamos el query
         database.query(query, function(error, success) {
@@ -47,11 +47,11 @@ exports.listarCompras = function(req) {
       }
     });
   });
-} //fin listarCompras
+} //fin listarTiposPagos
 
 
-/*WEB SERVICE --AGREGAR COMPRAS---*/
-exports.agregarCompra = function(req) {
+/*WEB SERVICE --AGREGAR TIPOS DE PAGOS---*/
+exports.agregarTipoPago = function(req) {
   //regresaremos una promesa
   console.log("agregando...");
   return new Promise((resolve, reject) => {
@@ -64,13 +64,12 @@ exports.agregarCompra = function(req) {
           respuesta: error
         });
       } else {
-        let query = 'insert into compras set ?';
+        let query = 'insert into tiposDePagos set ?';
 
         let requestBody = {
-          montoCompra: body.montoCompra,
-          idUsuario: body.idUsuario,
-          idProveedor: body.idProveedor,
-          idReporteEconomico: body.idReporteEconomico
+          tipoPago: body.tipoPago,
+          viaTipoPago: body.viaTipoPago,
+          descripcionTipoPago: body.descripcionTipoPago
         };
 
         database.query(query, requestBody, function(error, success) {
@@ -82,24 +81,24 @@ exports.agregarCompra = function(req) {
           } else {
             resolve({
               estatus: 1,
-              respuesta: 'compra dada de alta correctamente'
+              respuesta: 'tipo de pago dado de alta correctamente'
             });
           }
         });
       }
     });
   });
-} //fin agregarCompra
+} //fin agregarTipoPago
 
 
-/*WEB SERVICE --ACTUALIZAR COMPRAS--*/
-exports.actualizarCompra = function(req) {
+/*WEB SERVICE --ACTUALIZAR TIPOS DE PAGOS--*/
+exports.actualizarTipoPago = function(req) {
   //regresaremos una promesa
   console.log("actualizando...");
   return new Promise((resolve, reject) => {
     /*web service para actualizar*/
     let body = req.body;
-    let idCompra = req.params.idCompra;
+    let idTipoPago = req.params.idTipoPago;
     req.getConnection(function(error, database) {
       if (error) {
         reject({
@@ -107,13 +106,12 @@ exports.actualizarCompra = function(req) {
           respuesta: error
         });
       } else {
-        let query = `update compras set ? where idCompra = ${idCompra}`; //las comillas son diferentes
+        let query = `update tiposDePagos set ? where idTipoPago = ${idTipoPago}`; //las comillas son diferentes
 
         let requestBody = {
-          montoCompra: body.montoCompra,
-          idUsuario: body.idUsuario,
-          idProveedor: body.idProveedor,
-          idReporteEconomico: body.idReporteEconomico
+          tipoPago: body.tipoPago,
+          viaTipoPago: body.viaTipoPago,
+          descripcionTipoPago: body.descripcionTipoPago
         };
 
         database.query(query, requestBody, function(error, success) {
@@ -125,23 +123,23 @@ exports.actualizarCompra = function(req) {
           } else {
             resolve({
               estatus: 1,
-              respuesta: 'compra actualizada correctamente'
+              respuesta: 'tipo de pago actualizado correctamente'
             });
           }
         });
       }
     });
   });
-} //fin actualizarCompra
+} //fin actualizarTipoPago
 
 
-/*WEB SERVICE --ELIMINAR COMPRAS-- CON UN TOQUE DE BORRADO LOGICO*/
-exports.eliminarCompra = function(req) {
+/*WEB SERVICE --ELIMINAR TIPOS DE PAGOS-- CON UN TOQUE DE BORRADO LOGICO*/
+exports.eliminarTipoPago = function(req) {
   //regresaremos una promesa
   console.log("eliminando...");
   return new Promise((resolve, reject) => {
     /*web service para eliminar un registro*/
-    let idCompra = req.params.idCompra;
+    let idTipoPago = req.params.idTipoPago;
     req.getConnection(function(error, database) {
       if (error) {
         reject({
@@ -149,7 +147,7 @@ exports.eliminarCompra = function(req) {
           respuesta: error
         });
       } else {
-        let query = `update compras set ? where idCompra = ${idCompra}`; //las comillas son diferentes
+        let query = `update tiposDePagos set ? where idTipoPago = ${idTipoPago}`; //las comillas son diferentes
 
         let requestBody = {
           estatusBL: 0,
@@ -164,11 +162,11 @@ exports.eliminarCompra = function(req) {
           } else {
             resolve({
               estatus: 1,
-              respuesta: 'compra eliminada correctamente'
+              respuesta: 'tipo de pago eliminado correctamente'
             });
           }
         });
       }
     });
   });
-} //fin eliminarCompra
+} //fin eliminarTipoPago

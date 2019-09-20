@@ -1,13 +1,13 @@
 var express = require('express');
 var router = express.Router();
-var clientesModelo = require('../modelo/clientesModelo');
+var vendedoresModelo = require('../modelo/vendedoresModelo');
 
 
-// LISTAR CLIENTES - EXPORTANDO RUTA
-router.get('/listarClientes', function(req, res, next) {
+// LISTAR VENDEDORES - EXPORTANDO RUTA
+router.get('/listarVendedores', function(req, res, next) {
   try {
     //web service
-    clientesModelo.listarClientes(req).then(
+    vendedoresModelo.listarVendedores(req).then(
       (success) => {
         res.json(success);
       },
@@ -20,11 +20,11 @@ router.get('/listarClientes', function(req, res, next) {
   }
 });
 
-// AGREGAR CLIENTES - EXPORTANDO RUTA
-router.post('/agregarCliente', function(req, res, next) {
+// AGREGAR VENDEDORES - EXPORTANDO RUTA
+router.post('/agregarVendedor', function(req, res, next) {
   try {
     //web service
-    clientesModelo.agregarCliente(req).then(
+    vendedoresModelo.agregarVendedor(req).then(
       (success) => {
         res.json(success);
       },
@@ -38,11 +38,11 @@ router.post('/agregarCliente', function(req, res, next) {
 });
 
 
-// ACTUALIZAR CLIENTES - EXPORTANDO RUTA
-router.put('/actualizarCliente/:idCliente', function(req, res, next) {
+// ACTUALIZAR VENDEDORES - EXPORTANDO RUTA
+router.put('/actualizarVendedor/:idVendedor', function(req, res, next) {
   try {
     //web service
-    clientesModelo.actualizarCliente(req).then(
+    vendedoresModelo.actualizarVendedor(req).then(
       (success) => {
         res.json(success);
       },
@@ -55,11 +55,11 @@ router.put('/actualizarCliente/:idCliente', function(req, res, next) {
   }
 });
 
-// ELIMINAR CLIENTES - EXPORTANDO RUTA
-router.delete('/eliminarCliente/:idCliente', function(req, res, next) {
+// ELIMINAR VENDEDORES - EXPORTANDO RUTA
+router.delete('/eliminarVendedor/:idVendedor', function(req, res, next) {
   try {
     //web service
-    clientesModelo.eliminarCliente(req).then(
+    vendedoresModelo.eliminarVendedor(req).then(
       (success) => {
         res.json(success);
       },

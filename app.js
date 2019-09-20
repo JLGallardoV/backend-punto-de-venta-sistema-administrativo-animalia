@@ -24,6 +24,7 @@ var rendimientoVendedoresRouter = require('./routes/rendimientoVendedores/contro
 var reportesEconomicosRouter = require('./routes/reportesEconomicos/controlador/reportesEconomicosControlador');
 var tiposClientesRouter = require('./routes/tiposClientes/controlador/tiposClientesControlador');
 var tiposUsuariosRouter = require('./routes/tiposUsuarios/controlador/tiposUsuariosControlador');
+var usuariosRouter = require('./routes/usuarios/controlador/usuariosControlador');
 var vendedoresRouter = require('./routes/vendedores/controlador/vendedoresControlador');
 
 
@@ -76,6 +77,7 @@ app.use('/rendimientoVendedoresWS', rendimientoVendedoresRouter);
 app.use('/reportesEconomicosWS', reportesEconomicosRouter);
 app.use('/tiposClientesWS', tiposClientesRouter);
 app.use('/tiposUsuariosWS', tiposUsuariosRouter);
+app.use('/usuariosWS', usuariosRouter);
 app.use('/vendedoresWS', vendedoresRouter);
 
 

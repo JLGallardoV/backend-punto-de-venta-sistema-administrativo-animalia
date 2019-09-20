@@ -23,6 +23,7 @@ var premiosRouter = require('./routes/premios/controlador/premiosControlador');
 var rendimientoVendedoresRouter = require('./routes/rendimientoVendedores/controlador/rendimientoVendedoresControlador');
 var reportesEconomicosRouter = require('./routes/reportesEconomicos/controlador/reportesEconomicosControlador');
 var tiposClientesRouter = require('./routes/tiposClientes/controlador/tiposClientesControlador');
+var tiposUsuariosRouter = require('./routes/tiposUsuarios/controlador/tiposUsuariosControlador');
 var vendedoresRouter = require('./routes/vendedores/controlador/vendedoresControlador');
 
 
@@ -74,6 +75,7 @@ app.use('/premiosWS', premiosRouter);
 app.use('/rendimientoVendedoresWS', rendimientoVendedoresRouter);
 app.use('/reportesEconomicosWS', reportesEconomicosRouter);
 app.use('/tiposClientesWS', tiposClientesRouter);
+app.use('/tiposUsuariosWS', tiposUsuariosRouter);
 app.use('/vendedoresWS', vendedoresRouter);
 
 

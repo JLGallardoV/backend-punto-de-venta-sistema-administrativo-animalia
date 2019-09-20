@@ -6,8 +6,8 @@ respuesta: []/string
 }
 */
 
-/*WEB SERVICE --LISTAR COMPRAS--*/
-exports.listarCompras = function(req) {
+/*WEB SERVICE --LISTAR TRANSACCIONES--*/
+exports.listarTransacciones = function(req) {
   console.log("listando...");
   //regresaremos una promesa...
   return new Promise((resolve, reject) => {
@@ -20,7 +20,7 @@ exports.listarCompras = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'select * from compras where estatusBL = 1';
+        var query = 'select * from transacciones where estatusBL = 1';
 
         //ejecutamos el query
         database.query(query, function(error, success) {
@@ -47,11 +47,11 @@ exports.listarCompras = function(req) {
       }
     });
   });
-} //fin listarCompras
+} //fin listarTransacciones
 
 
-/*WEB SERVICE --AGREGAR COMPRAS---*/
-exports.agregarCompra = function(req) {
+/*WEB SERVICE --AGREGAR TRANSACCIONES---*/
+exports.agregarTransaccion = function(req) {
   //regresaremos una promesa
   console.log("agregando...");
   return new Promise((resolve, reject) => {
@@ -64,13 +64,15 @@ exports.agregarCompra = function(req) {
           respuesta: error
         });
       } else {
-        let query = 'insert into compras set ?';
+        let query = 'insert into transacciones set ?';
 
         let requestBody = {
-          montoCompra: body.montoCompra,
-          idUsuario: body.idUsuario,
-          idProveedor: body.idProveedor,
-          idReporteEconomico: body.idReporteEconomico
+          montoNoIvaTransaccion: body.montoNoIvaTransaccion,
+          ivaTransaccion: body.ivaTransaccion,
+          montoConIvaTransaccion: body.montoConIvaTransaccion,
+          cantidadTransaccion: body.cantidadTransaccion,
+          idVendedor: body.idVendedor,
+          idTipoPago: body.idTipoPago
         };
 
         database.query(query, requestBody, function(error, success) {
@@ -82,24 +84,24 @@ exports.agregarCompra = function(req) {
           } else {
             resolve({
               estatus: 1,
-              respuesta: 'compra dada de alta correctamente'
+              respuesta: 'transaccion dada de alta correctamente'
             });
           }
         });
       }
     });
   });
-} //fin agregarCompra
+} //fin agregarTransaccion
 
 
-/*WEB SERVICE --ACTUALIZAR COMPRAS--*/
-exports.actualizarCompra = function(req) {
+/*WEB SERVICE --ACTUALIZAR TRANSACCIONES--*/
+exports.actualizarTransaccion = function(req) {
   //regresaremos una promesa
   console.log("actualizando...");
   return new Promise((resolve, reject) => {
     /*web service para actualizar*/
     let body = req.body;
-    let idCompra = req.params.idCompra;
+    let idTransaccion = req.params.idTransaccion;
     req.getConnection(function(error, database) {
       if (error) {
         reject({
@@ -107,13 +109,15 @@ exports.actualizarCompra = function(req) {
           respuesta: error
         });
       } else {
-        let query = `update compras set ? where idCompra = ${idCompra}`; //las comillas son diferentes
+        let query = `update transacciones set ? where idTransaccion = ${idTransaccion}`; //las comillas son diferentes
 
         let requestBody = {
-          montoCompra: body.montoCompra,
-          idUsuario: body.idUsuario,
-          idProveedor: body.idProveedor,
-          idReporteEconomico: body.idReporteEconomico
+          montoNoIvaTransaccion: body.montoNoIvaTransaccion,
+          ivaTransaccion: body.ivaTransaccion,
+          montoConIvaTransaccion: body.montoConIvaTransaccion,
+          cantidadTransaccion: body.cantidadTransaccion,
+          idVendedor: body.idVendedor,
+          idTipoPago: body.idTipoPago
         };
 
         database.query(query, requestBody, function(error, success) {
@@ -125,23 +129,23 @@ exports.actualizarCompra = function(req) {
           } else {
             resolve({
               estatus: 1,
-              respuesta: 'compra actualizada correctamente'
+              respuesta: 'transaccion actualizada correctamente'
             });
           }
         });
       }
     });
   });
-} //fin actualizarCompra
+} //fin actualizarTransaccion
 
 
-/*WEB SERVICE --ELIMINAR COMPRAS-- CON UN TOQUE DE BORRADO LOGICO*/
-exports.eliminarCompra = function(req) {
+/*WEB SERVICE --ELIMINAR TRANSACCIONES-- CON UN TOQUE DE BORRADO LOGICO*/
+exports.eliminarTransaccion = function(req) {
   //regresaremos una promesa
   console.log("eliminando...");
   return new Promise((resolve, reject) => {
     /*web service para eliminar un registro*/
-    let idCompra = req.params.idCompra;
+    let idTransaccion = req.params.idTransaccion;
     req.getConnection(function(error, database) {
       if (error) {
         reject({
@@ -149,7 +153,7 @@ exports.eliminarCompra = function(req) {
           respuesta: error
         });
       } else {
-        let query = `update compras set ? where idCompra = ${idCompra}`; //las comillas son diferentes
+        let query = `update transacciones set ? where idTransaccion = ${idTransaccion}`; //las comillas son diferentes
 
         let requestBody = {
           estatusBL: 0,
@@ -164,11 +168,11 @@ exports.eliminarCompra = function(req) {
           } else {
             resolve({
               estatus: 1,
-              respuesta: 'compra eliminada correctamente'
+              respuesta: 'transaccion eliminada correctamente'
             });
           }
         });
       }
     });
   });
-} //fin eliminarCompra
+} //fin eliminarTransaccion

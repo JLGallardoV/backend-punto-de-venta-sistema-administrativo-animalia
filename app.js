@@ -24,7 +24,9 @@ var proveedoresRouter = require('./routes/proveedores/controlador/proveedoresCon
 var rendimientoVendedoresRouter = require('./routes/rendimientoVendedores/controlador/rendimientoVendedoresControlador');
 var reportesEconomicosRouter = require('./routes/reportesEconomicos/controlador/reportesEconomicosControlador');
 var tiposClientesRouter = require('./routes/tiposClientes/controlador/tiposClientesControlador');
+var tiposPagosRouter = require('./routes/tiposPagos/controlador/tiposPagosControlador');
 var tiposUsuariosRouter = require('./routes/tiposUsuarios/controlador/tiposUsuariosControlador');
+var transaccionesRouter = require('./routes/transacciones/controlador/transaccionesControlador');
 var usuariosRouter = require('./routes/usuarios/controlador/usuariosControlador');
 var vendedoresRouter = require('./routes/vendedores/controlador/vendedoresControlador');
 
@@ -79,7 +81,9 @@ app.use('/proveedoresWS', proveedoresRouter);
 app.use('/rendimientoVendedoresWS', rendimientoVendedoresRouter);
 app.use('/reportesEconomicosWS', reportesEconomicosRouter);
 app.use('/tiposClientesWS', tiposClientesRouter);
+app.use('/tiposPagosWS', tiposPagosRouter);
 app.use('/tiposUsuariosWS', tiposUsuariosRouter);
+app.use('/transaccionesWS', transaccionesRouter);
 app.use('/usuariosWS', usuariosRouter);
 app.use('/vendedoresWS', vendedoresRouter);
 

@@ -8,7 +8,6 @@ var logger = require('morgan');
 //definiendo rutas:
 /*var indexRouter = require('./routes/index');
 var compensacionesRouter = require('./routes/compensaciones/controlador/compensacionesControlador');
-var comprasRouter = require('./routes/compras/controlador/comprasControlador');
 var detallesTransaccionesRouter = require('./routes/detallesTransacciones/controlador/detallesTransaccionesControlador');
 var devolucionesRouter = require('./routes/devoluciones/controlador/devolucionesControlador');
 var productosRouter = require('./routes/productos/controlador/productosControlador');*/
@@ -17,9 +16,11 @@ var almacenesRouter = require('./routes/almacenes/controlador/almacenesControlad
 var carritosRouter = require('./routes/carritos/controlador/carritosControlador');
 var categoriasRouter = require('./routes/categorias/controlador/categoriasControlador');
 var clientesRouter = require('./routes/clientes/controlador/clientesControlador');
+var comprasRouter = require('./routes/compras/controlador/comprasControlador');
 var mediosEntregaRouter = require('./routes/mediosEntrega/controlador/mediosEntregaControlador');
 var popularidadProductosRouter = require('./routes/popularidadProductos/controlador/popularidadProductosControlador');
 var premiosRouter = require('./routes/premios/controlador/premiosControlador');
+var proveedoresRouter = require('./routes/proveedores/controlador/proveedoresControlador');
 var rendimientoVendedoresRouter = require('./routes/rendimientoVendedores/controlador/rendimientoVendedoresControlador');
 var reportesEconomicosRouter = require('./routes/reportesEconomicos/controlador/reportesEconomicosControlador');
 var tiposClientesRouter = require('./routes/tiposClientes/controlador/tiposClientesControlador');
@@ -70,9 +71,11 @@ app.use('/almacenesWS', almacenesRouter);
 app.use('/carritosWS', carritosRouter);
 app.use('/categoriasWS', categoriasRouter);
 app.use('/clientesWS', clientesRouter);
+app.use('/comprasWS', comprasRouter);
 app.use('/mediosEntregaWS', mediosEntregaRouter);
 app.use('/popularidadProductosWS', popularidadProductosRouter);
 app.use('/premiosWS', premiosRouter);
+app.use('/proveedoresWS', proveedoresRouter);
 app.use('/rendimientoVendedoresWS', rendimientoVendedoresRouter);
 app.use('/reportesEconomicosWS', reportesEconomicosRouter);
 app.use('/tiposClientesWS', tiposClientesRouter);

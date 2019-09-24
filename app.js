@@ -17,9 +17,9 @@ var carritosRouter = require('./routes/carritos/controlador/carritosControlador'
 var categoriasRouter = require('./routes/categorias/controlador/categoriasControlador');
 var clientesRouter = require('./routes/clientes/controlador/clientesControlador');
 var comprasRouter = require('./routes/compras/controlador/comprasControlador');
+var comprasFiltroFechaRouter = require('./routes/compras/controlador/filtrarxFechaComprasControlador');
+var comprasMontoRouter = require('./routes/compras/controlador/montoComprasControlador');
 var mediosEntregaRouter = require('./routes/mediosEntrega/controlador/mediosEntregaControlador');
-var montoComprasRouter = require('./routes/compras/controlador/montoComprasControlador');
-var montoTransaccionesRouter = require('./routes/transacciones/controlador/montoTransaccionesControlador');
 var popularidadProductosRouter = require('./routes/popularidadProductos/controlador/popularidadProductosControlador');
 var premiosRouter = require('./routes/premios/controlador/premiosControlador');
 var proveedoresRouter = require('./routes/proveedores/controlador/proveedoresControlador');
@@ -29,6 +29,8 @@ var tiposClientesRouter = require('./routes/tiposClientes/controlador/tiposClien
 var tiposPagosRouter = require('./routes/tiposPagos/controlador/tiposPagosControlador');
 var tiposUsuariosRouter = require('./routes/tiposUsuarios/controlador/tiposUsuariosControlador');
 var transaccionesRouter = require('./routes/transacciones/controlador/transaccionesControlador');
+var transaccionesFiltroFechaRouter = require('./routes/transacciones/controlador/filtrarxFechaTransaccionesControlador');
+var transaccionesMontoRouter = require('./routes/transacciones/controlador/montoTransaccionesControlador');
 var usuariosRouter = require('./routes/usuarios/controlador/usuariosControlador');
 var vendedoresRouter = require('./routes/vendedores/controlador/vendedoresControlador');
 
@@ -76,7 +78,8 @@ app.use('/carritosWS', carritosRouter);
 app.use('/categoriasWS', categoriasRouter);
 app.use('/clientesWS', clientesRouter);
 app.use('/comprasWS', comprasRouter);
-app.use('/comprasWS', montoComprasRouter);
+app.use('/comprasWS', comprasMontoRouter);
+app.use('/comprasWS', comprasFiltroFechaRouter);
 app.use('/mediosEntregaWS', mediosEntregaRouter);
 app.use('/popularidadProductosWS', popularidadProductosRouter);
 app.use('/premiosWS', premiosRouter);
@@ -87,7 +90,8 @@ app.use('/tiposClientesWS', tiposClientesRouter);
 app.use('/tiposPagosWS', tiposPagosRouter);
 app.use('/tiposUsuariosWS', tiposUsuariosRouter);
 app.use('/transaccionesWS', transaccionesRouter);
-app.use('/transaccionesWS', montoTransaccionesRouter);
+app.use('/transaccionesWS', transaccionesMontoRouter);
+app.use('/transaccionesWS', transaccionesFiltroFechaRouter);
 app.use('/usuariosWS', usuariosRouter);
 app.use('/vendedoresWS', vendedoresRouter);
 

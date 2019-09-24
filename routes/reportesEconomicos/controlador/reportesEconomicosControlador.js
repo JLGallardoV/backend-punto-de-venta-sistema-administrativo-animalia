@@ -3,7 +3,7 @@ var router = express.Router();
 var reportesEconomicosModelo = require('../modelo/reportesEconomicosModelo');
 
 // LISTAR REPORTE ECONOMICO - EXPORTANDO RUTA
-router.get('/listarReportesEconomicos', function(req, res, next) {
+router.get('/listarReportesEconomicos/:inicioFechaTransacciones/:finalFechaTransacciones/:inicioFechaCompras/:finalFechaCompras', function(req, res, next) {
   try {
     //web service
     reportesEconomicosModelo.listarReportesEconomicos(req).then(

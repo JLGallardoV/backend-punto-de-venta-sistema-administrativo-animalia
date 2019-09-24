@@ -5,7 +5,6 @@ estatus: -1/0/1,
 respuesta: []/string
 }
 */
-
 /*WEB SERVICE --LISTAR COMPRAS--*/
 exports.listarCompras = function(req) {
   console.log("listando...");

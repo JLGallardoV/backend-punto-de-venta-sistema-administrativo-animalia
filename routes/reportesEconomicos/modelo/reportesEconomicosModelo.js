@@ -11,6 +11,10 @@ exports.listarReportesEconomicos = function(req) {
   console.log("listando...");
   //regresaremos una promesa...
   return new Promise((resolve, reject) => {
+    let inicioFechaTransacciones = req.params.inicioFechaTransacciones;
+    let finalFechaTransacciones = req.params.finalFechaTransacciones;
+    let inicioFechaCompras = req.params.inicioFechaCompras;
+    let finalFechaCompras = req.params.finalFechaCompras;
     //conectar con la base de datos
     req.getConnection(function(error, database) {
       if (error) {
@@ -20,7 +24,7 @@ exports.listarReportesEconomicos = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'select * from reportesEconomicos where estatusBL = 1';
+        var query = `SELECT ((SELECT IFNULL(SUM(montoConIvaTransaccion),0) FROM transacciones WHERE fechaTransaccion BETWEEN '${inicioFechaTransacciones} 00:00:00' AND '${finalFechaTransacciones} 23:59:59') - (SELECT IFNULL(SUM(montoCompra),0) FROM compras WHERE fechaCompra BETWEEN '${inicioFechaCompras} 00:00:00' AND '${finalFechaCompras} 23:59:59')) AS utilidad;`;
 
         //ejecutamos el query
         database.query(query, function(error, success) {

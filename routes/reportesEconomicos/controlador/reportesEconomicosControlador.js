@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var reportesEconomicosModelo = require('../modelo/reportesEconomicosModelo');
 
-
 // LISTAR REPORTE ECONOMICO - EXPORTANDO RUTA
 router.get('/listarReportesEconomicos', function(req, res, next) {
   try {

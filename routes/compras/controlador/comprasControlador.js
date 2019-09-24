@@ -2,14 +2,27 @@ var express = require('express');
 var router = express.Router();
 var comprasModelo = require('../modelo/comprasModelo');
 
+/*AÑADIENDO CABECERAS:*/
+router.use(function(req,res,next){
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-headers", "Origin, X-Requested-With, Accept, Content-Type, Authorization");
+	return next();
+});
 
 // LISTAR COMPRAS - EXPORTANDO RUTA
 router.get('/listarCompras', function(req, res, next) {
   try {
-    //web service
+    var acumularCompras = 0;
     comprasModelo.listarCompras(req).then(
       (success) => {
         res.json(success);
+
+        //acumulando el recurso economico:
+        for (var i = 0; i < success.respuesta.length; i++) {
+          acumularCompras += success.respuesta[i].montoCompra
+        }
+        console.log("acumulado: ", acumularCompras);
+
       },
       (error) => {
         res.json(error);

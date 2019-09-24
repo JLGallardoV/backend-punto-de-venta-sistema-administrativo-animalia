@@ -18,6 +18,8 @@ var categoriasRouter = require('./routes/categorias/controlador/categoriasContro
 var clientesRouter = require('./routes/clientes/controlador/clientesControlador');
 var comprasRouter = require('./routes/compras/controlador/comprasControlador');
 var mediosEntregaRouter = require('./routes/mediosEntrega/controlador/mediosEntregaControlador');
+var montoComprasRouter = require('./routes/compras/controlador/montoComprasControlador');
+var montoTransaccionesRouter = require('./routes/transacciones/controlador/montoTransaccionesControlador');
 var popularidadProductosRouter = require('./routes/popularidadProductos/controlador/popularidadProductosControlador');
 var premiosRouter = require('./routes/premios/controlador/premiosControlador');
 var proveedoresRouter = require('./routes/proveedores/controlador/proveedoresControlador');
@@ -74,6 +76,7 @@ app.use('/carritosWS', carritosRouter);
 app.use('/categoriasWS', categoriasRouter);
 app.use('/clientesWS', clientesRouter);
 app.use('/comprasWS', comprasRouter);
+app.use('/comprasWS', montoComprasRouter);
 app.use('/mediosEntregaWS', mediosEntregaRouter);
 app.use('/popularidadProductosWS', popularidadProductosRouter);
 app.use('/premiosWS', premiosRouter);
@@ -84,6 +87,7 @@ app.use('/tiposClientesWS', tiposClientesRouter);
 app.use('/tiposPagosWS', tiposPagosRouter);
 app.use('/tiposUsuariosWS', tiposUsuariosRouter);
 app.use('/transaccionesWS', transaccionesRouter);
+app.use('/transaccionesWS', montoTransaccionesRouter);
 app.use('/usuariosWS', usuariosRouter);
 app.use('/vendedoresWS', vendedoresRouter);
 

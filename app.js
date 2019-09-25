@@ -9,8 +9,7 @@ var logger = require('morgan');
 /*var indexRouter = require('./routes/index');
 var compensacionesRouter = require('./routes/compensaciones/controlador/compensacionesControlador');
 var detallesTransaccionesRouter = require('./routes/detallesTransacciones/controlador/detallesTransaccionesControlador');
-var devolucionesRouter = require('./routes/devoluciones/controlador/devolucionesControlador');
-var productosRouter = require('./routes/productos/controlador/productosControlador');*/
+var devolucionesRouter = require('./routes/devoluciones/controlador/devolucionesControlador');*/
 var accesosRouter = require('./routes/accesos/controlador/accesosControlador');
 var almacenesRouter = require('./routes/almacenes/controlador/almacenesControlador');
 var carritosRouter = require('./routes/carritos/controlador/carritosControlador');
@@ -22,6 +21,7 @@ var comprasMontoRouter = require('./routes/compras/controlador/montoComprasContr
 var mediosEntregaRouter = require('./routes/mediosEntrega/controlador/mediosEntregaControlador');
 var popularidadProductosRouter = require('./routes/popularidadProductos/controlador/popularidadProductosControlador');
 var premiosRouter = require('./routes/premios/controlador/premiosControlador');
+var productosRouter = require('./routes/productos/controlador/productosControlador');
 var proveedoresRouter = require('./routes/proveedores/controlador/proveedoresControlador');
 var rendimientoVendedoresRouter = require('./routes/rendimientoVendedores/controlador/rendimientoVendedoresControlador');
 var reportesEconomicosRouter = require('./routes/reportesEconomicos/controlador/reportesEconomicosControlador');
@@ -70,8 +70,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 /*app.use('/', indexRouter);
 app.use('/compensacionesWS', compensacionesRouter);
 app.use('/detallesTransaccionesWS', detallesTransaccionesRouter);
-app.use('/devolucionesWS', devolucionesRouter);
-app.use('/productosWS', productosRouter);*/
+app.use('/devolucionesWS', devolucionesRouter);*/
 app.use('/accesosWS', accesosRouter);
 app.use('/almacenesWS', almacenesRouter);
 app.use('/carritosWS', carritosRouter);
@@ -83,6 +82,7 @@ app.use('/comprasWS', comprasFiltroFechaRouter);
 app.use('/mediosEntregaWS', mediosEntregaRouter);
 app.use('/popularidadProductosWS', popularidadProductosRouter);
 app.use('/premiosWS', premiosRouter);
+app.use('/productosWS', productosRouter);
 app.use('/proveedoresWS', proveedoresRouter);
 app.use('/rendimientoVendedoresWS', rendimientoVendedoresRouter);
 app.use('/reportesEconomicosWS', reportesEconomicosRouter);

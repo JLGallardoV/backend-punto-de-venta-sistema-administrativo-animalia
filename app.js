@@ -29,6 +29,7 @@ var tiposClientesRouter = require('./routes/tiposClientes/controlador/tiposClien
 var tiposPagosRouter = require('./routes/tiposPagos/controlador/tiposPagosControlador');
 var tiposUsuariosRouter = require('./routes/tiposUsuarios/controlador/tiposUsuariosControlador');
 var transaccionesFiltroFechaRouter = require('./routes/transacciones/controlador/filtrarxFechaTransaccionesControlador');
+var transacciones_clientesRouter = require('./routes/transacciones_clientes/controlador/transacciones_clientesControlador');
 var transacciones_productosRouter = require('./routes/transacciones_productos/controlador/transacciones_productosControlador');
 var transaccionesRouter = require('./routes/transacciones/controlador/transaccionesControlador');
 var transaccionesMontoRouter = require('./routes/transacciones/controlador/montoTransaccionesControlador');
@@ -93,6 +94,7 @@ app.use('/tiposPagosWS', tiposPagosRouter);
 app.use('/tiposUsuariosWS', tiposUsuariosRouter);
 app.use('/transaccionesWS', transaccionesRouter);
 app.use('/transaccionesWS', transaccionesMontoRouter);
+app.use('/transaccionesWS', transacciones_clientesRouter);
 app.use('/transaccionesWS', transacciones_productosRouter);
 app.use('/transaccionesWS', transaccionesFiltroFechaRouter);
 app.use('/usuariosWS', usuariosRouter);

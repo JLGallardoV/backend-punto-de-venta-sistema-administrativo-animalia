@@ -6,8 +6,8 @@ respuesta: []/string
 }
 */
 
-/*WEB SERVICE --LISTAR RELACION TRANSACCIONES-PRODUCTOS--*/
-exports.listarTransacciones_productos = function(req) {
+/*WEB SERVICE --LISTAR RELACION TRANSACCIONES-CLIENTES--*/
+exports.listarTransacciones_clientes = function(req) {
   console.log("listando...");
   //regresaremos una promesa...
   return new Promise((resolve, reject) => {
@@ -20,7 +20,7 @@ exports.listarTransacciones_productos = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'SELECT transacciones_productos.idTransaccion, productos.nombreProducto, count(*) as vendidos FROM transacciones_productos INNER JOIN productos ON transacciones_productos.idProducto = productos.idProducto group by nombreProducto order by vendidos DESC;';
+        var query = 'SELECT * FROM transacciones_clientes WHERE estatusBL = 1';
 
         //ejecutamos el query
         database.query(query, function(error, success) {
@@ -50,8 +50,8 @@ exports.listarTransacciones_productos = function(req) {
 } //fin listarRelacion
 
 
-/*WEB SERVICE --AGREGAR RELACION TRANSACCIONES-PRODUCTOS---*/
-exports.agregarTransaccion_producto = function(req) {
+/*WEB SERVICE --AGREGAR RELACION TRANSACCIONES-CLIENTES---*/
+exports.agregarTransaccion_cliente = function(req) {
   //regresaremos una promesa
   console.log("agregando...");
   return new Promise((resolve, reject) => {
@@ -64,12 +64,11 @@ exports.agregarTransaccion_producto = function(req) {
           respuesta: error
         });
       } else {
-        let query = 'insert into transacciones_productos set ?';
+        let query = 'insert into transacciones_clientes set ?';
 
         let requestBody = {
           idTransaccion: body.idTransaccion,
-          idProducto: body.idProducto,
-          numeroProductosEnTransaccion: body.numeroProductosEnTransaccion
+          idCliente: body.idCliente,
         };
 
         database.query(query, requestBody, function(error, success) {
@@ -91,15 +90,15 @@ exports.agregarTransaccion_producto = function(req) {
 } //fin agregarRelacion
 
 
-/*WEB SERVICE --ACTUALIZAR RELACION TRANSACCIONES-PRODUCTOS--*/
-exports.actualizarTransaccion_producto = function(req) {
+/*WEB SERVICE --ACTUALIZAR RELACION TRANSACCIONES-CLIENTES--*/
+exports.actualizarTransaccion_cliente = function(req) {
   //regresaremos una promesa
   console.log("actualizando...");
   return new Promise((resolve, reject) => {
     /*web service para actualizar*/
     let body = req.body;
     let idTransaccion = req.params.idTransaccion;
-    let idProducto = req.params.idProducto;
+    let idCliente = req.params.idCliente;
     req.getConnection(function(error, database) {
       if (error) {
         reject({
@@ -107,12 +106,11 @@ exports.actualizarTransaccion_producto = function(req) {
           respuesta: error
         });
       } else {
-        let query = `update transacciones_productos set ? where idTransaccion = ${idTransaccion} and idProducto = ${idProducto}`; //las comillas son diferentes
+        let query = `update transacciones_clientes set ? where idTransaccion = ${idTransaccion} and idCliente = ${idCliente}`; //las comillas son diferentes
 
         let requestBody = {
           idTransaccion: body.idTransaccion,
-          idProducto: body.idProducto,
-          numeroProductosEnTransaccion: body.numeroProductosEnTransaccion
+          idCliente: body.idCliente
         };
 
         database.query(query, requestBody, function(error, success) {
@@ -134,14 +132,14 @@ exports.actualizarTransaccion_producto = function(req) {
 } //fin actualizarRelacion
 
 
-/*WEB SERVICE --ELIMINAR RELACION TRANSACCIONES-PRODUCTOS-- CON UN TOQUE DE BORRADO LOGICO*/
-exports.eliminarTransaccion_producto = function(req) {
+/*WEB SERVICE --ELIMINAR RELACION TRANSACCIONES-CLIENTES-- CON UN TOQUE DE BORRADO LOGICO*/
+exports.eliminarTransaccion_cliente = function(req) {
   //regresaremos una promesa
   console.log("eliminando...");
   return new Promise((resolve, reject) => {
     /*web service para eliminar un registro*/
     let idTransaccion = req.params.idTransaccion;
-    let idProducto = req.params.idProducto;
+    let idCliente = req.params.idCliente;
     req.getConnection(function(error, database) {
       if (error) {
         reject({
@@ -149,7 +147,7 @@ exports.eliminarTransaccion_producto = function(req) {
           respuesta: error
         });
       } else {
-        let query = `update transacciones_productos set ? where idTransaccion = ${idTransaccion} and idProducto = ${idProducto}`; //las comillas son diferentes
+        let query = `update transacciones_clientes set ? where idTransaccion = ${idTransaccion} and idCliente = ${idCliente}`; //las comillas son diferentes
 
         let requestBody = {
           estatusBL: 0,

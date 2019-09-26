@@ -34,6 +34,7 @@ var transaccionesRouter = require('./routes/transacciones/controlador/transaccio
 var transaccionesMontoRouter = require('./routes/transacciones/controlador/montoTransaccionesControlador');
 var usuariosRouter = require('./routes/usuarios/controlador/usuariosControlador');
 var vendedoresRouter = require('./routes/vendedores/controlador/vendedoresControlador');
+var ventasVendedoresRouter = require('./routes/rendimientoVendedores/controlador/ventasVendedoresControlador');
 
 
 //importar dependencias para poder usar mysql
@@ -96,6 +97,7 @@ app.use('/transaccionesWS', transacciones_productosRouter);
 app.use('/transaccionesWS', transaccionesFiltroFechaRouter);
 app.use('/usuariosWS', usuariosRouter);
 app.use('/vendedoresWS', vendedoresRouter);
+app.use('/rendimientoVendedoresWS', ventasVendedoresRouter);
 
 
 

@@ -20,6 +20,7 @@ var comprasFiltroFechaRouter = require('./routes/compras/controlador/filtrarxFec
 var comprasMontoRouter = require('./routes/compras/controlador/montoComprasControlador');
 var mediosEntregaRouter = require('./routes/mediosEntrega/controlador/mediosEntregaControlador');
 var popularidadProductosRouter = require('./routes/popularidadProductos/controlador/popularidadProductosControlador');
+var popularidadVendedoresRouter = require('./routes/popularidadVendedores/controlador/popularidadVendedoresControlador');
 var premiosRouter = require('./routes/premios/controlador/premiosControlador');
 var productosRouter = require('./routes/productos/controlador/productosControlador');
 var proveedoresRouter = require('./routes/proveedores/controlador/proveedoresControlador');
@@ -84,6 +85,7 @@ app.use('/comprasWS', comprasMontoRouter);
 app.use('/comprasWS', comprasFiltroFechaRouter);
 app.use('/mediosEntregaWS', mediosEntregaRouter);
 app.use('/popularidadProductosWS', popularidadProductosRouter);
+app.use('/popularidadVendedoresWS', popularidadVendedoresRouter);
 app.use('/premiosWS', premiosRouter);
 app.use('/productosWS', productosRouter);
 app.use('/proveedoresWS', proveedoresRouter);

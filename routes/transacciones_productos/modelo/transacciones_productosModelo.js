@@ -1,9 +1,16 @@
 /*
-Estructura de respuesta del modelo
+ESTRUCTURA RESPUESTA MODELO
 {
 estatus: -1/0/1,
 respuesta: []/string
 }
+*/
+
+/*
+CONDICIONALES POPULARIDAD PRODUCTO
+1 - 20: Malo
+21 - 40: bueno
++41: excelente
 */
 
 /*WEB SERVICE --LISTAR RELACION TRANSACCIONES-PRODUCTOS--*/
@@ -20,7 +27,7 @@ exports.listarTransacciones_productos = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'SELECT transacciones_productos.idTransaccion, productos.nombreProducto, count(*) as vendidos FROM transacciones_productos INNER JOIN productos ON transacciones_productos.idProducto = productos.idProducto group by nombreProducto order by vendidos DESC;';
+        var query = 'SELECT transacciones_productos.idTransaccion, productos.nombreProducto FROM transacciones_productos INNER JOIN productos ON transacciones_productos.idProducto = productos.idProducto;';
 
         //ejecutamos el query
         database.query(query, function(error, success) {
@@ -37,6 +44,20 @@ exports.listarTransacciones_productos = function(req) {
                 respuesta: success
               });
             } else if (success.length > 0) {
+
+              /*definiendo segun sean las ventas del producto, su popularidad*/
+              for (var i = 0; i < success.length; i++) {
+                if (success[i].vendidos > 0 && success[i].vendidos <= 20) {
+                  success[i].vendidos = "malo"
+                }
+                if (success[i].vendidos > 20 && success[i].vendidos <= 40) {
+                  success[i].vendidos = "bueno"
+                }
+                if (success[i].vendidos > 41) {
+                  success[i].vendidos = "excelente"
+                }
+              }
+
               resolve({
                 estatus: 1,
                 respuesta: success

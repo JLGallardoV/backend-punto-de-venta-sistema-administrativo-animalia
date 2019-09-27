@@ -20,7 +20,7 @@ exports.listarPopularidadProductos = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'select * from popularidadProductos where estatusBL = 1';
+        var query = 'SELECT transacciones_productos.idTransaccion, productos.nombreProducto, count(*) as vendidos FROM transacciones_productos INNER JOIN productos ON transacciones_productos.idProducto = productos.idProducto group by nombreProducto order by vendidos DESC;';
 
         //ejecutamos el query
         database.query(query, function(error, success) {

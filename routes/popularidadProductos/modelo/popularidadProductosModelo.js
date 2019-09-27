@@ -39,6 +39,19 @@ exports.listarPopularidadProductos = function(req) {
                 respuesta: success
               });
             } else if (success.length > 0) {
+              /*definiendo segun sean las ventas de un vendedor, su popularidad*/
+              for (var i = 0; i < success.length; i++) {
+                if (success[i].vendidos > 0 && success[i].vendidos <= 20) {
+                  success[i].vendidos = "malo"
+                }
+                if (success[i].vendidos > 20 && success[i].vendidos <= 40) {
+                  success[i].vendidos = "bueno"
+                }
+                if (success[i].vendidos > 41) {
+                  success[i].vendidos = "excelente"
+                }
+              }
+
               resolve({
                 estatus: 1,
                 respuesta: success

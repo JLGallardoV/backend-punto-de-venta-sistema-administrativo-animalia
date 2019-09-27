@@ -15,6 +15,7 @@ var almacenesRouter = require('./routes/almacenes/controlador/almacenesControlad
 var carritosRouter = require('./routes/carritos/controlador/carritosControlador');
 var categoriasRouter = require('./routes/categorias/controlador/categoriasControlador');
 var clientesRouter = require('./routes/clientes/controlador/clientesControlador');
+var clientesPuntosRouter = require('./routes/clientes/controlador/puntosClientesControlador');
 var comprasRouter = require('./routes/compras/controlador/comprasControlador');
 var comprasFiltroFechaRouter = require('./routes/compras/controlador/filtrarxFechaComprasControlador');
 var comprasMontoRouter = require('./routes/compras/controlador/montoComprasControlador');
@@ -24,7 +25,6 @@ var popularidadVendedoresRouter = require('./routes/popularidadVendedores/contro
 var premiosRouter = require('./routes/premios/controlador/premiosControlador');
 var productosRouter = require('./routes/productos/controlador/productosControlador');
 var proveedoresRouter = require('./routes/proveedores/controlador/proveedoresControlador');
-var rendimientoVendedoresRouter = require('./routes/rendimientoVendedores/controlador/rendimientoVendedoresControlador');
 var reportesEconomicosRouter = require('./routes/reportesEconomicos/controlador/reportesEconomicosControlador');
 var tiposClientesRouter = require('./routes/tiposClientes/controlador/tiposClientesControlador');
 var tiposPagosRouter = require('./routes/tiposPagos/controlador/tiposPagosControlador');
@@ -80,6 +80,7 @@ app.use('/almacenesWS', almacenesRouter);
 app.use('/carritosWS', carritosRouter);
 app.use('/categoriasWS', categoriasRouter);
 app.use('/clientesWS', clientesRouter);
+app.use('/clientesWS', clientesPuntosRouter);
 app.use('/comprasWS', comprasRouter);
 app.use('/comprasWS', comprasMontoRouter);
 app.use('/comprasWS', comprasFiltroFechaRouter);
@@ -89,7 +90,7 @@ app.use('/popularidadVendedoresWS', popularidadVendedoresRouter);
 app.use('/premiosWS', premiosRouter);
 app.use('/productosWS', productosRouter);
 app.use('/proveedoresWS', proveedoresRouter);
-app.use('/rendimientoVendedoresWS', rendimientoVendedoresRouter);
+app.use('/rendimientoVendedoresWS', ventasVendedoresRouter);
 app.use('/reportesEconomicosWS', reportesEconomicosRouter);
 app.use('/tiposClientesWS', tiposClientesRouter);
 app.use('/tiposPagosWS', tiposPagosRouter);
@@ -101,7 +102,6 @@ app.use('/transaccionesWS', transacciones_productosRouter);
 app.use('/transaccionesWS', transaccionesFiltroFechaRouter);
 app.use('/usuariosWS', usuariosRouter);
 app.use('/vendedoresWS', vendedoresRouter);
-app.use('/rendimientoVendedoresWS', ventasVendedoresRouter);
 
 
 

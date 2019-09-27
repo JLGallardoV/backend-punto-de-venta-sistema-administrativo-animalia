@@ -1,21 +1,12 @@
-/*
-Estructura de respuesta del modelo
-{
-estatus: -1/0/1,
-respuesta: []/string
-}
-*/
 
-/*WEB SERVICE --LISTAR REPORTES ECONOMICOS--*/
-exports.listarReportesEconomicos = function(req) {
+/*WEB SERVICE --LISTAR CLIENTES--*/
+exports.listarPuntosClientes = function(req) {
   console.log("listando...");
   //regresaremos una promesa...
   return new Promise((resolve, reject) => {
+    //conectar con la base de datos
     let inicioFechaTransacciones = req.params.inicioFechaTransacciones;
     let finalFechaTransacciones = req.params.finalFechaTransacciones;
-    let inicioFechaCompras = req.params.inicioFechaCompras;
-    let finalFechaCompras = req.params.finalFechaCompras;
-    //conectar con la base de datos
     req.getConnection(function(error, database) {
       if (error) {
         reject({
@@ -23,8 +14,8 @@ exports.listarReportesEconomicos = function(req) {
           respuesta: error
         });
       } else {
-        //tenemos conexión
-        var query = `SELECT ((SELECT IFNULL(SUM(montoConIvaTransaccion),0) FROM transacciones WHERE fechaTransaccion BETWEEN '${inicioFechaTransacciones} 00:00:00' AND '${finalFechaTransacciones} 23:59:59') - (SELECT IFNULL(SUM(montoCompra),0) FROM compras WHERE fechaCompra BETWEEN '${inicioFechaCompras} 00:00:00' AND '${finalFechaCompras} 23:59:59')) AS utilidad;`;
+        /*ENTREGA LOS PUNTOS ACUMULADOS DE CADA CLIENTE*/
+        var query = 'SELECT transacciones_clientes.idCliente, clientes.nombreCliente, productos.nombreProducto, sum(productos.puntosProducto * transacciones.cantidadTransaccion) as puntosTotales FROM transacciones_clientes INNER JOIN clientes ON transacciones_clientes.idCliente = clientes.idCliente INNER JOIN productos ON transacciones_clientes.idTransaccion = productos.idProducto INNER JOIN transacciones ON transacciones_clientes.idTransaccion = transacciones.idTransaccion group by nombreCliente;';
 
         //ejecutamos el query
         database.query(query, function(error, success) {
@@ -51,4 +42,4 @@ exports.listarReportesEconomicos = function(req) {
       }
     });
   });
-} //fin listarReportesEconomicos
+} //fin listarNumeroComprasClientes

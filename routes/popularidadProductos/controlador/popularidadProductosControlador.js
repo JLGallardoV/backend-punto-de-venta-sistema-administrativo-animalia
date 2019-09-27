@@ -4,7 +4,7 @@ var popularidadProductosModelo = require('../modelo/popularidadProductosModelo')
 
 
 // LISTAR POPULARIDAD PRODUCTOS - EXPORTANDO RUTA
-router.get('/listarPopularidadProductos', function(req, res, next) {
+router.get('/listarPopularidadProductos/:inicioFechaTransacciones/:finalFechaTransacciones', function(req, res, next) {
   try {
     //web service
     popularidadProductosModelo.listarPopularidadProductos(req).then(

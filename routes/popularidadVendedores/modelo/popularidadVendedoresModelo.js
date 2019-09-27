@@ -20,6 +20,8 @@ exports.listarPopularidadVendedores = function(req) {
   console.log("listando...");
   //regresaremos una promesa...
   return new Promise((resolve, reject) => {
+    let inicioFechaTransacciones = req.params.inicioFechaTransacciones;
+    let finalFechaTransacciones = req.params.finalFechaTransacciones;
     //conectar con la base de datos
     req.getConnection(function(error, database) {
       if (error) {
@@ -29,7 +31,7 @@ exports.listarPopularidadVendedores = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'SELECT vendedores.nombreVendedor, count(*) AS vendidos FROM transacciones INNER JOIN vendedores ON transacciones.idVendedor = vendedores.idVendedor group by nombreVendedor order by vendidos DESC';
+        var query = `SELECT transacciones.fechaTransaccion, vendedores.nombreVendedor, count(*) AS vendidos  FROM transacciones INNER JOIN vendedores ON transacciones.idVendedor = vendedores.idVendedor WHERE fechaTransaccion between '${inicioFechaTransacciones} 00:00:00' AND '${finalFechaTransacciones} 23:59:59' group by nombreVendedor order by vendidos DESC;`;
 
         //ejecutamos el query
         database.query(query, function(error, success) {

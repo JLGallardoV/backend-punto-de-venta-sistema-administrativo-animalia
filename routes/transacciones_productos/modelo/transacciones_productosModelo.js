@@ -27,7 +27,7 @@ exports.listarTransacciones_productos = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'SELECT transacciones_productos.idTransaccion, productos.nombreProducto FROM transacciones_productos INNER JOIN productos ON transacciones_productos.idProducto = productos.idProducto;';
+        var query = 'SELECT transacciones_productos.idTransaccion, productos.nombreProducto, transacciones.fechaTransaccion FROM transacciones_productos INNER JOIN productos ON transacciones_productos.idProducto = productos.idProducto INNER JOIN transacciones ON transacciones_productos.idTransaccion = transacciones.idTransaccion;';
 
         //ejecutamos el query
         database.query(query, function(error, success) {

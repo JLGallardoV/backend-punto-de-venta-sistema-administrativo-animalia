@@ -11,7 +11,7 @@ exports.listarVentasVendedores = function(req) {
           respuesta: error
         });
       } else {
-        //tenemos conexión
+        //CUANTAS VENTAS HIZO TAL VENDEDOR
         var query = 'SELECT transacciones.idTransaccion, vendedores.nombreVendedor, count(*) AS vendidos FROM transacciones INNER JOIN vendedores ON transacciones.idVendedor = vendedores.idVendedor group by nombreVendedor order by vendidos DESC;';
 
         //ejecutamos el query

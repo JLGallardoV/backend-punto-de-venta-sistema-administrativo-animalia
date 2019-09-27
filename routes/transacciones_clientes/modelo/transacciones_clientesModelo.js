@@ -19,8 +19,8 @@ exports.listarTransacciones_clientes = function(req) {
           respuesta: error
         });
       } else {
-        //tenemos conexión
-        var query = 'SELECT * FROM transacciones_clientes WHERE estatusBL = 1';
+        //REGRESA QUIEN COMPRO QUE PRODUCTO
+        var query = 'SELECT transacciones_clientes.idTransaccion, clientes.nombreCliente, transacciones.fechaTransaccion, productos.nombreProducto FROM transacciones_clientes INNER JOIN clientes ON transacciones_clientes.idCliente = clientes.idCliente INNER JOIN productos ON transacciones_clientes.idTransaccion = productos.idProducto INNER JOIN transacciones ON transacciones_clientes.idTransaccion = transacciones.idTransaccion;';
 
         //ejecutamos el query
         database.query(query, function(error, success) {

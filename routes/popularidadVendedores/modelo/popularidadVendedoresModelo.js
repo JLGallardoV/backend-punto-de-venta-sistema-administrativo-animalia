@@ -30,8 +30,8 @@ exports.listarPopularidadVendedores = function(req) {
           respuesta: error
         });
       } else {
-        //tenemos conexión
-        var query = `SELECT transacciones.fechaTransaccion, vendedores.nombreVendedor, count(*) AS vendidos  FROM transacciones INNER JOIN vendedores ON transacciones.idVendedor = vendedores.idVendedor WHERE fechaTransaccion between '${inicioFechaTransacciones} 00:00:00' AND '${finalFechaTransacciones} 23:59:59' group by nombreVendedor order by vendidos DESC;`;
+        //REGRESA QUE TAN BUENO ES UN VENDEDOR SEGUN SUS VENTAS REALIZADAS EN UN PERIODO DETERMINADO
+        var query = `SELECT vendedores.nombreVendedor, count(*) AS vendidos  FROM transacciones INNER JOIN vendedores ON transacciones.idVendedor = vendedores.idVendedor WHERE fechaTransaccion between '${inicioFechaTransacciones} 00:00:00' AND '${finalFechaTransacciones} 23:59:59' group by nombreVendedor order by vendidos DESC;`;
 
         //ejecutamos el query
         database.query(query, function(error, success) {
@@ -56,7 +56,7 @@ exports.listarPopularidadVendedores = function(req) {
                 if (success[i].vendidos > 20 && success[i].vendidos <= 40) {
                   success[i].vendidos = "bueno"
                 }
-                if (success[i].vendidos > 41) {
+                if (success[i].vendidos >= 41) {
                   success[i].vendidos = "excelente"
                 }
               }

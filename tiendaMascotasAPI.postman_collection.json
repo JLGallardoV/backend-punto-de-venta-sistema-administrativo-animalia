@@ -1,0 +1,2530 @@
+{
+	"info": {
+		"_postman_id": "ae30bf03-ad38-42a6-ae42-803268e812e4",
+		"name": "tiendaMascotasAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "premios",
+			"item": [
+				{
+					"name": "GET listarPremios",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/premiosWS/listarPremios",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"premiosWS",
+								"listarPremios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST agregarPremio",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"premio\":\"producto gratis\",\n\t\"descripcionPremio\":\"menor a 100.00 MXN\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/premiosWS/agregarPremio",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"premiosWS",
+								"agregarPremio"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT actualizarPremio",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"premio\":\"5% descuento\",\n\t\"descripcionPremio\":\"sin descripcion\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/premiosWS/actualizarPremio/9",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"premiosWS",
+								"actualizarPremio",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE eliminarPremio",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/premiosWS/eliminarPremio/11",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"premiosWS",
+								"eliminarPremio",
+								"11"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "categorias",
+			"item": [
+				{
+					"name": "GET listarCategorias",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/categoriasWS/listarCategorias",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"categoriasWS",
+								"listarCategorias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST agregarCategoria",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombreCategoria\":\"mascotas\",\n\t\"subCategoria\":\"perros\",\n\t\"descripcionCategoria\":\"enanos a gigantes\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/categoriasWS/agregarCategoria",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"categoriasWS",
+								"agregarCategoria"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT actualizarCategoria",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombreCategoria\":\"mascotas\",\n\t\"subCategoria\":\"gatos\",\n\t\"descripcionCategoria\":\"enanos a gigantes\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/categoriasWS/actualizarCategoria/3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"categoriasWS",
+								"actualizarCategoria",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE eliminarCategoria",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/categoriasWS/eliminarCategoria/3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"categoriasWS",
+								"eliminarCategoria",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "popularidadProductos",
+			"item": [
+				{
+					"name": "GET listarPopularidadProductos",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/popularidadProductosWS/listarPopularidadProductos/2019-09-26/2019-09-28",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"popularidadProductosWS",
+								"listarPopularidadProductos",
+								"2019-09-26",
+								"2019-09-28"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "popularidadVendedores",
+			"item": [
+				{
+					"name": "GET listarPopularidadVendedores",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/popularidadVendedoresWS/listarPopularidadVendedores/2019-09-26/2019-09-28",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"popularidadVendedoresWS",
+								"listarPopularidadVendedores",
+								"2019-09-26",
+								"2019-09-28"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "mediosEntrega",
+			"item": [
+				{
+					"name": "GET listarMediosEntrega",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/mediosEntregaWS/listarMediosEntrega",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"mediosEntregaWS",
+								"listarMediosEntrega"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST agregarMedioEntrega",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"medioEntrega\":\"sucursal irapuato\",\n\t\"viaMedioEntrega\":\"presencial\",\n\t\"descripcionMedioEntrega\":\"vendedor a cliente\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/mediosEntregaWS/agregarMedioEntrega",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"mediosEntregaWS",
+								"agregarMedioEntrega"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT actualizarMedioEntrega",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"medioEntrega\":\"sucursal leon\",\n\t\"viaMedioEntrega\":\"presencial\",\n\t\"descripcionMedioEntrega\":\"vendedor a cliente\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/mediosEntregaWS/actualizarMedioEntrega/3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"mediosEntregaWS",
+								"actualizarMedioEntrega",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE eliminarMedioEntrega",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/mediosEntregaWS/eliminarMedioEntrega/4",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"mediosEntregaWS",
+								"eliminarMedioEntrega",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "almacenes",
+			"item": [
+				{
+					"name": "GET listarAlmacenes",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/almacenesWS/listarAlmacenes",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"almacenesWS",
+								"listarAlmacenes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST agregarAlmacen",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"ciudadAlmacen\":\"acambaro\",\n\t\"estadoAlmacen\":\"gto\",\n\t\"paisAlmacen\":\"mexico\",\n\t\"direccionAlmacen\":\"potreros 234\",\n\t\"referenciaAlmacen\":\"almacen/sucursal\",\n\t\"telefonoAlmacen\":\"4291991010\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/almacenesWS/agregarAlmacen",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"almacenesWS",
+								"agregarAlmacen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT actualizarAlmacen",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"ciudadAlmacen\":\"silao\",\n\t\"estadoAlmacen\":\"gto\",\n\t\"paisAlmacen\":\"mexico\",\n\t\"direccionAlmacen\":\"potreros 234\",\n\t\"referenciaAlmacen\":\"almacen/sucursal\",\n\t\"telefonoAlmacen\":\"4291991010\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/almacenesWS/actualizarAlmacen/3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"almacenesWS",
+								"actualizarAlmacen",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE eliminarAlmacen",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/almacenesWS/eliminarAlmacen/3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"almacenesWS",
+								"eliminarAlmacen",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "rendimientoVendedores",
+			"item": [
+				{
+					"name": "GET listarVentasVendedores",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/rendimientoVendedoresWS/listarVentasVendedores",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"rendimientoVendedoresWS",
+								"listarVentasVendedores"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "reportesEconomicos",
+			"item": [
+				{
+					"name": "GET listarReportesEconomicos",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/reportesEconomicosWS/listarReportesEconomicos/2019-08-11/2019-09-28/2019-09-23/2019-09-28",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"reportesEconomicosWS",
+								"listarReportesEconomicos",
+								"2019-08-11",
+								"2019-09-28",
+								"2019-09-23",
+								"2019-09-28"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "tiposClientes",
+			"item": [
+				{
+					"name": "GET listarTiposClientes",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/tiposClientesWS/listarTiposClientes",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"tiposClientesWS",
+								"listarTiposClientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST agregarTipoCliente",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tipoCliente\": \"normal\",\n    \"descripcionTipoCliente\": \"usuario comun\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/tiposClientesWS/agregarTipoCliente",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"tiposClientesWS",
+								"agregarTipoCliente"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT actualizarTipoCliente",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tipoCliente\": \"normal\",\n    \"descripcionTipoCliente\": \"usuario ordinario\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/tiposClientesWS/actualizarTipoCliente/3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"tiposClientesWS",
+								"actualizarTipoCliente",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE eliminarTipoCliente",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/tiposClientesWS/eliminarTipoCliente/3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"tiposClientesWS",
+								"eliminarTipoCliente",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "tiposPagos",
+			"item": [
+				{
+					"name": "GET listarTiposPagos",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/tiposPagosWS/listarTiposPagos",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"tiposPagosWS",
+								"listarTiposPagos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST agregarTipoPago",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"tipoPago\": \"tarjeta debito\",\n    \"viaTipoPago\": \"visa\",\n    \"descripcionTipoPago\": \"sin descripcion\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/tiposPagosWS/agregarTipoPago",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"tiposPagosWS",
+								"agregarTipoPago"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT actualizarTipoPago",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"tipoPago\": \"tarjeta debito\",\n    \"viaTipoPago\": \"master card\",\n    \"descripcionTipoPago\": \"sin descripcion\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/tiposPagosWS/actualizarTipoPago/3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"tiposPagosWS",
+								"actualizarTipoPago",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE eliminarTipoPago",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/tiposPagosWS/eliminarTipoPago/3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"tiposPagosWS",
+								"eliminarTipoPago",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "transacciones",
+			"item": [
+				{
+					"name": "GET listarTransacciones",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/transaccionesWS/listarTransacciones",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"transaccionesWS",
+								"listarTransacciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET montoTransacciones",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/transaccionesWS/montoTransacciones",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"transaccionesWS",
+								"montoTransacciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST agregarTransaccion",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"montoNoIvaTransaccion\": \"165\",\n    \"ivaTransaccion\": \"16\",\n    \"montoConIvaTransaccion\": \"168.8\",\n    \"cantidadTransaccion\": \"8\",\n    \"idVendedor\": \"2\",\n    \"idTipoPago\": \"2\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/transaccionesWS/agregarTransaccion",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"transaccionesWS",
+								"agregarTransaccion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT actualizarTransaccion",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"montoNoIvaTransaccion\": \"36\",\n    \"ivaTransaccion\": \"16\",\n    \"montoConIvaTransaccion\": \"37.8\",\n    \"cantidadTransaccion\": \"1\",\n    \"idVendedor\": \"2\",\n    \"idTipoPago\": \"2\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/transaccionesWS/actualizarTransaccion/3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"transaccionesWS",
+								"actualizarTransaccion",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE eliminarTransaccion",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/transaccionesWS/eliminarTransaccion/3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"transaccionesWS",
+								"eliminarTransaccion",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET filtrarxFechaTransacciones",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/transaccionesWS/filtrarxFechaTransacciones/2019-08-11/2019-09-27",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"transaccionesWS",
+								"filtrarxFechaTransacciones",
+								"2019-08-11",
+								"2019-09-27"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "transacciones_productos",
+			"item": [
+				{
+					"name": "GET listarTransacciones_productos",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/transaccionesWS/listarTransacciones_productos",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"transaccionesWS",
+								"listarTransacciones_productos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST agregarTransaccion_producto",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"idTransaccion\":1,\n\t\"idProducto\":1,\n\t\"numeroProductosEnTransaccion\":\"2\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/transaccionesWS/agregarTransaccion_producto",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"transaccionesWS",
+								"agregarTransaccion_producto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT actualizarTransaccion_producto",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"idTransaccion\":\"1\",\n\t\"idProducto\":\"1\",\n\t\"numeroProductosEnTransaccion\":\"5\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/transaccionesWS/actualizarTransaccion_producto/1/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"transaccionesWS",
+								"actualizarTransaccion_producto",
+								"1",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE eliminarTransaccion_producto",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/transaccionesWS/eliminarTransaccion_producto/1/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"transaccionesWS",
+								"eliminarTransaccion_producto",
+								"1",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "transacciones_clientes",
+			"item": [
+				{
+					"name": "GET listarTransacciones_clientes",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/transaccionesWS/listarTransacciones_clientes",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"transaccionesWS",
+								"listarTransacciones_clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST agregarTransaccion_cliente",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"idTransaccion\":4,\n\t\"idCliente\":2\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/transaccionesWS/agregarTransaccion_cliente",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"transaccionesWS",
+								"agregarTransaccion_cliente"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT actualizarTransaccion_cliente",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"idTransaccion\":5,\n\t\"idCliente\":1\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/transaccionesWS/actualizarTransaccion_cliente/1/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"transaccionesWS",
+								"actualizarTransaccion_cliente",
+								"1",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE eliminarTransaccion_cliente",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/transaccionesWS/eliminarTransaccion_cliente/5/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"transaccionesWS",
+								"eliminarTransaccion_cliente",
+								"5",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "tiposUsuarios",
+			"item": [
+				{
+					"name": "GET listarTiposUsuarios",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/tiposUsuariosWS/listarTiposUsuarios",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"tiposUsuariosWS",
+								"listarTiposUsuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST agregarTipoUsuario",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"tipoUsuario\": \"administrador\",\n\t\"privilegiosTipoUsuario\": \"*\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/tiposUsuariosWS/agregarTipoUsuario",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"tiposUsuariosWS",
+								"agregarTipoUsuario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT actualizarTipoUsuario",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tipoUsuario\": \"administrador\",\n    \"privilegiosTipoUsuario\": \"todo\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/tiposUsuariosWS/actualizarTipoUsuario/3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"tiposUsuariosWS",
+								"actualizarTipoUsuario",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE eliminarTipoUsuario",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/tiposUsuariosWS/eliminarTipoUsuario/3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"tiposUsuariosWS",
+								"eliminarTipoUsuario",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "usuarios",
+			"item": [
+				{
+					"name": "GET listarUsuarios",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/usuariosWS/listarUsuarios",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"usuariosWS",
+								"listarUsuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST agregarUsuario",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"nombreUsuario\": \"roco\",\n \"emailUsuario\": \"roco@prueba1.com\",\n \"contraseniaUsuario\": \"1234\",\n \"idVendedor\": \"1\",\n \"idTipoUsuario\": \"2\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/usuariosWS/agregarUsuario",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"usuariosWS",
+								"agregarUsuario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT actualizarUsuario",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"nombreUsuario\": \"coco\",\n \"emailUsuario\": \"coco@prueba1.com\",\n \"contraseniaUsuario\": \"1234\",\n \"idVendedor\": \"1\",\n \"idTipoUsuario\": \"2\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/usuariosWS/actualizarUsuario/2",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"usuariosWS",
+								"actualizarUsuario",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE eliminarUsuario",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/usuariosWS/eliminarUsuario/2",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"usuariosWS",
+								"eliminarUsuario",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "accesos",
+			"item": [
+				{
+					"name": "GET listarAccesos",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/accesosWS/listarAccesos",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"accesosWS",
+								"listarAccesos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST agregarAcceso",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"accionAcceso\": \"eliminar registro\",\n \"idUsuario\": \"1\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/accesosWS/agregarAcceso",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"accesosWS",
+								"agregarAcceso"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT actualizarAcceso",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"accionAcceso\": \"editar registro\",\n\t\"idUsuario\": \"1\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/accesosWS/actualizarAcceso/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"accesosWS",
+								"actualizarAcceso",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE eliminarAcceso",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/accesosWS/eliminarAcceso/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"accesosWS",
+								"eliminarAcceso",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "compras",
+			"item": [
+				{
+					"name": "GET listarCompras",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/comprasWS/listarCompras",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"comprasWS",
+								"listarCompras"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET filtrarxFechaCompras",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/comprasWS/filtrarxFechaCompras/2019-09-23/2019-09-24",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"comprasWS",
+								"filtrarxFechaCompras",
+								"2019-09-23",
+								"2019-09-24"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET montoCompras",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/comprasWS/montoCompras",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"comprasWS",
+								"montoCompras"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST agregarCompra",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"montoCompra\": \"200.00\",\n \"idUsuario\":\"1\",\n \"idProveedor\":\"1\",\n \"idReporteEconomico\":\"1\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/comprasWS/agregarCompra",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"comprasWS",
+								"agregarCompra"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT actualizarCompra",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"montoCompra\": \"1000.00\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/comprasWS/actualizarCompra/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"comprasWS",
+								"actualizarCompra",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE eliminarCompra",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/comprasWS/eliminarCompra/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"comprasWS",
+								"eliminarCompra",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "clientes",
+			"item": [
+				{
+					"name": "GET listarClientes",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/clientesWS/listarClientes",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"clientesWS",
+								"listarClientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET listarPuntosClientes",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/clientesWS/listarPuntosClientes/",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"clientesWS",
+								"listarPuntosClientes",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST agregarCliente",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombreCliente\": \"mario\",\n    \"apellidoPaternoCliente\": \"perez\",\n    \"apellidoMaternoCliente\": \"figueroa\",\n    \"ciudadCliente\": \"abasolo\",\n    \"estadoCliente\": \"gto\",\n    \"paisCliente\": \"mexico\",\n    \"direccionCliente\": \"juarez 101\",\n    \"coloniaCliente\": \"juarez\",\n    \"cpCliente\": \"36970\",\n    \"telefonoCliente\": \"4291093598\",\n    \"emailCliente\": \"dulce@hotmial.com\",\n    \"contraseniaCliente\": \"1243\",\n    \"puntuajeCliente\": \"32\",\n    \"idTipoCliente\": \"1\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/clientesWS/agregarCliente",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"clientesWS",
+								"agregarCliente"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT actualizarCliente",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombreCliente\": \"dulce\",\n    \"apellidoPaternoCliente\": \"perez\",\n    \"apellidoMaternoCliente\": \"figueroa\",\n    \"ciudadCliente\": \"abasolo\",\n    \"estadoCliente\": \"gto\",\n    \"paisCliente\": \"mexico\",\n    \"direccionCliente\": \"juarez 101\",\n    \"coloniaCliente\": \"juarez\",\n    \"cpCliente\": \"36970\",\n    \"telefonoCliente\": \"4291093598\",\n    \"emailCliente\": \"dulce@hotmial.com\",\n    \"contraseniaCliente\": \"1243\",\n    \"puntuajeCliente\": \"32\",\n    \"idTipoCliente\": \"1\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/clientesWS/actualizarCliente/3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"clientesWS",
+								"actualizarCliente",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE eliminarCliente",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/clientesWS/eliminarCliente/2",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"clientesWS",
+								"eliminarCliente",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "carritos",
+			"item": [
+				{
+					"name": "GET listarCarritos",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/carritosWS/listarCarritos",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"carritosWS",
+								"listarCarritos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST agregarCarrito",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"numeroProductosCarrito\": \"4\",\n    \"montoTotalCarrito\": \"250.00\",\n    \"idCliente\": \"1\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/carritosWS/agregarCarrito",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"carritosWS",
+								"agregarCarrito"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT actualizarCarrito",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"numeroProductosCarrito\": \"5\",\n    \"montoTotalCarrito\": \"450.00\",\n    \"idCliente\": \"1\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/carritosWS/actualizarCarrito/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"carritosWS",
+								"actualizarCarrito",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE eliminarCarrito",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/carritosWS/eliminarCarrito/2",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"carritosWS",
+								"eliminarCarrito",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "vendedores",
+			"item": [
+				{
+					"name": "GET listarVendedores",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/vendedoresWS/listarVendedores",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"vendedoresWS",
+								"listarVendedores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST agregarVendedor",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombreVendedor\": \"vendedor3\",\n    \"ciudadVendedor\": \"cuaramaro\",\n    \"estadoVendedor\": \"gto\",\n    \"direccionVendedor\": \"primavera 217\",\n    \"telefonoVendedor\": \"4291226929\",\n    \"emailVendedor\": \"vendedor1@vendedor1.com\",\n    \"fechaNacimientoVendedor\": \"2019-08-13T05:00:00.000Z\",\n    \"rfcVendedor\": \"JKSLEOR\",\n    \"numeroSeguroSocialVendedor\": \"234211\",\n    \"antiguedadVendedor\": \"4\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/vendedoresWS/agregarVendedor",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"vendedoresWS",
+								"agregarVendedor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT actualizarVendedor",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombreVendedor\": \"vendedor3\",\n    \"ciudadVendedor\": \"xichu\",\n    \"estadoVendedor\": \"gto\",\n    \"direccionVendedor\": \"primavera 217\",\n    \"telefonoVendedor\": \"4291226929\",\n    \"emailVendedor\": \"vendedor1@vendedor1.com\",\n    \"fechaNacimientoVendedor\": \"2019-08-13T05:00:00.000Z\",\n    \"rfcVendedor\": \"JKSLEOR\",\n    \"numeroSeguroSocialVendedor\": \"234211\",\n    \"antiguedadVendedor\": \"4\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/vendedoresWS/actualizarVendedor/3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"vendedoresWS",
+								"actualizarVendedor",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE eliminarVendedor",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/vendedoresWS/eliminarVendedor/3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"vendedoresWS",
+								"eliminarVendedor",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "proveedores",
+			"item": [
+				{
+					"name": "GET listarProveedores",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/proveedoresWS/listarProveedores",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"proveedoresWS",
+								"listarProveedores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST agregarProveedor",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombreProveedor\": \"proveedor3\",\n    \"ciudadProveedor\": \"abdul\",\n    \"estadoProveedor\": \"guato\",\n    \"paisProveedor\": \"india\",\n    \"direccionProveedor\": \"alaa 210\",\n    \"telefonoProveedor\": \"2121230987\",\n    \"emailProveedor\": \"proveedor1@proveedor\",\n    \"descripcionProveedor\": \"croquetas premium ba\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/proveedoresWS/agregarProveedor",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"proveedoresWS",
+								"agregarProveedor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT actualizarProveedor",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombreProveedor\": \"proveedor3\",\n    \"ciudadProveedor\": \"abdul\",\n    \"estadoProveedor\": \"guato\",\n    \"paisProveedor\": \"malasia\",\n    \"direccionProveedor\": \"alaa 210\",\n    \"telefonoProveedor\": \"2121230987\",\n    \"emailProveedor\": \"proveedor1@proveedor\",\n    \"descripcionProveedor\": \"croquetas premium ba\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/proveedoresWS/actualizarProveedor/3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"proveedoresWS",
+								"actualizarProveedor",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE eliminarProveedor",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/proveedoresWS/eliminarProveedor/3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"proveedoresWS",
+								"eliminarProveedor",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "productos",
+			"item": [
+				{
+					"name": "GET listarProductos",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/productosWS/listarProductos",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"productosWS",
+								"listarProductos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST agregarProducto",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"nombreProducto\": \"collar de castigo\",\n\"detalleProducto\": \"marca granpet\",\n\"contenidoProducto\": \"1 costal arena gato\",\n\"fechaCaducidadProducto\": null,\n\"paisOrigenProducto\": \"mexico\",\n\"stockProducto\": 20,\n\"puntosProducto\":200,\n\"precioUnitarioProducto\": 30,\n\"precioMayoreoProducto\": 23.22,\n\"idCategoria\": 1,\n\"idAlmacen\": 1\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/productosWS/agregarProducto",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"productosWS",
+								"agregarProducto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT actualizarProducto",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombreProducto\": \"collar de castigo\",\n\t\"detalleProducto\": \"marca granpet\",\n\t\"contenidoProducto\": \"1 corrar de castigo mediano\",\n\t\"fechaCaducidadProducto\": null,\n\t\"paisOrigenProducto\": \"mexico\",\n\t\"stockProducto\": 20,\n\t\"precioUnitarioProducto\": 30,\n\t\"precioMayoreoProducto\": 23.22,\n\t\"idCategoria\": 1,\n\t\"idAlmacen\": 1\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/productosWS/actualizarProducto/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"productosWS",
+								"actualizarProducto",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE eliminarProducto",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/productosWS/eliminarProducto/2",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"productosWS",
+								"eliminarProducto",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

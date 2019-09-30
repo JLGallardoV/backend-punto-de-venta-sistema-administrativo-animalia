@@ -167,10 +167,8 @@ CREATE TABLE transacciones(
 	fechaTransaccion DATETIME DEFAULT NOW(),
 	estatusBL tinyint(2) default 1,
 	idVendedor INT NOT NULL,
-	idTipoPago INT NOT NULL,
 	PRIMARY KEY (idTransaccion),
-	FOREIGN KEY (idVendedor) REFERENCES vendedores (idVendedor) ON DELETE CASCADE,
-	FOREIGN KEY (idTipoPago) REFERENCES tiposDePagos (idTipoPago) ON DELETE CASCADE
+	FOREIGN KEY (idVendedor) REFERENCES vendedores (idVendedor) ON DELETE CASCADE
 );
 
 CREATE TABLE mediosDeEntrega(
@@ -300,6 +298,15 @@ CREATE TABLE transacciones_clientes(
 	FOREIGN KEY (idCliente) REFERENCES clientes (idCliente) ON DELETE CASCADE
 );
 
+CREATE TABLE transacciones_tiposDePagos(
+	idTransaccion INT NOT NULL,
+	idTipoPago INT NOT NULL,
+	estatusBL tinyint(2) default 1,
+	PRIMARY KEY (idTransaccion, idTipoPago),
+	FOREIGN KEY (idTransaccion) REFERENCES transacciones (idTransaccion) ON DELETE CASCADE,
+	FOREIGN KEY (idTipoPago) REFERENCES tiposDePagos (idTipoPago) ON DELETE CASCADE
+);
+
 CREATE TABLE devoluciones_productos(
 	idDevolucion INT NOT NULL,
 	idProducto INT NOT NULL,
@@ -342,12 +349,16 @@ CREATE TABLE compensaciones_clientes(
 --show procedure status: los procedimientos que tengo
 --drop procedure nombre: elimina procecimiento
 DELIMITER $$
-CREATE PROCEDURE transaccionesProductos_procedimiento(IN montoNoIvaTransaccion DECIMAL(7,2) UNSIGNED, IN ivaTransaccion INT(5) UNSIGNED, IN montoConIvaTransaccion DECIMAL(7,2) UNSIGNED, IN idVendedor INT, IN idTipoPago INT, IN idTransaccion INT, IN idProducto INT, IN numeroProductosEnTransaccion INT)
+CREATE PROCEDURE transaccionCompleta_procedimiento(IN montoNoIvaTransaccion DECIMAL(7,2) UNSIGNED, IN ivaTransaccion INT(5) UNSIGNED, IN montoConIvaTransaccion DECIMAL(7,2) UNSIGNED, IN idVendedor INT, IN idTipoPago INT, IN idTransaccion INT, IN idProducto INT, IN numeroProductosEnTransaccion INT, IN idCliente INT)
 BEGIN
-	 INSERT INTO transacciones (idTransaccion,montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,idVendedor, idTipoPago)
-	 VALUES (NULL, montoNoIvaTransaccion, ivaTransaccion, montoConIvaTransaccion, idVendedor, idTipoPago);
+	 INSERT INTO transacciones (idTransaccion,montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,idVendedor)
+	 VALUES (NULL, montoNoIvaTransaccion, ivaTransaccion, montoConIvaTransaccion, idVendedor);
 	 INSERT INTO transacciones_productos (idTransaccion,idProducto, numeroProductosEnTransaccion)
 	 VALUES (idTransaccion, idProducto, numeroProductosEnTransaccion);
+	 INSERT INTO transacciones_tiposDePagos(idTransaccion,idTipoPago)
+	 VALUES (idTransaccion,idTipoPago);
+	 INSERT INTO transacciones_clientes(idTransaccion, idCliente)
+	 VAlUES (idTransaccion, idCliente);
 END;
 $$
 
@@ -355,106 +366,100 @@ $$
 --PREMIOS:
 INSERT INTO premios (idPremio,premio,descripcionPremio)
 VALUES (NULL, 'envio gratis', 'unicamente republica mexicana'),
-			 (NULL, '15% descuento', 'unicamente en mascotas');
+			 (NULL, '15% descuento', 'unicamente en mascotas');$$
 
 --TIPOS DE CLIENTES:
 INSERT INTO tiposDeClientes (idTipoCliente,tipoCliente,descripcionTipoCliente)
 VALUES (NULL, 'premium', 'descuentos, unicos envios gratis'),
-			 (NULL, 'premiado', 'segun sea el premio');
+			 (NULL, 'premiado', 'segun sea el premio');$$
 
 --TIPOS DE PROBLEMAS:
 INSERT INTO tiposDeProblemas (idTipoProblema,tipoProblema)
 VALUES (NULL, 'caducado'),
-			 (NULL, 'mal estado');
+			 (NULL, 'mal estado');$$
 
 
 --TIPOS DE USUARIOS
 INSERT INTO tiposDeUsuarios (idTipoUsuario,tipoUsuario,privilegiosTipoUsuario)
 VALUES (NULL, 'gerente','ver,eliminar,editar,agregar'),
-			 (NULL, 'vendedor', 'ver');
+			 (NULL, 'vendedor', 'ver');$$
 
 
 --TIPOS DE PAGO:
 INSERT INTO tiposDePagos (idTipoPago,tipoPago,viaTipoPago, descripcionTipoPago)
 VALUES (NULL, 'tarjeta credito','visa', '12 meses s/intereses'),
-			 (NULL, 'efectivo', 'caja', 'sin descripcion');
+			 (NULL, 'efectivo', 'caja', 'sin descripcion');$$
 
 --MEDIO DE ENTREGA:
 INSERT INTO mediosDeEntrega (idMedioEntrega,medioEntrega,viaMedioEntrega, descripcionMedioEntrega)
 VALUES (NULL, 'envio','DHL', 'sucursal'),
-			 (NULL, 'envio','fedex', 'domicilio');
+			 (NULL, 'envio','fedex', 'domicilio');$$
 
 --ALMACENES:
 INSERT INTO almacenes (idAlmacen,ciudadAlmacen,estadoAlmacen,paisAlmacen,direccionAlmacen,referenciaAlmacen,telefonoAlmacen)
 VALUES (NULL, 'abasolo', 'gto', 'mexico', 'primavera 217','cerca de aurrera', '234211'),
-			 (NULL, 'irapuato', 'gto', 'mexico', 'las fresas 219', 'esquina hidalgo','4409245');
+			 (NULL, 'irapuato', 'gto', 'mexico', 'las fresas 219', 'esquina hidalgo','4409245');$$
 
 --CATEGORIAS:
 INSERT INTO categorias (idCategoria,nombreCategoria,subCategoria,descripcionCategoria)
 VALUES (NULL, 'articulos', 'correas', 'tambien se incluyen pecheras'),
-			 (NULL, 'alimentos', 'alimento humedo', 'productos unicamente enlatados');
+			 (NULL, 'alimentos', 'alimento humedo', 'productos unicamente enlatados');$$
 
 --VENDEDORES:
 INSERT INTO vendedores (idVendedor,nombreVendedor,ciudadVendedor,estadoVendedor,direccionVendedor,telefonoVendedor,emailVendedor,fechaNacimientoVendedor,rfcVendedor,numeroSeguroSocialVendedor,antiguedadVendedor)
 VALUES (NULL, 'vendedor1', 'abasolo', 'gto', 'primavera 217', '4291226929', 'vendedor1@vendedor1.com', '2019-08-13', 'JKSLEOR', '234211','4'),
-			 (NULL, 'vendedor2', 'irapuato', 'gto', 'las fresas 219', '4621226929', 'vendedor2@vendedor2.com', '2019-08-15', 'FGRFDSG', '4409245','3');
+			 (NULL, 'vendedor2', 'irapuato', 'gto', 'las fresas 219', '4621226929', 'vendedor2@vendedor2.com', '2019-08-15', 'FGRFDSG', '4409245','3');$$
 
 --USUARIOS:
 INSERT INTO usuarios (idUsuario,nombreUsuario,emailUsuario,contraseniaUsuario,idVendedor,idTipoUsuario)
-VALUES (NULL, 'prueba1', 'prueba1@prueba1.com', '12345',NULL, '1');
+VALUES (NULL, 'prueba1', 'prueba1@prueba1.com', '12345',NULL, '1');$$
 
 --PROVEEDORES:
 INSERT INTO proveedores (idProveedor,nombreProveedor,ciudadProveedor,estadoProveedor,paisProveedor,direccionProveedor,telefonoProveedor,emailProveedor,descripcionProveedor)
 VALUES (NULL, 'proveedor1', 'abdul', 'guato', 'india','alaa 210','2121230987','proveedor1@proveedor1.com','croquetas premium baratas'),
- 			 (NULL, 'proveedor2', 'irapuato', 'gto', 'mexico','fresas 123','2121230987','proveedor2@proveedor2.com','proteina premium baratas');
+ 			 (NULL, 'proveedor2', 'irapuato', 'gto', 'mexico','fresas 123','2121230987','proveedor2@proveedor2.com','proteina premium baratas');$$
 
 --CLIENTES:
 INSERT INTO clientes (idCliente,nombreCliente,apellidoPaternoCliente,apellidoMaternoCliente,ciudadCliente,estadoCliente,paisCliente,direccionCliente,coloniaCliente,cpCliente,telefonoCliente,emailCliente, constraseniaCliente, puntuajeCliente,fechaRegistroCliente,fechaActualizacionCliente,idTipoCliente)
 VALUES (NULL, 'cliente1', 'perez', 'figueroa', 'abasolo','gto','mexico','juarez 101','colonia juarez','36970','4291093589','cliente1@cliente1.com','1234','1200',NULL,NULL,1),
-			 (NULL, 'cliente2', 'conde', 'jimenez', 'leon','gto','mexico','juarez 201','colonia juarez','36970','4291093589','cliente2@cliente2.com','1234','1200',NULL,NULL,2);
+			 (NULL, 'cliente2', 'conde', 'jimenez', 'leon','gto','mexico','juarez 201','colonia juarez','36970','4291093589','cliente2@cliente2.com','1234','1200',NULL,NULL,2);$$
 
 --PRODUCTOS:
 INSERT INTO productos (idProducto,nombreProducto,detalleProducto,contenidoProducto,fechaCaducidadProducto,paisOrigenProducto,stockProducto,puntosProducto,precioUnitarioProducto,precioMayoreoProducto,idCategoria,idAlmacen)
 VALUES (NULL, 'collar de castigo', 'marca granpet','1 corrar de castigo mediano',NULL,'e.u.','20','100','30.00','23.22','1','1'),
 			(NULL, 'carne de res', 'marca dogchow','caja 24 latas de 480grs','2019-09-08','india.','10','200','299.99','269.99','2','2'),
 			(NULL, 'collar de entrenar', 'marca granpet','1 corrar de castigo mediano','2019-08-08','e.u.','20','100','30.00','23.22','1','1'),
-			(NULL, 'correa', 'marca granpet','1 corrar de castigo mediano','2019-08-08','e.u.','20','100','30.00','23.22','1','1');
+			(NULL, 'correa', 'marca granpet','1 corrar de castigo mediano','2019-08-08','e.u.','20','100','30.00','23.22','1','1');$$
 
 --COMPRAS:
 INSERT INTO compras (montoCompra,idUsuario,idProveedor)
 VALUES ('300.00', '1','1'),
-			('400.00', '1','1');
+			('400.00', '1','1');$$
 
 --VENTAS - COMPRAS:
-INSERT INTO transacciones (idTransaccion,montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,idVendedor, idTipoPago)
-VALUES (NULL, '30.00', '16','34.80','1','1'),
-			 (NULL, '299.99', '16','347.98','1','1');
+INSERT INTO transacciones (idTransaccion,montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,idVendedor)
+VALUES (NULL, '30.00', '16','34.80','1'),
+			 (NULL, '299.99', '16','347.98','1');$$
 
 --DEVOLUCIONES:
 INSERT INTO devoluciones (idDevolucion,ivaDevolucion,montoConIvaDevolucion,motivoDevolucion,idCliente,idTipoProblema)
 VALUES (NULL, '16','34.80','mal estado, oxidado','1','1'),
-			 (NULL, '16','347.98','caducada','1','2');
+			 (NULL, '16','347.98','caducada','1','2');$$
 
 --COMPENSACIONES:
 INSERT INTO compensaciones (idCompensacion,tipoCompensacion,idDevolucion)
 VALUES (NULL, 'regreso dinero','1'),
-			 (NULL, 'cambio producto','2');
+			 (NULL, 'cambio producto','2');$$
 
 --RELACION COMPENSACIONES-CLIENTES:
 INSERT INTO compensaciones_clientes (idCompensacion,idCliente)
 VALUES ('2', '1'),
-		('1', '2');
+		('1', '2');$$
 
---RELACION TRANSACCIONES-CLIENTES:
-INSERT INTO transacciones_clientes (idTransaccion,idCliente)
-VALUES ('2', '1'),
-		('1', '2');
 
---RELACION TRANSACCIONES-PRODUCTOS:
-INSERT INTO transacciones_productos (idTransaccion,idProducto, numeroProductosEnTransaccion)
-VALUES ('1', '1','3');
-
-CALL transaccionesProductos_procedimiento('30.00','16','34.80','1','1','1','1','3');
+--PARAMETROS:montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,idVendedor,
+--idTipoPago,idTransaccion,idProducto,numeroProductosEnTransaccion,idCliente
+CALL transaccionCompleta_procedimiento('40.00','16','44.80','1','1','1','1','2','1');$$
 
 
 --CONSULTAS *NOTA CORRIJA LAS FECHAS PARA QUE SE PUEDA HACER LAS SUMAS:
@@ -511,13 +516,3 @@ INNER JOIN clientes ON transacciones_clientes.idCliente = clientes.idCliente
 INNER JOIN productos ON transacciones_clientes.idTransaccion = productos.idProducto
 INNER JOIN transacciones ON transacciones_clientes.idTransaccion = transacciones.idTransaccion
 group by nombreCliente;
-
-
-
-
-
-
-INSERT INTO transacciones (idTransaccion,montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,idVendedor, idTipoPago)
-VALUES (NULL, '30.00', '16','34.80','1','1');
-INSERT INTO transacciones_productos (idTransaccion,idProducto, numeroProductosEnTransaccion)
-VALUES ('1', '1','3');

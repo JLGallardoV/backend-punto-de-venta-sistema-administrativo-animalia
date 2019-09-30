@@ -7,18 +7,18 @@ var logger = require('morgan');
 
 //definiendo rutas:
 /*var indexRouter = require('./routes/index');
-var compensacionesRouter = require('./routes/compensaciones/controlador/compensacionesControlador');
-var detallesTransaccionesRouter = require('./routes/detallesTransacciones/controlador/detallesTransaccionesControlador');
-var devolucionesRouter = require('./routes/devoluciones/controlador/devolucionesControlador');*/
+var detallesTransaccionesRouter = require('./routes/detallesTransacciones/controlador/detallesTransaccionesControlador');*/
 var accesosRouter = require('./routes/accesos/controlador/accesosControlador');
 var almacenesRouter = require('./routes/almacenes/controlador/almacenesControlador');
 var carritosRouter = require('./routes/carritos/controlador/carritosControlador');
 var categoriasRouter = require('./routes/categorias/controlador/categoriasControlador');
 var clientesRouter = require('./routes/clientes/controlador/clientesControlador');
 var clientesPuntosRouter = require('./routes/clientes/controlador/puntosClientesControlador');
+var compensacionesRouter = require('./routes/compensaciones/controlador/compensacionesControlador');
 var comprasRouter = require('./routes/compras/controlador/comprasControlador');
 var comprasFiltroFechaRouter = require('./routes/compras/controlador/filtrarxFechaComprasControlador');
 var comprasMontoRouter = require('./routes/compras/controlador/montoComprasControlador');
+var devolucionesRouter = require('./routes/devoluciones/controlador/devolucionesControlador');
 var mediosEntregaRouter = require('./routes/mediosEntrega/controlador/mediosEntregaControlador');
 var popularidadProductosRouter = require('./routes/popularidadProductos/controlador/popularidadProductosControlador');
 var popularidadVendedoresRouter = require('./routes/popularidadVendedores/controlador/popularidadVendedoresControlador');
@@ -73,18 +73,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //creando - invocando rutas de acceso a web service
 /*app.use('/', indexRouter);
-app.use('/compensacionesWS', compensacionesRouter);
-app.use('/detallesTransaccionesWS', detallesTransaccionesRouter);
-app.use('/devolucionesWS', devolucionesRouter);*/
+app.use('/detallesTransaccionesWS', detallesTransaccionesRouter);*/
 app.use('/accesosWS', accesosRouter);
 app.use('/almacenesWS', almacenesRouter);
 app.use('/carritosWS', carritosRouter);
 app.use('/categoriasWS', categoriasRouter);
 app.use('/clientesWS', clientesRouter);
 app.use('/clientesWS', clientesPuntosRouter);
+app.use('/compensacionesWS', compensacionesRouter);
 app.use('/comprasWS', comprasRouter);
 app.use('/comprasWS', comprasMontoRouter);
 app.use('/comprasWS', comprasFiltroFechaRouter);
+app.use('/devolucionesWS', devolucionesRouter);
 app.use('/mediosEntregaWS', mediosEntregaRouter);
 app.use('/popularidadProductosWS', popularidadProductosRouter);
 app.use('/popularidadVendedoresWS', popularidadVendedoresRouter);

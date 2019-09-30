@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "ae30bf03-ad38-42a6-ae42-803268e812e4",
-		"name": "tiendaMascotasAPI",
+		"_postman_id": "79190fa8-2bff-4c70-a10e-409dcf3f625e",
+		"name": "tiendaMascotasAPI copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -894,6 +894,128 @@
 			]
 		},
 		{
+			"name": "tiposProblemas",
+			"item": [
+				{
+					"name": "GET listarTiposProblemas",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/tiposProblemasWS/listarTiposProblemas",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"tiposProblemasWS",
+								"listarTiposProblemas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST agregarTipoProblema",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"tipoProblema\": \"no era lo que esperaba\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/tiposProblemasWS/agregarTipoProblema",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"tiposProblemasWS",
+								"agregarTipoProblema"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT actualizarTipoProblema",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"tipoProblema\": \"fuera de tiempo\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/tiposProblemasWS/actualizarTipoProblema/3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"tiposProblemasWS",
+								"actualizarTipoProblema",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE eliminarTipoProblema",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/tiposProblemasWS/eliminarTipoProblema/3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"tiposProblemasWS",
+								"eliminarTipoProblema",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "transacciones",
 			"item": [
 				{
@@ -974,7 +1096,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"montoNoIvaTransaccion\": \"165\",\n    \"ivaTransaccion\": \"16\",\n    \"montoConIvaTransaccion\": \"168.8\",\n    \"cantidadTransaccion\": \"8\",\n    \"idVendedor\": \"2\",\n    \"idTipoPago\": \"2\"\n}"
+							"raw": "{\n\t\"montoNoIvaTransaccion\": \"40\",\n    \"ivaTransaccion\": \"16\",\n    \"montoConIvaTransaccion\": \"44.8\",\n    \"idVendedor\": \"2\",\n    \"idTipoPago\": \"2\",\n    \"idTransaccion\":\"2\",\n    \"idProducto\":\"2\",\n    \"numeroProductosEnTransaccion\":\"4\",\n    \"idCliente\":\"2\"\n}"
 						},
 						"url": {
 							"raw": "localhost:3000/transaccionesWS/agregarTransaccion",
@@ -1074,6 +1196,250 @@
 								"filtrarxFechaTransacciones",
 								"2019-08-11",
 								"2019-09-27"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "devoluciones",
+			"item": [
+				{
+					"name": "GET listarDevoluciones",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/devolucionesWS/listarDevoluciones",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"devolucionesWS",
+								"listarDevoluciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST agregarDevolucion",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ivaDevolucion\": 16,\n    \"montoConIvaDevolucion\": 44.8,\n    \"motivoDevolucion\": \"mal estado, engusanada\",\n    \"idCliente\": 1,\n    \"idTipoProblema\": 1\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/devolucionesWS/agregarDevolucion",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"devolucionesWS",
+								"agregarDevolucion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT actualizarDevolucion",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ivaDevolucion\": 16,\n    \"montoConIvaDevolucion\": 44.8,\n    \"motivoDevolucion\": \"mal estado,engusanada\",\n    \"idCliente\": 1,\n    \"idTipoProblema\": 1\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/devolucionesWS/actualizarDevolucion/3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"devolucionesWS",
+								"actualizarDevolucion",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE eliminarDevolucion",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/devolucionesWS/eliminarDevolucion/3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"devolucionesWS",
+								"eliminarDevolucion",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "compensaciones",
+			"item": [
+				{
+					"name": "GET listarCompensaciones",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/compensacionesWS/listarCompensaciones",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"compensacionesWS",
+								"listarCompensaciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST agregarCompensacion",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tipoCompensacion\": \"cupon\",\n    \"idDevolucion\": 1\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/compensacionesWS/agregarCompensacion",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"compensacionesWS",
+								"agregarCompensacion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT actualizarCompensacion",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tipoCompensacion\": \"cupon\",\n    \"idDevolucion\": 2\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/compensacionesWS/actualizarCompensacion/3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"compensacionesWS",
+								"actualizarCompensacion",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE eliminarCompensacion",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/compensacionesWS/eliminarCompensacion/3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"compensacionesWS",
+								"eliminarCompensacion",
+								"3"
 							]
 						}
 					},

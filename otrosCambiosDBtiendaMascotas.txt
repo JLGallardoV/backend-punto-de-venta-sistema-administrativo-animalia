@@ -1,10 +1,1 @@
--> Agregue los id's de la relacion a esta tabla, los tenia en mi modelo relacion pero al parecer se me pasaron por completo en el query: tabla compras.
-
-
-->en la tabla acceso agregue el campo fechamodificacion es current_timestamp
-
-
-->agregue el campo puntuaje a productos
-
-
-->elimine tabla popularidad productos, popularidad vendedores y reportes economicos.
+->elimine atributo "cantidadTransaccion" de transacciones ya que ese atributo lo tengo en la relacion.

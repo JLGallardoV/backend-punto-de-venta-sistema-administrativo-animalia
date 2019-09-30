@@ -103,7 +103,7 @@ CREATE TABLE accesos(
 	fechaModificacionAcceso DATETIME DEFAULT NOW(),
 	accionAcceso VARCHAR(20),
 	estatusBL tinyint(2) default 1,
-	idUsuario INT NOT NULL,	
+	idUsuario INT NOT NULL,
 	PRIMARY KEY (idAcceso),
 	FOREIGN KEY (idUsuario) REFERENCES usuarios (idUsuario) ON DELETE CASCADE
 );
@@ -122,7 +122,7 @@ CREATE TABLE proveedores(
 	PRIMARY KEY (idProveedor)
 );
 
-	
+
 CREATE TABLE compras(
 	idCompra INT AUTO_INCREMENT,
 	montoCompra NUMERIC(7,2),
@@ -165,7 +165,6 @@ CREATE TABLE transacciones(
 	ivaTransaccion INT(5) UNSIGNED,
 	montoConIvaTransaccion NUMERIC(7,2) UNSIGNED,
 	fechaTransaccion DATETIME DEFAULT NOW(),
-	cantidadTransaccion INT(5) UNSIGNED,
 	estatusBL tinyint(2) default 1,
 	idVendedor INT NOT NULL,
 	idTipoPago INT NOT NULL,
@@ -339,10 +338,20 @@ CREATE TABLE compensaciones_clientes(
 	FOREIGN KEY (idCliente) REFERENCES clientes (idCliente) ON DELETE CASCADE
 );
 
+--PROCEDIMIENTO ALMACENADO INSERTAR DATOS A TRANSACCIONES CON SU RESPECTIVO PRODUCTO Y CANTIDAD DE PRODUCTOS
+--show procedure status: los procedimientos que tengo
+--drop procedure nombre: elimina procecimiento
+DELIMITER $$
+CREATE PROCEDURE transaccionesProductos_procedimiento(IN montoNoIvaTransaccion DECIMAL(7,2) UNSIGNED, IN ivaTransaccion INT(5) UNSIGNED, IN montoConIvaTransaccion DECIMAL(7,2) UNSIGNED, IN idVendedor INT, IN idTipoPago INT, IN idTransaccion INT, IN idProducto INT, IN numeroProductosEnTransaccion INT)
+BEGIN
+	 INSERT INTO transacciones (idTransaccion,montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,idVendedor, idTipoPago)
+	 VALUES (NULL, montoNoIvaTransaccion, ivaTransaccion, montoConIvaTransaccion, idVendedor, idTipoPago);
+	 INSERT INTO transacciones_productos (idTransaccion,idProducto, numeroProductosEnTransaccion)
+	 VALUES (idTransaccion, idProducto, numeroProductosEnTransaccion);
+END;
+$$
 
 --REGISTROS PARA PRUEBA
-
-
 --PREMIOS:
 INSERT INTO premios (idPremio,premio,descripcionPremio)
 VALUES (NULL, 'envio gratis', 'unicamente republica mexicana'),
@@ -417,9 +426,9 @@ VALUES ('300.00', '1','1'),
 			('400.00', '1','1');
 
 --VENTAS - COMPRAS:
-INSERT INTO transacciones (idTransaccion,montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,cantidadTransaccion,idVendedor, idTipoPago)
-VALUES (NULL, '30.00', '16','34.80','1','1','1'),
-			 (NULL, '299.99', '16','347.98','1','1','1');
+INSERT INTO transacciones (idTransaccion,montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,idVendedor, idTipoPago)
+VALUES (NULL, '30.00', '16','34.80','1','1'),
+			 (NULL, '299.99', '16','347.98','1','1');
 
 --DEVOLUCIONES:
 INSERT INTO devoluciones (idDevolucion,ivaDevolucion,montoConIvaDevolucion,motivoDevolucion,idCliente,idTipoProblema)
@@ -441,6 +450,11 @@ INSERT INTO transacciones_clientes (idTransaccion,idCliente)
 VALUES ('2', '1'),
 		('1', '2');
 
+--RELACION TRANSACCIONES-PRODUCTOS:
+INSERT INTO transacciones_productos (idTransaccion,idProducto, numeroProductosEnTransaccion)
+VALUES ('1', '1','3');
+
+CALL transaccionesProductos_procedimiento('30.00','16','34.80','1','1','1','1','3');
 
 
 --CONSULTAS *NOTA CORRIJA LAS FECHAS PARA QUE SE PUEDA HACER LAS SUMAS:
@@ -452,41 +466,41 @@ SELECT sum(montoCompra) from compras WHERE fechaCompra BETWEEN '2019-09-23 00:00
 select ((select ifnull(sum(montoConIvaTransaccion),0) from transacciones where fechaTransaccion between '2019-08-11 00:00:00' and '2019-09-28 23:59:59') - (select ifnull(sum(montoCompra),0) from compras where fechaCompra between '2019-09-23 00:00:00' and '2019-09-24 23:59:59')) AS total;
 
 --EL PRODUCTO MAS VENDIDO *verificar que tenga datos la tabla de relacion:
-SELECT productos.nombreProducto, count(*) as vendidos 
-FROM transacciones_productos 
+SELECT productos.nombreProducto, count(*) as vendidos
+FROM transacciones_productos
 INNER JOIN productos ON transacciones_productos.idProducto = productos.idProducto
 INNER JOIN transacciones ON transacciones_productos.idTransaccion = transacciones.idTransaccion
-WHERE fechaTransaccion between '2019-09-23 00:00:00' and '2019-09-28 23:59:59' 
+WHERE fechaTransaccion between '2019-09-23 00:00:00' and '2019-09-28 23:59:59'
 group by nombreProducto order by vendidos DESC;
 
 --EL MEJOR VENDEDOR:
-SELECT vendedores.nombreVendedor, count(*) AS vendidos 
-FROM transacciones 
+SELECT vendedores.nombreVendedor, count(*) AS vendidos
+FROM transacciones
 INNER JOIN vendedores ON transacciones.idVendedor = vendedores.idVendedor
 WHERE fechaTransaccion between '2019-09-23 00:00:00' and '2019-09-26 23:59:59'
 group by nombreVendedor order by vendidos DESC;
 
 
 --TRANSACCIONES_PRODUCTOS:
-SELECT transacciones_productos.idTransaccion, productos.nombreProducto, transacciones.fechaTransaccion 
-FROM transacciones_productos 
+SELECT transacciones_productos.idTransaccion, productos.nombreProducto, transacciones.fechaTransaccion
+FROM transacciones_productos
 INNER JOIN productos ON transacciones_productos.idProducto = productos.idProducto
 INNER JOIN transacciones ON transacciones_productos.idTransaccion = transacciones.idTransaccion;
 
 --TRANSACCIONES_CLIENTES:
-SELECT transacciones_clientes.idTransaccion, clientes.nombreCliente, transacciones.fechaTransaccion, productos.nombreProducto 
-FROM transacciones_clientes 
+SELECT transacciones_clientes.idTransaccion, clientes.nombreCliente, transacciones.fechaTransaccion, productos.nombreProducto
+FROM transacciones_clientes
 INNER JOIN clientes ON transacciones_clientes.idCliente = clientes.idCliente
 INNER JOIN productos ON transacciones_clientes.idTransaccion = productos.idProducto
 INNER JOIN transacciones ON transacciones_clientes.idTransaccion = transacciones.idTransaccion;
 
 
 --PUNTOS POR NUMERO DE COMPRAS A CLIENTES:
-SELECT clientes.nombreCliente, clientes.idCliente, clientes.puntuajeCliente, count(*) as compras 
-FROM transacciones_clientes 
+SELECT clientes.nombreCliente, clientes.idCliente, clientes.puntuajeCliente, count(*) as compras
+FROM transacciones_clientes
 INNER JOIN clientes ON transacciones_clientes.idCliente = clientes.idCliente
 INNER JOIN transacciones ON transacciones_clientes.idTransaccion = transacciones.idTransaccion
-WHERE fechaTransaccion between '2019-09-23 00:00:00' and '2019-09-28 23:59:59' 
+WHERE fechaTransaccion between '2019-09-23 00:00:00' and '2019-09-28 23:59:59'
 group by nombreCliente order by compras DESC;
 
 
@@ -503,7 +517,7 @@ group by nombreCliente;
 
 
 
-
-
-
-	
+INSERT INTO transacciones (idTransaccion,montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,idVendedor, idTipoPago)
+VALUES (NULL, '30.00', '16','34.80','1','1');
+INSERT INTO transacciones_productos (idTransaccion,idProducto, numeroProductosEnTransaccion)
+VALUES ('1', '1','3');

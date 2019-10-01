@@ -186,7 +186,6 @@ CREATE TABLE detallesTransacciones(
 	ciudadDetalleTransaccion VARCHAR(20),
 	estadoDetalleTransaccion VARCHAR(20),
 	paisDetalleTransaccion VARCHAR(20),
-	medioEntregaDetalleTransaccion VARCHAR(20),
 	observacionesDetalleTransaccion VARCHAR(20),
 	estatusBL tinyint(2) default 1,
 	idTransaccion INT NOT NULL,
@@ -280,7 +279,7 @@ CREATE TABLE premios_clientes(
 
 
 CREATE TABLE transacciones_productos(
-	idTransaccion INT NOT NULL,
+	idTransaccion INT AUTO_INCREMENT,
 	idProducto INT NOT NULL,
 	numeroProductosEnTransaccion INT(6),
 	estatusBL tinyint(2) default 1,
@@ -290,7 +289,7 @@ CREATE TABLE transacciones_productos(
 );
 
 CREATE TABLE transacciones_clientes(
-	idTransaccion INT NOT NULL,
+	idTransaccion INT AUTO_INCREMENT,
 	idCliente INT NOT NULL,
 	estatusBL tinyint(2) default 1,
 	PRIMARY KEY (idTransaccion, idCliente),
@@ -299,7 +298,7 @@ CREATE TABLE transacciones_clientes(
 );
 
 CREATE TABLE transacciones_tiposDePagos(
-	idTransaccion INT NOT NULL,
+	idTransaccion INT AUTO_INCREMENT,
 	idTipoPago INT NOT NULL,
 	estatusBL tinyint(2) default 1,
 	PRIMARY KEY (idTransaccion, idTipoPago),
@@ -349,16 +348,16 @@ CREATE TABLE compensaciones_clientes(
 --show procedure status: los procedimientos que tengo
 --drop procedure nombre: elimina procecimiento
 DELIMITER $$
-CREATE PROCEDURE transaccionCompleta_procedimiento(IN montoNoIvaTransaccion DECIMAL(7,2) UNSIGNED, IN ivaTransaccion INT(5) UNSIGNED, IN montoConIvaTransaccion DECIMAL(7,2) UNSIGNED, IN idVendedor INT, IN idTipoPago INT, IN idTransaccion INT, IN idProducto INT, IN numeroProductosEnTransaccion INT, IN idCliente INT)
+CREATE PROCEDURE transaccionCompleta_procedimiento(IN montoNoIvaTransaccion DECIMAL(7,2) UNSIGNED, IN ivaTransaccion INT(5) UNSIGNED, IN montoConIvaTransaccion DECIMAL(7,2) UNSIGNED, IN idVendedor INT, IN idTipoPago INT, IN idProducto INT, IN numeroProductosEnTransaccion INT, IN idCliente INT)
 BEGIN
-	 INSERT INTO transacciones (idTransaccion,montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,idVendedor)
-	 VALUES (NULL, montoNoIvaTransaccion, ivaTransaccion, montoConIvaTransaccion, idVendedor);
-	 INSERT INTO transacciones_productos (idTransaccion,idProducto, numeroProductosEnTransaccion)
-	 VALUES (idTransaccion, idProducto, numeroProductosEnTransaccion);
-	 INSERT INTO transacciones_tiposDePagos(idTransaccion,idTipoPago)
-	 VALUES (idTransaccion,idTipoPago);
-	 INSERT INTO transacciones_clientes(idTransaccion, idCliente)
-	 VAlUES (idTransaccion, idCliente);
+	 INSERT INTO transacciones (montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,idVendedor)
+	 VALUES (montoNoIvaTransaccion, ivaTransaccion, montoConIvaTransaccion, idVendedor);
+	 INSERT INTO transacciones_productos (idProducto, numeroProductosEnTransaccion)
+	 VALUES (idProducto, numeroProductosEnTransaccion);
+	 INSERT INTO transacciones_tiposDePagos(idTipoPago)
+	 VALUES (idTipoPago);
+	 INSERT INTO transacciones_clientes(idCliente)
+	 VAlUES (idCliente);
 END;
 $$
 
@@ -458,8 +457,8 @@ VALUES ('2', '1'),
 
 
 --PARAMETROS:montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,idVendedor,
---idTipoPago,idTransaccion,idProducto,numeroProductosEnTransaccion,idCliente
-CALL transaccionCompleta_procedimiento('40.00','16','44.80','1','1','1','1','2','1');$$
+--idTipoPago,idProducto,numeroProductosEnTransaccion,idCliente
+CALL transaccionCompleta_procedimiento('40.00','16','44.80','1','1','1','2','1');$$
 
 
 --CONSULTAS *NOTA CORRIJA LAS FECHAS PARA QUE SE PUEDA HACER LAS SUMAS:

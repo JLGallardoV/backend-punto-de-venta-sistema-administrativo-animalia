@@ -6,8 +6,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 //definiendo rutas:
-/*var indexRouter = require('./routes/index');
-var detallesTransaccionesRouter = require('./routes/detallesTransacciones/controlador/detallesTransaccionesControlador');*/
+/*var indexRouter = require('./routes/index');*/
 var accesosRouter = require('./routes/accesos/controlador/accesosControlador');
 var almacenesRouter = require('./routes/almacenes/controlador/almacenesControlador');
 var carritosRouter = require('./routes/carritos/controlador/carritosControlador');
@@ -18,6 +17,7 @@ var compensacionesRouter = require('./routes/compensaciones/controlador/compensa
 var comprasRouter = require('./routes/compras/controlador/comprasControlador');
 var comprasFiltroFechaRouter = require('./routes/compras/controlador/filtrarxFechaComprasControlador');
 var comprasMontoRouter = require('./routes/compras/controlador/montoComprasControlador');
+var detallesTransaccionesRouter = require('./routes/detallesTransacciones/controlador/detallesTransaccionesControlador');
 var devolucionesRouter = require('./routes/devoluciones/controlador/devolucionesControlador');
 var mediosEntregaRouter = require('./routes/mediosEntrega/controlador/mediosEntregaControlador');
 var popularidadProductosRouter = require('./routes/popularidadProductos/controlador/popularidadProductosControlador');
@@ -72,8 +72,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 //creando - invocando rutas de acceso a web service
-/*app.use('/', indexRouter);
-app.use('/detallesTransaccionesWS', detallesTransaccionesRouter);*/
+/*app.use('/', indexRouter);*/
 app.use('/accesosWS', accesosRouter);
 app.use('/almacenesWS', almacenesRouter);
 app.use('/carritosWS', carritosRouter);
@@ -84,6 +83,7 @@ app.use('/compensacionesWS', compensacionesRouter);
 app.use('/comprasWS', comprasRouter);
 app.use('/comprasWS', comprasMontoRouter);
 app.use('/comprasWS', comprasFiltroFechaRouter);
+app.use('/detallesTransaccionesWS', detallesTransaccionesRouter);
 app.use('/devolucionesWS', devolucionesRouter);
 app.use('/mediosEntregaWS', mediosEntregaRouter);
 app.use('/popularidadProductosWS', popularidadProductosRouter);

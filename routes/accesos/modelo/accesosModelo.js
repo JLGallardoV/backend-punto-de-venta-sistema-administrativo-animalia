@@ -20,8 +20,7 @@ exports.listarAccesos = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'select * from accesos where estatusBL = 1';
-
+        var query = 'SELECT accesos.idAcceso, accesos.fechaAcceso, accesos.accionAcceso, usuarios.nombreUsuario FROM accesos INNER JOIN usuarios ON accesos.idUsuario = usuarios.idUsuario;';
         //ejecutamos el query
         database.query(query, function(error, success) {
           if (error) {
@@ -88,83 +87,3 @@ exports.agregarAcceso = function(req) {
     });
   });
 } //fin agregarAcceso
-
-
-/*WEB SERVICE --ACTUALIZAR ACCESOS--*/
-exports.actualizarAcceso = function(req) {
-  //regresaremos una promesa
-  console.log("actualizando...");
-  return new Promise((resolve, reject) => {
-    /*web service para actualizar*/
-    let body = req.body;
-    let idAcceso = req.params.idAcceso;
-    req.getConnection(function(error, database) {
-      if (error) {
-        reject({
-          estatus: -1,
-          respuesta: error
-        });
-      } else {
-        let query = `update accesos set ? where idAcceso = ${idAcceso}`; //las comillas son diferentes
-
-        let requestBody = {
-          accionAcceso: body.accionAcceso,
-          idUsuario: body.idUsuario
-        };
-
-        database.query(query, requestBody, function(error, success) {
-          if (error) {
-            reject({
-              estatus: -1,
-              respuesta: error
-            });
-          } else {
-            resolve({
-              estatus: 1,
-              respuesta: 'acceso actualizado correctamente'
-            });
-          }
-        });
-      }
-    });
-  });
-} //fin actualizarAcceso
-
-
-/*WEB SERVICE --ELIMINAR ACCESOS-- CON UN TOQUE DE BORRADO LOGICO*/
-exports.eliminarAcceso = function(req) {
-  //regresaremos una promesa
-  console.log("eliminando...");
-  return new Promise((resolve, reject) => {
-    /*web service para eliminar un registro*/
-    let idAcceso = req.params.idAcceso;
-    req.getConnection(function(error, database) {
-      if (error) {
-        reject({
-          estatus: -1,
-          respuesta: error
-        });
-      } else {
-        let query = `update accesos set ? where idAcceso = ${idAcceso}`; //las comillas son diferentes
-
-        let requestBody = {
-          estatusBL: 0,
-        };
-
-        database.query(query, requestBody, function(error, success) {
-          if (error) {
-            reject({
-              estatus: -1,
-              respuesta: error
-            });
-          } else {
-            resolve({
-              estatus: 1,
-              respuesta: 'acceso eliminado correctamente'
-            });
-          }
-        });
-      }
-    });
-  });
-} //fin eliminarAcceso

@@ -19,8 +19,8 @@ exports.listarClientes = function(req) {
           respuesta: error
         });
       } else {
-        //tenemos conexión
-        var query = 'select * from clientes where estatusBL = 1';
+        //listando clientes
+        var query = 'SELECT clientes.idCliente,clientes.nombreCliente,clientes.apellidoPaternoCliente,clientes.apellidoMaternoCliente,clientes.ciudadCliente,clientes.estadoCliente,clientes.paisCliente,clientes.direccionCliente,clientes.coloniaCliente,clientes.cpCliente,clientes.telefonoCliente,clientes.emailCliente,clientes.puntuajeCliente,tiposDeClientes.tipoCliente FROM clientes INNER JOIN tiposDeClientes ON clientes.idTipoCliente = tiposDeClientes.idTipoCliente WHERE clientes.estatusBL = 1;';
 
         //ejecutamos el query
         database.query(query, function(error, success) {

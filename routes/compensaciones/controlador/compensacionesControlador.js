@@ -2,6 +2,13 @@ var express = require('express');
 var router = express.Router();
 var compensacionesModelo = require('../modelo/compensacionesModelo');
 
+//CABECERAS
+router.use(function(req,res,next){
+	res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-headers", "Origin, X-Requested-With, Accept, Content-Type, Authorization");
+  res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+	next();
+});
 
 // LISTAR COMPENSACIONES - EXPORTANDO RUTA
 router.get('/listarCompensaciones', function(req, res, next) {

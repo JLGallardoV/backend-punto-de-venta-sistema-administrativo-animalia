@@ -128,6 +128,43 @@
 			]
 		},
 		{
+			"name": "login",
+			"item": [
+				{
+					"name": "GET autenticarUsuarios",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombreUsuario\":\"prueba1\",\n\t\"contraseniaUsuario\":\"12345\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/loginWS/autenticarUsuarios",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"loginWS",
+								"autenticarUsuarios"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "categorias",
 			"item": [
 				{
@@ -1196,6 +1233,128 @@
 								"filtrarxFechaTransacciones",
 								"2019-08-11",
 								"2019-09-27"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "detallesTransacciones",
+			"item": [
+				{
+					"name": "GET listarDetallesTransacciones",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/detallesTransaccionesWS/listarDetallesTransacciones",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"detallesTransaccionesWS",
+								"listarDetallesTransacciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST agregarDetalleTransaccion",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"ciudadDetalleTransaccion\": \"abasolo\",\n    \"estadoDetalleTransaccion\": \"gto\",\n    \"paisDetalleTransaccion\": \"mexico\",\n    \"observacionesDetalleTransaccion\": \"sin descripcion\",\n    \"idTransaccion\":\"2\",\n    \"idMedioEntrega\":\"2\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/detallesTransaccionesWS/agregardetalleTransaccion",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"detallesTransaccionesWS",
+								"agregardetalleTransaccion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT actualizarDetalleTransaccion",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"ciudadDetalleTransaccion\": \"valle de stgo\",\n    \"estadoDetalleTransaccion\": \"gto\",\n    \"paisDetalleTransaccion\": \"mexico\",\n    \"observacionesDetalleTransaccion\": \"sin descripcion\",\n    \"idTransaccion\":\"2\",\n    \"idMedioEntrega\":\"2\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/detallesTransaccionesWS/actualizarDetalleTransaccion/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"detallesTransaccionesWS",
+								"actualizarDetalleTransaccion",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE eliminarDetalleTransaccion",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/detallesTransaccionesWS/eliminarDetalleTransaccion/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"detallesTransaccionesWS",
+								"eliminarDetalleTransaccion",
+								"1"
 							]
 						}
 					},

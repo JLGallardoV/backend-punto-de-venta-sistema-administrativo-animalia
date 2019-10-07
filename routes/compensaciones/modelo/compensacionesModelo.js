@@ -20,7 +20,7 @@ exports.listarCompensaciones = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'select * from compensaciones where estatusBL = 1';
+        var query = 'select idCompensacion,tipoCompensacion,descripcionCompensacion from compensaciones where estatusBL = 1';
 
         //ejecutamos el query
         database.query(query, function(error, success) {
@@ -68,7 +68,7 @@ exports.agregarCompensacion = function(req) {
 
         let requestBody = {
           tipoCompensacion: body.tipoCompensacion,
-          idDevolucion: body.idDevolucion
+          descripcionCompensacion: body.descripcionCompensacion
         };
 
         database.query(query, requestBody, function(error, success) {
@@ -109,7 +109,7 @@ exports.actualizarCompensacion = function(req) {
 
         let requestBody = {
           tipoCompensacion: body.tipoCompensacion,
-          idDevolucion: body.idDevolucion
+          descripcionCompensacion: body.descripcionCompensacion
         };
 
         database.query(query, requestBody, function(error, success) {

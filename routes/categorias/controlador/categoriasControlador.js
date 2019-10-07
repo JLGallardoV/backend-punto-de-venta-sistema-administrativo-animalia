@@ -4,20 +4,25 @@ var categoriasModelo = require('../modelo/categoriasModelo');
 var jwt = require('../../../public/servicios/jwt');
 var jsonWebToken = require('jsonwebtoken');
 
+
+//CABECERAS
+router.use(function(req,res,next){
+	res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-headers", "Origin, X-Requested-With, Accept, Content-Type, Authorization");
+  res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+	next();
+});
+
+
 // LISTAR CATEGORIAS - EXPORTANDO RUTA
 router.get('/listarCategorias', jwt.verificarExistenciaToken, function(req, res, next) {
   try {
-    console.log("entro 0 - inicio: ", req.token);
-
     jsonWebToken.verify(req.token, jwt.claveSecreta, function(error, success) {
           categoriasModelo.listarCategorias(req).then(
             (success) => {
-              console.log("entro 4 - raro");
               res.json(success);
             },
             (error) => {
-              console.log("entro 5 - error de listado");
-              res.json({key:1});
               return next(error)
             }
           );

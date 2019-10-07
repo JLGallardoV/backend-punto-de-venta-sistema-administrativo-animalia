@@ -18,8 +18,8 @@ exports.listarCarritos = function(req) {
           respuesta: error
         });
       } else {
-        //tenemos conexión
-        var query = 'select * from carritos where estatusBL = 1';
+        //listando todos los carritos con sus respectivos atributos
+        var query = 'SELECT carritos.idCarrito, carritos.numeroProductosCarrito, carritos.montoTotalCarrito, clientes.nombreCliente FROM carritos INNER JOIN clientes ON carritos.idCliente = clientes.idCliente WHERE carritos.estatusBL = 1;';
 
         //ejecutamos el query
         database.query(query, function(error, success) {
@@ -47,6 +47,51 @@ exports.listarCarritos = function(req) {
     });
   });
 } //fin listarCarritos
+
+
+/*WEB SERVICE --LISTAR CARRITOS SEGUN SU USUARIO--*/
+exports.listarCarritoUsuario = function(req) {
+  console.log("listando...");
+  //regresaremos una promesa...
+  return new Promise((resolve, reject) => {
+    //conectar con la base de datos
+    let idCliente = req.params.idCliente;
+    req.getConnection(function(error, database) {
+      if (error) {
+        reject({
+          estatus: -1,
+          respuesta: error
+        });
+      } else {
+        //tenemos conexión
+        var query = `SELECT montoTotalCarrito, numeroProductosCarrito FROM carritos WHERE idCliente = ${idCliente};`;
+
+        //ejecutamos el query
+        database.query(query, function(error, success) {
+          if (error) {
+            reject({
+              estatus: -1,
+              respuesta: error
+            });
+          } else {
+            //validar que venga vacío
+            if (success.length == 0) {
+              resolve({
+                estatus: 0,
+                respuesta: success
+              });
+            } else if (success.length > 0) {
+              resolve({
+                estatus: 1,
+                respuesta: success
+              });
+            }
+          }
+        });
+      }
+    });
+  });
+} //fin listarCarritoUsuario
 
 
 /*WEB SERVICE --AGREGAR CARRITOS---*/

@@ -20,7 +20,7 @@ exports.listarAlmacenes = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'select * from almacenes where estatusBL = 1';
+        var query = 'select idAlmacen,ciudadAlmacen,estadoAlmacen,paisAlmacen,direccionAlmacen,referenciaAlmacen,telefonoAlmacen from almacenes where estatusBL = 1;';
 
         //ejecutamos el query
         database.query(query, function(error, success) {

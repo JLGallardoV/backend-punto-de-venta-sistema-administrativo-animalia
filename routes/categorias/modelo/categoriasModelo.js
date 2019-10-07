@@ -20,7 +20,7 @@ exports.listarCategorias = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'select * from categorias where estatusBL = 1';
+        var query = 'SELECT idCategoria,nombreCategoria,subCategoria,descripcionCategoria FROM categorias WHERE estatusBL = 1;';
 
         //ejecutamos el query
         database.query(query, function(error, success) {

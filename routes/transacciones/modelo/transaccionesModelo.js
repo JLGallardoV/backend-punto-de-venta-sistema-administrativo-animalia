@@ -64,18 +64,18 @@ exports.agregarTransaccion = function(req) {
           respuesta: error
         });
       } else {
-        
+
         let montoNoIvaTransaccion = body.montoNoIvaTransaccion;
         let ivaTransaccion = body.ivaTransaccion;
         let montoConIvaTransaccion = body.montoConIvaTransaccion;
         let idVendedor = body.idVendedor;
         let idTipoPago = body.idTipoPago;
-        let idTransaccion = body.idTransaccion;
         let idProducto = body.idProducto;
         let numeroProductosEnTransaccion = body.numeroProductosEnTransaccion;
         let idCliente = body.idCliente;
-        let query = `CALL transaccionCompleta_procedimiento('${montoNoIvaTransaccion}','${ivaTransaccion}','${montoConIvaTransaccion}','${idVendedor}','${idTipoPago}','${idTransaccion}','${idProducto}','${numeroProductosEnTransaccion}','${idCliente}');`;
+        let query = `CALL transaccionCompleta_procedimiento('${montoNoIvaTransaccion}','${ivaTransaccion},'${montoConIvaTransaccion}','${idVendedor}','${idTipoPago}','${idProducto}','${numeroProductosEnTransaccion}','${idCliente}');`;
 
+        console.log("idProducto: ",idProducto, "\n numeroProductosEnTransaccion: ", numeroProductosEnTransaccion);
 
         database.query(query, function(error, success) {
           if (error) {

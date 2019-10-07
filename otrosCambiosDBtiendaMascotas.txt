@@ -1,1 +1,0 @@
-->elimine atributo "cantidadTransaccion" y "tipoPago" de transacciones (ya que ese atributo lo tengo en la relacion) y tiposDePagos (es de muchos a muchos).

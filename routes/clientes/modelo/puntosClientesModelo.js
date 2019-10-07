@@ -15,7 +15,7 @@ exports.listarPuntosClientes = function(req) {
         });
       } else {
         /*ENTREGA LOS PUNTOS ACUMULADOS DE CADA CLIENTE*/
-        var query = 'SELECT transacciones_clientes.idCliente, clientes.nombreCliente, productos.nombreProducto, sum(productos.puntosProducto * transacciones.cantidadTransaccion) as puntosTotales FROM transacciones_clientes INNER JOIN clientes ON transacciones_clientes.idCliente = clientes.idCliente INNER JOIN productos ON transacciones_clientes.idTransaccion = productos.idProducto INNER JOIN transacciones ON transacciones_clientes.idTransaccion = transacciones.idTransaccion group by nombreCliente;';
+        var query = 'SELECT transacciones_clientes.idCliente, clientes.nombreCliente,SUM(productos.puntosProducto * transacciones_productos.numeroProductosEnTransaccion) AS puntosTotales FROM transacciones_clientes INNER JOIN clientes ON transacciones_clientes.idCliente = clientes.idCliente INNER JOIN productos ON transacciones_clientes.idTransaccion = productos.idProducto INNER JOIN transacciones_productos ON transacciones_clientes.idTransaccion = transacciones_productos.idTransaccion group by nombreCliente;';
 
         //ejecutamos el query
         database.query(query, function(error, success) {

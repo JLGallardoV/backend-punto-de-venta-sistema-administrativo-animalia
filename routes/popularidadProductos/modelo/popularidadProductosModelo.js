@@ -36,7 +36,7 @@ exports.listarPopularidadProductos = function(req) {
             if (success.length == 0) {
               resolve({
                 estatus: 0,
-                respuesta: success
+                respuesta: "No existen registros en ese rango de fechas"
               });
             } else if (success.length > 0) {
               /*definiendo segun sean las ventas de un vendedor, su popularidad*/

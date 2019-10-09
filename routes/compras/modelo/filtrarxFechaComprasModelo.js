@@ -14,7 +14,7 @@ exports.filtrarCompras = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = `SELECT sum(montoCompra) FROM compras WHERE fechaCompra BETWEEN '${deFecha} 00:00:00' AND '${aFecha} 23:59:59'`;
+        var query = `SELECT (SELECT IFNULL(sum(montoCompra),0) FROM compras WHERE fechaCompra BETWEEN '${deFecha} 00:00:00' AND '${aFecha} 23:59:59') AS montoCompra`;
 
         //ejecutamos el query
         database.query(query, function(error, success) {

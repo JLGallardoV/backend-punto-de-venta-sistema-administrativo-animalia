@@ -64,35 +64,55 @@ exports.agregarCliente = function(req) {
           respuesta: error
         });
       } else {
-        let query = 'insert into clientes set ?';
+        let nombreCliente = body.nombreCliente;
+        let emailCliente = body.emailCliente;
 
-        let requestBody = {
-          nombreCliente: body.nombreCliente,
-          apellidoPaternoCliente: body.apellidoPaternoCliente,
-          apellidoMaternoCliente: body.apellidoMaternoCliente,
-          ciudadCliente: body.ciudadCliente,
-          estadoCliente: body.estadoCliente,
-          paisCliente: body.paisCliente,
-          direccionCliente: body.direccionCliente,
-          coloniaCliente: body.coloniaCliente,
-          cpCliente: body.cpCliente,
-          telefonoCliente: body.telefonoCliente,
-          emailCliente: body.emailCliente,
-          contraseniaCliente: body.contraseniaCliente,
-          puntuajeCliente: body.puntuajeCliente,
-          idTipoCliente: body.idTipoCliente
-        };
+        var query = `select * from clientes where (nombreCliente ='${nombreCliente}' or emailCliente='${emailCliente}') and  estatusBL = 1`;
+        database.query(query,function(error,success){
 
-        database.query(query, requestBody, function(error, success) {
           if (error) {
             reject({
               estatus: -1,
               respuesta: error
             });
-          } else {
-            resolve({
-              estatus: 1,
-              respuesta: 'cliente dado de alta correctamente'
+          }
+          if(success.length == 0) {
+            let query = 'insert into clientes set ?';
+
+            let requestBody = {
+              nombreCliente: body.nombreCliente,
+              apellidoPaternoCliente: body.apellidoPaternoCliente,
+              apellidoMaternoCliente: body.apellidoMaternoCliente,
+              ciudadCliente: body.ciudadCliente,
+              estadoCliente: body.estadoCliente,
+              paisCliente: body.paisCliente,
+              direccionCliente: body.direccionCliente,
+              coloniaCliente: body.coloniaCliente,
+              cpCliente: body.cpCliente,
+              telefonoCliente: body.telefonoCliente,
+              emailCliente: body.emailCliente,
+              contraseniaCliente: body.contraseniaCliente,
+              puntuajeCliente: body.puntuajeCliente,
+              idTipoCliente: body.idTipoCliente
+            };
+
+            database.query(query, requestBody, function(error, success) {
+              if (error) {
+                reject({
+                  estatus: -1,
+                  respuesta: error
+                });
+              } else {
+                resolve({
+                  estatus: 1,
+                  respuesta: 'cliente dado de alta correctamente'
+                });
+              }
+            });
+          }else {
+            reject({
+              estatus: -1,
+              respuesta: 'usuario duplicado, intenta nuevamente'
             });
           }
         });

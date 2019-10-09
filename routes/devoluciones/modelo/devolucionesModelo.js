@@ -20,7 +20,7 @@ exports.listarDevoluciones = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'select * from devoluciones where estatusBL = 1';
+        var query = 'SELECT devoluciones_productos.idDevolucion,productos.nombreProducto,devoluciones.montoConIvaDevolucion,devoluciones.fechaDevolucion,devoluciones.motivoDevolucion,clientes.nombreCliente,tiposDeProblemas.tipoProblema,compensaciones.tipoCompensacion FROM devoluciones INNER JOIN clientes ON devoluciones.idDevolucion = clientes.idCliente INNER JOIN compensaciones ON devoluciones.idDevolucion = compensaciones.idCompensacion INNER JOIN productos ON devoluciones.idDevolucion = productos.idProducto INNER JOIN tiposDeProblemas ON devoluciones.idDevolucion = tiposDeProblemas.idTipoProblema;';
 
         //ejecutamos el query
         database.query(query, function(error, success) {

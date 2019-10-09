@@ -19,7 +19,7 @@ exports.listarProveedores = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'select * from proveedores where estatusBL = 1';
+        var query = 'select idProveedor,nombreProveedor,ciudadProveedor,estadoProveedor,paisProveedor,direccionProveedor,telefonoProveedor,emailProveedor,descripcionProveedor,fechaActualizacionProveedor from proveedores where estatusBL = 1';
 
         //ejecutamos el query
         database.query(query, function(error, success) {
@@ -112,6 +112,7 @@ exports.actualizarProveedor = function(req) {
       } else {
         let query = `update proveedores set ? where idProveedor = ${idProveedor}`; //las comillas son diferentes
 
+        //var now = 'now()'
         let requestBody = {
           nombreProveedor: body.nombreProveedor,
           ciudadProveedor: body.ciudadProveedor,
@@ -120,7 +121,8 @@ exports.actualizarProveedor = function(req) {
           direccionProveedor: body.direccionProveedor,
           telefonoProveedor: body.telefonoProveedor,
           emailProveedor: body.emailProveedor,
-          descripcionProveedor: body.descripcionProveedor
+          descripcionProveedor: body.descripcionProveedor,
+          //fechaActualizacionProveedor: `${now}`
         };
 
         database.query(query, requestBody, function(error, success) {

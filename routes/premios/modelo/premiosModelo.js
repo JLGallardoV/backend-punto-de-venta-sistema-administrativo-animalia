@@ -20,7 +20,7 @@ exports.listarPremios = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'select * from premios where estatusBL = 1';
+        var query = 'select idPremio,premio,descripcionPremio from premios where estatusBL = 1';
 
         //ejecutamos el query
         database.query(query, function(error, success) {

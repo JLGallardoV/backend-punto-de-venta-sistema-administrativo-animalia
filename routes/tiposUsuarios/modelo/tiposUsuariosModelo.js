@@ -20,7 +20,7 @@ exports.listarTiposUsuarios = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'select * from tiposDeUsuarios where estatusBL = 1';
+        var query = 'select idTipoUsuario,tipoUsuario,descripcionTipoUsuario from tiposDeUsuarios where estatusBL = 1';
 
         //ejecutamos el query
         database.query(query, function(error, success) {

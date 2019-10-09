@@ -14,7 +14,7 @@ exports.filtrarTransacciones = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = `SELECT sum(montoConIvaTransaccion) FROM transacciones WHERE fechaTransaccion BETWEEN '${deFecha} 00:00:00' AND '${aFecha} 23:59:59'`;
+        var query = `SELECT (SELECT IFNULL(sum(montoConIvaTransaccion),0) from transacciones WHERE fechaTransaccion BETWEEN '${deFecha} 00:00:00' AND '${aFecha} 23:59:59') AS montoVentas`;
 
         //ejecutamos el query
         database.query(query, function(error, success) {

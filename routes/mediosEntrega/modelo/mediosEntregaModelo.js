@@ -20,7 +20,7 @@ exports.listarMediosEntrega = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'select * from mediosDeEntrega where estatusBL = 1';
+        var query = 'select idMedioEntrega,medioEntrega,viaMedioEntrega,descripcionMedioEntrega from mediosDeEntrega where estatusBL = 1';
 
         //ejecutamos el query
         database.query(query, function(error, success) {
@@ -67,7 +67,6 @@ exports.agregarMedioEntrega = function(req) {
         let query = 'insert into mediosDeEntrega set ?';
 
         let requestBody = {
-          medioEntrega: body.medioEntrega,
           viaMedioEntrega: body.viaMedioEntrega,
           descripcionMedioEntrega: body.descripcionMedioEntrega
         };
@@ -109,7 +108,6 @@ exports.actualizarMedioEntrega = function(req) {
         let query = `update mediosDeEntrega set ? where idMedioEntrega = ${idMedioEntrega}`; //las comillas son diferentes
 
         let requestBody = {
-          medioEntrega: body.medioEntrega,
           viaMedioEntrega: body.viaMedioEntrega,
           descripcionMedioEntrega: body.descripcionMedioEntrega
         };

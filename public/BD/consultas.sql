@@ -3,6 +3,9 @@
 -- MONTO DE COMPRAS
 SELECT (SELECT IFNULL(sum(montoCompra),0) from compras WHERE fechaCompra BETWEEN '2019-09-23 00:00:00' AND '2019-10-23 23:59:59') AS montoCompra;
 
+-- MONTO DE TRANSACCIONES
+SELECT (SELECT IFNULL(sum(montoConIvaTransaccion),0) from transacciones WHERE fechaTransaccion BETWEEN '2019-09-23 00:00:00' AND '2019-10-23 23:59:59') AS montoTransaccion;
+
 -- UTILIDAD
 select ((select ifnull(sum(montoConIvaTransaccion),0) from transacciones where fechaTransaccion between '2019-08-11 00:00:00' and '2019-10-03 23:59:59') - (select ifnull(sum(montoCompra),0) from compras where fechaCompra between '2019-09-23 00:00:00' and '2019-09-24 23:59:59')) AS total;
 
@@ -22,18 +25,18 @@ WHERE fechaTransaccion between '2019-09-23 00:00:00' and '2019-09-26 23:59:59'
 group by nombreVendedor order by vendidos DESC;
 
 
---TRANSACCIONES_PRODUCTOS:
+/*TRANSACCIONES_PRODUCTOS:
 SELECT transacciones_productos.idTransaccion, productos.nombreProducto, transacciones.fechaTransaccion
 FROM transacciones_productos
 INNER JOIN productos ON transacciones_productos.idProducto = productos.idProducto
-INNER JOIN transacciones ON transacciones_productos.idTransaccion = transacciones.idTransaccion;
+INNER JOIN transacciones ON transacciones_productos.idTransaccion = transacciones.idTransaccion;*/
 
---TRANSACCIONES_CLIENTES:
-SELECT transacciones_clientes.idTransaccion, clientes.nombreCliente, transacciones.fechaTransaccion, productos.nombreProducto
-FROM transacciones_clientes
-INNER JOIN clientes ON transacciones_clientes.idCliente = clientes.idCliente
-INNER JOIN productos ON transacciones_clientes.idTransaccion = productos.idProducto
-INNER JOIN transacciones ON transacciones_clientes.idTransaccion = transacciones.idTransaccion;
+--TRANSACCIONES_CLIENTES: MAL SOLO DEJA VER UNA TRANSACCION X PRODUCTO
+  SELECT transacciones_clientes.idTransaccion, clientes.nombreCliente, transacciones.fechaTransaccion, productos.nombreProducto
+  FROM transacciones_clientes
+  INNER JOIN clientes ON transacciones_clientes.idCliente = clientes.idCliente
+  INNER JOIN productos ON transacciones_clientes.idTransaccion = productos.idProducto
+  INNER JOIN transacciones ON transacciones_clientes.idTransaccion = transacciones.idTransaccion;
 
 
 --PUNTOS POR NUMERO DE COMPRAS A CLIENTES - ALTERNATIVA:
@@ -73,13 +76,61 @@ FROM clientes
 INNER JOIN tiposDeClientes ON clientes.idTipoCliente = tiposDeClientes.idTipoCliente
 WHERE clientes.estatusBL = 1;
 
+--DEVOLUCIONES - ¿QUIEN HIZO LA DEVOLUCION? ¿PORQUE (TIPO DE PROBLEMA)? ¿CUAL FUE LA COMPENSACION? ¿QUE PRODUCTO SE DEVOLVIO?
+
+SELECT devoluciones.idDevolucion,productos.nombreProducto,devoluciones.montoConIvaDevolucion,devoluciones.fechaDevolucion,devoluciones.motivoDevolucion,clientes.nombreCliente,tiposDeProblemas.tipoProblema,compensaciones.tipoCompensacion
+FROM devoluciones
+INNER JOIN clientes ON devoluciones.idCliente = clientes.idCliente
+INNER JOIN compensaciones ON devoluciones.idDevolucion = compensaciones.idCompensacion
+INNER JOIN productos ON devoluciones.idDevolucion = productos.idProducto
+INNER JOIN tiposDeProblemas ON devoluciones.idDevolucion = tiposDeProblemas.idTipoProblema;
+
+--PRODUCTOS - ¿A QUE CATEGORIA PERTENECE? ¿EN CUAL ALMACEN ESTA?
+SELECT productos.idProducto,productos.nombreProducto,productos.detalleProducto,productos.contenidoProducto,productos.fechaCaducidadProducto,productos.paisOrigenProducto,productos.stockProducto,productos.puntosProducto,productos.precioUnitarioProducto,productos.precioMayoreoProducto,categorias.nombreCategoria,almacenes.ciudadAlmacen,almacenes.telefonoAlmacen
+FROM productos
+INNER JOIN categorias ON productos.idCategoria = categorias.idCategoria
+INNER JOIN almacenes ON productos.idAlmacen = almacenes.idAlmacen
+WHERE productos.estatusBL = 1;
+
+--TRANSACCIONES - ¿QUIEN FUE EL VENDEDOR?
+SELECT transacciones.idTransaccion, transacciones.montoNoIvaTransaccion, transacciones.ivaTransaccion, transacciones.montoConIvaTransaccion, transacciones.fechaTransaccion, vendedores.nombreVendedor
+FROM transacciones
+INNER JOIN vendedores ON transacciones.idVendedor = vendedores.idVendedor
+WHERE vendedores.estatusBL = 1;
+
+--USUARIOS - ¿A QUE VENDEDOR LE PERTENECE LA CUENTA? ¿QUE TIPO DE USUARIO ES?
+SELECT usuarios.idUsuario, usuarios.nombreUsuario, usuarios.emailUsuario, usuarios.idVendedor, tiposDeUsuarios.tipoUsuario
+FROM usuarios
+INNER JOIN tiposDeUsuarios ON usuarios.idTipoUsuario = tiposDeUsuarios.idTipoUsuario
+
+--COMPRAS - ¿QUIEN HIZO LA COMPRA? ¿A QUIEN SE LE REALIZO LA COMPRA?: PROCESO
+--OPC 1
+SELECT compras_productos.idCompra, productos.nombreProducto, usuarios.nombreUsuario
+FROM compras_productos
+INNER JOIN productos ON compras_productos.idProducto = productos.idProducto
+INNER JOIN
+(compras INNER JOIN usuarios ON compras.idUsuario = usuarios.idUsuario);
+--OPC 2
+  SELECT compras.idCompra, productos.nombreProducto, usuarios.nombreUsuario, proveedores.nombreProveedor
+  FROM compras
+  INNER JOIN proveedores ON compras.idProveedor = proveedores.idProveedor
+  INNER JOIN usuarios ON compras.idUsuario = usuarios.idUsuario
+  INNER JOIN productos ON compras.idCompra = productos.idProducto;
+--OPC 3
+SELECT compras_productos.idCompra, productos.nombreProducto, compras.idUsuario
+FROM compras_productos
+INNER JOIN productos ON compras_productos.idProducto = productos.idProducto
+INNER JOIN compras ON compras_productos.idCompra = compras.idCompra;
 
 
 
 
 
-/*VER DETALLES DE UNA COMPRA (PRODUCTO, PROVEDOR, MONTO, FECHA) -ANDA EN PROCESO...
-SELECT compras.idCompra, proveedores.idProveedor, compras.fechaCompra, productos.nombreProducto, usuarios.nombreUsuario
-FROM compras
-INNER JOIN proveedores ON compras.idProveedor = proveedores.idProveedor
-INNER JOIN productos ON compras.idProveedor = proveedores.idProveedor*/
+
+
+
+
+
+
+--PROBANDO EVITAR UN REGISTRO INEXISTENTE:
+`IF NOT EXISTS(SELECT nombreCliente, emailCliente FROM clientes WHERE nombreCliente = '${nombreCliente}' AND emailCliente = '${emailCliente}') INSERT INTO clientes (idCliente,nombreCliente,apellidoPaternoCliente,apellidoMaternoCliente,ciudadCliente,estadoCliente,paisCliente,direccionCliente,coloniaCliente,cpCliente,telefonoCliente,emailCliente, contraseniaCliente, puntuajeCliente,fechaRegistroCliente,fechaActualizacionCliente,idTipoCliente) VALUES ('${nombreCliente}','${apellidoPaternoCliente}','${apellidoMaternoCliente}','${ciudadCliente}','${estadoCliente}','${paisCliente}','${direccionCliente}','${coloniaCliente}','${cpCliente}','${telefonoCliente}','${emailCliente}','${contraseniaCliente}','${puntuajeCliente}','${idTipoCliente}');`

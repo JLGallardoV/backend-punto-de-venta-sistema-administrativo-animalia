@@ -20,7 +20,7 @@ exports.listarTiposProblemas = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'select * from tiposDeProblemas where estatusBL = 1';
+        var query = 'select idTipoProblema,tipoProblema FROM tiposDeProblemas where estatusBL = 1';
 
         //ejecutamos el query
         database.query(query, function(error, success) {

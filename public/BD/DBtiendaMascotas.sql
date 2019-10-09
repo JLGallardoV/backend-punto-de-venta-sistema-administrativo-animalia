@@ -77,7 +77,7 @@ CREATE TABLE vendedores(
 CREATE TABLE tiposDeUsuarios(
 	idTipoUsuario INT UNSIGNED AUTO_INCREMENT,
 	tipoUsuario VARCHAR(100),
-	privilegiosTipoUsuario VARCHAR(100),
+	descripcionTipoUsuario VARCHAR(100),
 	estatusBL tinyint(2) default 1,
 	PRIMARY KEY (idTipoUsuario)
 );
@@ -118,6 +118,8 @@ CREATE TABLE proveedores(
 	telefonoProveedor VARCHAR(100),
 	emailProveedor VARCHAR(100),
 	descripcionProveedor VARCHAR(100),
+	fechaRegistroProveedor DATETIME DEFAULT NOW(),
+	fechaActualizacionProveedor DATETIME DEFAULT NOW(),
 	estatusBL tinyint(2) default 1,
 	PRIMARY KEY (idProveedor)
 );
@@ -173,7 +175,6 @@ CREATE TABLE transacciones(
 
 CREATE TABLE mediosDeEntrega(
 	idMedioEntrega INT UNSIGNED AUTO_INCREMENT,
-	medioEntrega VARCHAR(100),
 	viaMedioEntrega VARCHAR(100),
 	descripcionMedioEntrega VARCHAR(100),
 	estatusBL tinyint(2) default 1,
@@ -181,16 +182,16 @@ CREATE TABLE mediosDeEntrega(
 );
 
 
-CREATE TABLE detallesTransacciones(
-	idDetalleTransaccion INT UNSIGNED AUTO_INCREMENT,
-	ciudadDetalleTransaccion VARCHAR(100),
-	estadoDetalleTransaccion VARCHAR(100),
-	paisDetalleTransaccion VARCHAR(100),
-	observacionesDetalleTransaccion VARCHAR(100),
+CREATE TABLE envios(
+	idEnvio INT UNSIGNED AUTO_INCREMENT,
+	ciudadEnvio VARCHAR(100),
+	estadoEnvio VARCHAR(100),
+	paisEnvio VARCHAR(100),
+	observacionesEnvio VARCHAR(100),
 	estatusBL tinyint(2) default 1,
 	idTransaccion INT UNSIGNED NOT NULL,
 	idMedioEntrega INT UNSIGNED NOT NULL,
-	PRIMARY KEY (idDetalleTransaccion),
+	PRIMARY KEY (idEnvio),
 	FOREIGN KEY (idTransaccion) REFERENCES transacciones (idTransaccion) ON DELETE CASCADE,
 	FOREIGN KEY (idMedioEntrega) REFERENCES mediosDeEntrega (idMedioEntrega) ON DELETE CASCADE
 );
@@ -219,22 +220,6 @@ CREATE TABLE compensaciones(
 	PRIMARY KEY (idCompensacion)
 );
 
-CREATE TABLE devoluciones(
-	idDevolucion INT UNSIGNED AUTO_INCREMENT,
-	ivaDevolucion INT(5) UNSIGNED,
-	montoConIvaDevolucion NUMERIC(7,2) UNSIGNED,
-	fechaDevolucion DATETIME DEFAULT NOW(),
-	motivoDevolucion VARCHAR(100),
-	estatusBL tinyint(2) default 1,
-	idCliente INT UNSIGNED NOT NULL,
-	idTipoProblema INT UNSIGNED NOT NULL,
-	idCompensacion INT UNSIGNED NOT NULL,
-	PRIMARY KEY (idDevolucion),
-	FOREIGN KEY (idCliente) REFERENCES clientes (idCliente) ON DELETE CASCADE,
-	FOREIGN KEY (idTipoProblema) REFERENCES tiposDeProblemas (idTipoProblema) ON DELETE CASCADE,
-	FOREIGN KEY (idCompensacion) REFERENCES compensaciones (idCompensacion) ON DELETE CASCADE
-);
-
 CREATE TABLE productos(
 	idProducto INT UNSIGNED AUTO_INCREMENT,
 	nombreProducto VARCHAR(100),
@@ -250,12 +235,28 @@ CREATE TABLE productos(
 	fechaRegistroProducto DATETIME DEFAULT NOW(),
 	fechaActualizacionProducto DATETIME DEFAULT NOW(),
 	idCategoria INT UNSIGNED NOT NULL,
-	idAlmacen INT UNSIGNED NOT NULL,
-	idCompra INT UNSIGNED NOT NULL,
+	idAlmacen INT UNSIGNED DEFAULT NULL,
 	PRIMARY KEY (idProducto),
 	FOREIGN KEY (idCategoria) REFERENCES categorias (idCategoria) ON DELETE CASCADE,
-	FOREIGN KEY (idCompra) REFERENCES compras (idCompra) ON DELETE CASCADE,
 	FOREIGN KEY (idAlmacen) REFERENCES almacenes (idAlmacen) ON DELETE CASCADE
+);
+
+CREATE TABLE devoluciones(
+	idDevolucion INT UNSIGNED AUTO_INCREMENT,
+	ivaDevolucion INT(5) UNSIGNED,
+	montoConIvaDevolucion NUMERIC(7,2) UNSIGNED,
+	fechaDevolucion DATETIME DEFAULT NOW(),
+	motivoDevolucion VARCHAR(100),
+	estatusBL tinyint(2) default 1,
+	idCliente INT UNSIGNED NOT NULL,
+	idTipoProblema INT UNSIGNED NOT NULL,
+	idProducto INT UNSIGNED NOT NULL,
+	idCompensacion INT UNSIGNED NOT NULL,
+	PRIMARY KEY (idDevolucion),
+	FOREIGN KEY (idCliente) REFERENCES clientes (idCliente) ON DELETE CASCADE,
+	FOREIGN KEY (idTipoProblema) REFERENCES tiposDeProblemas (idTipoProblema) ON DELETE CASCADE,
+	FOREIGN KEY (idProducto) REFERENCES productos (idProducto) ON DELETE CASCADE,
+	FOREIGN KEY (idCompensacion) REFERENCES compensaciones (idCompensacion) ON DELETE CASCADE
 );
 
 --AQUI COMIENZAN LAS TABLAS DE RELACIONES. CUANDO ES DE MUCHOS A MUCHOS EN CARDINALIDAD, GENERO UNA NUEVA TABLA PARA EVITAR REPETICION DE REGISTROS
@@ -278,7 +279,6 @@ CREATE TABLE premios_clientes(
 	FOREIGN KEY (idCliente) REFERENCES clientes (idCliente) ON DELETE CASCADE
 );
 
-
 CREATE TABLE transacciones_productos(
 	idTransaccion INT UNSIGNED AUTO_INCREMENT,
 	idProducto INT UNSIGNED NOT NULL,
@@ -286,6 +286,16 @@ CREATE TABLE transacciones_productos(
 	estatusBL tinyint(2) default 1,
 	PRIMARY KEY (idTransaccion, idProducto),
 	FOREIGN KEY (idTransaccion) REFERENCES transacciones (idTransaccion) ON DELETE CASCADE,
+	FOREIGN KEY (idProducto) REFERENCES productos (idProducto) ON DELETE CASCADE
+);
+
+CREATE TABLE compras_productos(
+	idCompra INT UNSIGNED NOT NULL,
+	idProducto INT UNSIGNED NOT NULL,
+	numeroProductosEnCompra INT(6),
+	estatusBL tinyint(2) default 1,
+	PRIMARY KEY (idCompra, idProducto),
+	FOREIGN KEY (idCompra) REFERENCES compras (idCompra) ON DELETE CASCADE,
 	FOREIGN KEY (idProducto) REFERENCES productos (idProducto) ON DELETE CASCADE
 );
 
@@ -305,15 +315,6 @@ CREATE TABLE transacciones_tiposDePagos(
 	PRIMARY KEY (idTransaccion, idTipoPago),
 	FOREIGN KEY (idTransaccion) REFERENCES transacciones (idTransaccion) ON DELETE CASCADE,
 	FOREIGN KEY (idTipoPago) REFERENCES tiposDePagos (idTipoPago) ON DELETE CASCADE
-);
-
-CREATE TABLE devoluciones_productos(
-	idDevolucion INT UNSIGNED NOT NULL,
-	idProducto INT UNSIGNED NOT NULL,
-	estatusBL tinyint(2) default 1,
-	PRIMARY KEY (idDevolucion, idProducto),
-	FOREIGN KEY (idDevolucion) REFERENCES devoluciones (idDevolucion) ON DELETE CASCADE,
-	FOREIGN KEY (idProducto) REFERENCES productos (idProducto) ON DELETE CASCADE
 );
 
 CREATE TABLE almacenes_categorias(

@@ -18,8 +18,8 @@ exports.listarCompras = function(req) {
           respuesta: error
         });
       } else {
-        //tenemos conexión
-        var query = 'select * from compras where estatusBL = 1';
+        //muestra las diferentes compras existentes, quien fue el proveedor, que producto se compro y quien lo compro
+        var query = 'SELECT compras.idCompra, proveedores.idProveedor, compras.fechaCompra, productos.nombreProducto, usuarios.nombreUsuario FROM compras INNER JOIN proveedores ON compras.idProveedor = proveedores.idProveedor INNER JOIN usuarios ON compras.idUsuario = usuarios.idUsuario INNER JOIN productos ON compras.idCompra = productos.idCompra;';
 
         //ejecutamos el query
         database.query(query, function(error, success) {

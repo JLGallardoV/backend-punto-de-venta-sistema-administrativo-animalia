@@ -20,7 +20,7 @@ exports.listarTiposPagos = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'select * from tiposDePagos where estatusBL = 1';
+        var query = 'select idTipoPago,tipoPago,viaTipoPago,descripcionTipoPago from tiposDePagos where estatusBL = 1';
 
         //ejecutamos el query
         database.query(query, function(error, success) {

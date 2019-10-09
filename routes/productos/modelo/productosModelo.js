@@ -19,7 +19,7 @@ exports.listarProductos = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'select * from productos where estatusBL = 1';
+        var query = 'SELECT productos.idProducto,productos.nombreProducto,productos.detalleProducto,productos.contenidoProducto,productos.fechaCaducidadProducto,productos.paisOrigenProducto,productos.stockProducto,productos.puntosProducto,productos.precioUnitarioProducto,productos.precioMayoreoProducto,categorias.nombreCategoria,almacenes.ciudadAlmacen,almacenes.telefonoAlmacen FROM productos INNER JOIN categorias ON productos.idCategoria = categorias.idCategoria INNER JOIN almacenes ON productos.idAlmacen = almacenes.idAlmacen WHERE productos.estatusBL = 1;';
 
         //ejecutamos el query
         database.query(query, function(error, success) {

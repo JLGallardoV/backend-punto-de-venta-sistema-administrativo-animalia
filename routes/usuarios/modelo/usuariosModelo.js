@@ -20,7 +20,7 @@ exports.listarUsuarios = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'select * from usuarios where estatusBL = 1';
+        var query = 'SELECT usuarios.idUsuario, usuarios.nombreUsuario, usuarios.emailUsuario, usuarios.idVendedor, tiposDeUsuarios.tipoUsuario FROM usuarios INNER JOIN tiposDeUsuarios ON usuarios.idTipoUsuario = tiposDeUsuarios.idTipoUsuario';
 
         //ejecutamos el query
         database.query(query, function(error, success) {
@@ -64,26 +64,46 @@ exports.agregarUsuario = function(req) {
           respuesta: error
         });
       } else {
-        let query = 'insert into usuarios set ?';
+        let nombreUsuario = body.nombreUsuario;
+        let contraseniaUsuario = body.contraseniaUsuario;
 
-        let requestBody = {
-          nombreUsuario: body.nombreUsuario,
-          emailUsuario: body.emailUsuario,
-          contraseniaUsuario: body.contraseniaUsuario,
-          idVendedor: body.idVendedor,
-          idTipoUsuario: body.idTipoUsuario
-        };
+        var query = `select * from usuarios where nombreUsuario ='${nombreUsuario}' and  estatusBL = 1`;
+        database.query(query, function(error, success){
 
-        database.query(query, requestBody, function(error, success) {
           if (error) {
             reject({
               estatus: -1,
               respuesta: error
             });
-          } else {
-            resolve({
-              estatus: 1,
-              respuesta: 'usuario dado de alta correctamente'
+          }
+          if(success.length == 0) {
+            let query = 'insert into usuarios set ?';
+
+            let requestBody = {
+              nombreUsuario: body.nombreUsuario,
+              emailUsuario: body.emailUsuario,
+              contraseniaUsuario: body.contraseniaUsuario,
+              idVendedor: body.idVendedor,
+              idTipoUsuario: body.idTipoUsuario
+            };
+
+            database.query(query, requestBody, function(error, success) {
+              if (error) {
+                reject({
+                  estatus: -1,
+                  respuesta: error
+                });
+              } else {
+                resolve({
+                  estatus: 1,
+                  respuesta: 'usuario dado de alta correctamente'
+                });
+              }
+            });
+          }else {
+            reject({
+              estatus: -1,
+              respuesta: 'usuario duplicado, intenta nuevamente'
             });
           }
         });

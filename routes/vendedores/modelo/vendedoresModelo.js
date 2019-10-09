@@ -19,7 +19,7 @@ exports.listarVendedores = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'select * from vendedores where estatusBL = 1';
+        var query = 'select idVendedor,nombreVendedor,ciudadVendedor,estadoVendedor,direccionVendedor,telefonoVendedor,emailVendedor,fechaNacimientoVendedor,rfcVendedor,numeroSeguroSocialVendedor,antiguedadVendedor from vendedores where estatusBL = 1';
 
         //ejecutamos el query
         database.query(query, function(error, success) {

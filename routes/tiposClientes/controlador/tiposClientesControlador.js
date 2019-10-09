@@ -3,6 +3,15 @@ var router = express.Router();
 var tiposClientesModelo = require('../modelo/tiposClientesModelo');
 
 
+//CABECERAS
+router.use(function(req,res,next){
+	res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-headers", "Origin, X-Requested-With, Accept, Content-Type, Authorization");
+  res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+	next();
+});
+
+
 // LISTAR TIPOS DE CLIENTES - EXPORTANDO RUTA
 router.get('/listarTiposClientes', function(req, res, next) {
   try {

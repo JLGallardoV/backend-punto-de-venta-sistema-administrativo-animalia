@@ -20,7 +20,7 @@ exports.listarTransacciones = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'select * from transacciones where estatusBL = 1';
+        var query = 'SELECT transacciones.idTransaccion, transacciones.montoNoIvaTransaccion, transacciones.ivaTransaccion, transacciones.montoConIvaTransaccion, transacciones.fechaTransaccion, vendedores.nombreVendedor FROM transacciones INNER JOIN vendedores ON transacciones.idVendedor = vendedores.idVendedor WHERE vendedores.estatusBL = 1;';
 
         //ejecutamos el query
         database.query(query, function(error, success) {

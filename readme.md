@@ -24,32 +24,29 @@
 # CORRECCIONES
 
 - TIPOS DE DATO, AGREGA VARCHAR(100) A TODO (x).
-- DOCUMENTA POSTMAN
-- AGREGAR CABECERAS.
+- DOCUMENTA POSTMAN(x)
+- AGREGAR CABECERAS.(x)
 - EVITAR MODIFICAR, ELIMINAR EN:(x)
   - ACCESOS(x)
   - COMPRAS(x)
   - VENTAS(x)
-- NO REGRESAR CONTRASEÑAS
-- NO REGRESAR BORRADO LOGICO
-- NO REGRESAR FECHA DE REGISTRO (ESTA ES ESTATICA)
-- REGRESAR 0 Y NO NULL EN WS DONDE FILTRO ENTRE FECHAS
-- VERIFICA DOBLES INSERCIONES!
-  - VALIDAR USUARIOS QUE YA EXISTEN
-- VERIFICA QUE QUIERES QUE HAGA LA TABLA DE DETALLES
-  - TIENE MULTIPLES DETALLES PARA UNA VENTAS
-- EN LISTAR VENTAS... ¿QUE VENDÍ?
-  - HACER LOS INNER JOINS ADECUADOS.
-- VERIFICA EL WS DE AGREGAR VENDEDOR.
-- HAZ LA RELACION DE MUCHOS A MUCHOS (COMPRAS - PRODUCTOS)
+- NO REGRESAR CONTRASEÑAS(x)
+- NO REGRESAR BORRADO LOGICO(x)
+- NO REGRESAR FECHA DE REGISTRO (ESTA ES ESTATICA)(x)
+- REGRESAR 0 Y NO NULL EN WS DONDE FILTRO ENTRE FECHAS(x)
+- VERIFICA DOBLES INSERCIONES!(x)
+  - VALIDAR USUARIOS QUE YA EXISTEN(x)
+- VERIFICA QUE QUIERES QUE HAGA LA TABLA DE DETALLES(x)
+  - TIENE MULTIPLES DETALLES PARA UNA VENTAS(x)
+- EN LISTAR VENTAS... ¿QUE VENDÍ?(x)
+  - HACER LOS INNER JOINS ADECUADOS.(x)
+- VERIFICA EL WS DE AGREGAR VENDEDOR.(x)
+- HAZ LA RELACION DE MUCHOS A MUCHOS (COMPRAS - PRODUCTOS)(x)
 
 
 
 >Para el lunes me quede pendiente en la consulta transaccionCompleta_procedimiento (que actualice el stock)
 >Crear relacion carrito productos ¿que productos estan en el carrito?
-### 07-OCT-2019
-# NOTAS:
-
-### Carrito
-- Es buena idea dejar un select * from de carritos, esto por parte del administrador del sistema, asi se puede dar cuenta de forma mas detallada los montos, numero de productos y clientes (en relacion con el carrito) y de alguna u otra forma la actividad de sus clientes por medio de sus gustos o proximas compras.
-  - De igual manera se requiere select * from where para cada usuario con su respectivo carrito.
+>Hacer el procedimiento almacendo para realizar una devolucion en forma: (producto, motivo)
+>proveedores fecha de actualizacion pendiente
+>que pasa si se cancela una venta en caja

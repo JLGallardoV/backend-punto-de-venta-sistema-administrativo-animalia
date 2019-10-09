@@ -20,7 +20,7 @@ exports.listarTiposClientes = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'select * from tiposDeClientes where estatusBL = 1';
+        var query = 'select idTipoCliente,tipoCliente,descripcionTipoCliente from tiposDeClientes where estatusBL = 1';
 
         //ejecutamos el query
         database.query(query, function(error, success) {

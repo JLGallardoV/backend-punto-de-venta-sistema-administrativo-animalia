@@ -16,7 +16,7 @@ var clientesPuntosRouter = require('./routes/clientes/controlador/puntosClientes
 var compensacionesRouter = require('./routes/compensaciones/controlador/compensacionesControlador');
 var comprasRouter = require('./routes/compras/controlador/comprasControlador');
 var comprasFiltroFechaRouter = require('./routes/compras/controlador/filtrarxFechaComprasControlador');
-var detallesTransaccionesRouter = require('./routes/detallesTransacciones/controlador/detallesTransaccionesControlador');
+var enviosRouter = require('./routes/envios/controlador/enviosControlador');
 var devolucionesRouter = require('./routes/devoluciones/controlador/devolucionesControlador');
 var loginRouter = require('./routes/login/controlador/loginControlador');
 var mediosEntregaRouter = require('./routes/mediosEntrega/controlador/mediosEntregaControlador');
@@ -81,7 +81,7 @@ app.use('/clientesWS', clientesPuntosRouter);
 app.use('/compensacionesWS', compensacionesRouter);
 app.use('/comprasWS', comprasRouter);
 app.use('/comprasWS', comprasFiltroFechaRouter);
-app.use('/detallesTransaccionesWS', detallesTransaccionesRouter);
+app.use('/enviosWS', enviosRouter);
 app.use('/devolucionesWS', devolucionesRouter);
 app.use('/loginWS', loginRouter);
 app.use('/mediosEntregaWS', mediosEntregaRouter);

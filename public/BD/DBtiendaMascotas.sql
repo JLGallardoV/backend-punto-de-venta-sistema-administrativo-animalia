@@ -188,6 +188,7 @@ CREATE TABLE envios(
 	estadoEnvio VARCHAR(100),
 	paisEnvio VARCHAR(100),
 	observacionesEnvio VARCHAR(100),
+	fechaEnvio DATETIME DEFAULT NOW(),
 	estatusBL tinyint(2) default 1,
 	idTransaccion INT UNSIGNED NOT NULL,
 	idMedioEntrega INT UNSIGNED NOT NULL,
@@ -280,7 +281,7 @@ CREATE TABLE premios_clientes(
 );
 
 CREATE TABLE transacciones_productos(
-	idTransaccion INT UNSIGNED AUTO_INCREMENT,
+	idTransaccion INT UNSIGNED NOT NULL,
 	idProducto INT UNSIGNED NOT NULL,
 	numeroProductosEnTransaccion INT(6),
 	estatusBL tinyint(2) default 1,
@@ -300,7 +301,7 @@ CREATE TABLE compras_productos(
 );
 
 CREATE TABLE transacciones_clientes(
-	idTransaccion INT UNSIGNED AUTO_INCREMENT,
+	idTransaccion INT UNSIGNED NOT NULL,
 	idCliente INT UNSIGNED NOT NULL,
 	estatusBL tinyint(2) default 1,
 	PRIMARY KEY (idTransaccion, idCliente),
@@ -309,7 +310,7 @@ CREATE TABLE transacciones_clientes(
 );
 
 CREATE TABLE transacciones_tiposDePagos(
-	idTransaccion INT UNSIGNED AUTO_INCREMENT,
+	idTransaccion INT UNSIGNED NOT NULL,
 	idTipoPago INT UNSIGNED NOT NULL,
 	estatusBL tinyint(2) default 1,
 	PRIMARY KEY (idTransaccion, idTipoPago),
@@ -337,17 +338,25 @@ CREATE TABLE compensaciones_clientes(
 );
 
 --PROCEDIMIENTO ALMACENADO INSERTAR DATOS A TRANSACCIONES CON SU RESPECTIVO PRODUCTO Y CANTIDAD DE PRODUCTOS
+
+--PROCESO
 DELIMITER $$
-CREATE PROCEDURE transaccionCompleta_procedimiento(IN montoNoIvaTransaccion DECIMAL(7,2) UNSIGNED, IN ivaTransaccion INT(5) UNSIGNED, IN montoConIvaTransaccion DECIMAL(7,2) UNSIGNED, IN idVendedor INT, IN idTipoPago INT, IN idProducto INT, IN numeroProductosEnTransaccion INT UNSIGNED, IN idCliente INT)
-BEGIN
-	 INSERT INTO transacciones (montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,idVendedor)
-	 VALUES (montoNoIvaTransaccion, ivaTransaccion, montoConIvaTransaccion, idVendedor);
-	 INSERT INTO transacciones_productos (idProducto, numeroProductosEnTransaccion)
-	 VALUES (idProducto, numeroProductosEnTransaccion);
-	 INSERT INTO transacciones_tiposDePagos(idTipoPago)
-	 VALUES (idTipoPago);
-	 INSERT INTO transacciones_clientes(idCliente)
-	 VAlUES (idCliente);
-	 UPDATE productos SET stockProducto = (stockProducto - numeroProductosEnTransaccion) WHERE idProducto IN (SELECT idProducto FROM transacciones_productos);
-END;
-$$
+CREATE PROCEDURE transaccionCompleta_procedimiento(IN _montoNoIvaTransaccion DECIMAL(7,2) UNSIGNED, IN _ivaTransaccion INT(5) UNSIGNED, IN _montoConIvaTransaccion DECIMAL(7,2) UNSIGNED, IN _idVendedor INT, IN _idTipoPago INT,IN _idTransaccion INT, IN _idProducto INT, IN _numeroProductosEnTransaccion INT, IN _idCliente INT)
+	BEGIN
+		 IF _idTransaccion > (select ifnull(idTransaccion,0) from transacciones order by idTransaccion desc limit 1) THEN
+			 INSERT INTO transacciones (montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,idVendedor)
+			 VALUES (_montoNoIvaTransaccion, _ivaTransaccion, _montoConIvaTransaccion, _idVendedor);
+		 END IF;
+		 INSERT INTO transacciones_productos (idTransaccion,idProducto, numeroProductosEnTransaccion)
+		 VALUES (_idTransaccion,_idProducto, _numeroProductosEnTransaccion);
+
+		 INSERT INTO transacciones_tiposDePagos(idTransaccion,idTipoPago)
+		 VALUES (_idTransaccion,_idTipoPago);
+		 IF _idTransaccion
+		 INSERT INTO transacciones_clientes(idTransaccion,idCliente)
+		 VAlUES (_idTransaccion,_idCliente);
+
+		 UPDATE productos SET stockProducto = stockProducto - _numeroProductosEnTransaccion WHERE idProducto = _idProducto;
+
+	END;
+	$$

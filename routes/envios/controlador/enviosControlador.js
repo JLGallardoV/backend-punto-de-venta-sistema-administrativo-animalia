@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var detallesTransaccionesModelo = require('../modelo/detallesTransaccionesModelo');
+var enviosModelo = require('../modelo/enviosModelo');
 
 //CABECERAS
 router.use(function(req,res,next){
@@ -11,11 +11,11 @@ router.use(function(req,res,next){
 });
 
 
-// LISTAR TIPOS DE PAGOS - EXPORTANDO RUTA
-router.get('/listarDetallesTransacciones', function(req, res, next) {
+// LISTAR ENVIOS - EXPORTANDO RUTA
+router.get('/listarEnvios', function(req, res, next) {
   try {
     //web service
-    detallesTransaccionesModelo.listarDetallesTransacciones(req).then(
+    enviosModelo.listarEnvios(req).then(
       (success) => {
         res.json(success);
       },
@@ -28,11 +28,11 @@ router.get('/listarDetallesTransacciones', function(req, res, next) {
   }
 });
 
-// AGREGAR TIPOS DE PAGOS - EXPORTANDO RUTA
-router.post('/agregarDetalleTransaccion', function(req, res, next) {
+// AGREGAR ENVIOS - EXPORTANDO RUTA
+router.post('/agregarEnvio', function(req, res, next) {
   try {
     //web service
-    detallesTransaccionesModelo.agregarDetalleTransaccion(req).then(
+    enviosModelo.agregarEnvio(req).then(
       (success) => {
         res.json(success);
       },
@@ -46,11 +46,11 @@ router.post('/agregarDetalleTransaccion', function(req, res, next) {
 });
 
 
-// ACTUALIZAR TIPOS DE PAGOS - EXPORTANDO RUTA
-router.put('/actualizarDetalleTransaccion/:idDetalleTransaccion', function(req, res, next) {
+// ACTUALIZAR ENVIOS - EXPORTANDO RUTA
+router.put('/actualizarEnvio/:idEnvio', function(req, res, next) {
   try {
     //web service
-    detallesTransaccionesModelo.actualizarDetalleTransaccion(req).then(
+    enviosModelo.actualizarEnvio(req).then(
       (success) => {
         res.json(success);
       },
@@ -63,11 +63,11 @@ router.put('/actualizarDetalleTransaccion/:idDetalleTransaccion', function(req, 
   }
 });
 
-// ELIMINAR TIPOS DE PAGOS - EXPORTANDO RUTA
-router.delete('/eliminarDetalleTransaccion/:idDetalleTransaccion', function(req, res, next) {
+// ELIMINAR ENVIOS - EXPORTANDO RUTA
+router.delete('/eliminarEnvio/:idEnvio', function(req, res, next) {
   try {
     //web service
-    detallesTransaccionesModelo.eliminarDetalleTransaccion(req).then(
+    enviosModelo.eliminarEnvio(req).then(
       (success) => {
         res.json(success);
       },

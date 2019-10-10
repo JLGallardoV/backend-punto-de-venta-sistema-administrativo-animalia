@@ -103,6 +103,12 @@ SELECT usuarios.idUsuario, usuarios.nombreUsuario, usuarios.emailUsuario, usuari
 FROM usuarios
 INNER JOIN tiposDeUsuarios ON usuarios.idTipoUsuario = tiposDeUsuarios.idTipoUsuario
 
+--ENVIOS - ¿DE QUE VENTA ES EL ENVIO? ¿POR QUE MEDIO SE ENVIA?
+SELECT envios.idEnvio, envios.ciudadEnvio, envios.estadoEnvio, envios.paisEnvio, envios.observacionesEnvio, envios.fechaEnvio, envios.idTransaccion, mediosDeEntrega.viaMedioEntrega
+FROM envios
+INNER JOIN mediosDeEntrega ON envios.idMedioEntrega = mediosDeEntrega.idMedioEntrega;
+
+
 --COMPRAS - ¿QUIEN HIZO LA COMPRA? ¿A QUIEN SE LE REALIZO LA COMPRA?: PROCESO
 --OPC 1
 SELECT compras_productos.idCompra, productos.nombreProducto, usuarios.nombreUsuario

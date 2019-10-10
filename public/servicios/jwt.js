@@ -14,7 +14,7 @@ exports.verificarExistenciaToken = function(req, res, next){
   else {
     res.json({
       estatus: -1,
-      respuesta: 'La cabecera de Autorizacion es requerida jeje'
+      respuesta: 'La cabecera de Autorizacion es requerida'
     });
   }
 }

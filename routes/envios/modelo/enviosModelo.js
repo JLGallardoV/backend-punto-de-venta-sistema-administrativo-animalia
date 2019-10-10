@@ -6,8 +6,8 @@ respuesta: []/string
 }
 */
 
-/*WEB SERVICE --LISTAR DETALLES TRANSACCIONES--*/
-exports.listarDetallesTransacciones = function(req) {
+/*WEB SERVICE --LISTAR ENVIOS--*/
+exports.listarEnvios = function(req) {
   console.log("listando...");
   //regresaremos una promesa...
   return new Promise((resolve, reject) => {
@@ -20,7 +20,7 @@ exports.listarDetallesTransacciones = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'select * from detallesTransacciones where estatusBL = 1';
+        var query = 'SELECT envios.idEnvio, envios.ciudadEnvio, envios.estadoEnvio, envios.paisEnvio, envios.observacionesEnvio, envios.fechaEnvio, envios.idTransaccion, mediosDeEntrega.viaMedioEntrega FROM envios INNER JOIN mediosDeEntrega ON envios.idMedioEntrega = mediosDeEntrega.idMedioEntrega;';
 
         //ejecutamos el query
         database.query(query, function(error, success) {
@@ -47,11 +47,11 @@ exports.listarDetallesTransacciones = function(req) {
       }
     });
   });
-} //fin listarDetallesTransaccion
+} //fin listarEnvios
 
 
-/*WEB SERVICE --AGREGAR DETALLES TRANSACCIONES---*/
-exports.agregarDetalleTransaccion = function(req) {
+/*WEB SERVICE --AGREGAR ENVIOS---*/
+exports.agregarEnvio = function(req) {
   //regresaremos una promesa
   console.log("agregando...");
   return new Promise((resolve, reject) => {
@@ -65,13 +65,13 @@ exports.agregarDetalleTransaccion = function(req) {
         });
       } else {
 
-        let query = 'insert into detallesTransacciones set ?';
+        let query = 'insert into envios set ?';
 
         let requestBody = {
-          ciudadDetalleTransaccion: body.ciudadDetalleTransaccion,
-          estadoDetalleTransaccion: body.estadoDetalleTransaccion,
-          paisDetalleTransaccion: body.paisDetalleTransaccion,
-          observacionesDetalleTransaccion: body.observacionesDetalleTransaccion,
+          ciudadEnvio: body.ciudadEnvio,
+          estadoEnvio: body.estadoEnvio,
+          paisEnvio: body.paisEnvio,
+          observacionesEnvio: body.observacionesEnvio,
           idTransaccion: body.idTransaccion,
           idMedioEntrega: body.idMedioEntrega
         };
@@ -85,24 +85,24 @@ exports.agregarDetalleTransaccion = function(req) {
           } else {
             resolve({
               estatus: 1,
-              respuesta: 'detalle transaccion dada de alta correctamente'
+              respuesta: 'envio dada de alta correctamente'
             });
           }
         });
       }
     });
   });
-} //fin agregarDetalleTransaccion
+} //fin agregarEnvio
 
 
-/*WEB SERVICE --ACTUALIZAR DETALLES TRANSACCIONES--*/
-exports.actualizarDetalleTransaccion = function(req) {
+/*WEB SERVICE --ACTUALIZAR ENVIOS--*/
+exports.actualizarEnvio = function(req) {
   //regresaremos una promesa
   console.log("actualizando...");
   return new Promise((resolve, reject) => {
     /*web service para actualizar*/
     let body = req.body;
-    let idDetalleTransaccion = req.params.idDetalleTransaccion;
+    let idEnvio = req.params.idEnvio;
     req.getConnection(function(error, database) {
       if (error) {
         reject({
@@ -110,13 +110,13 @@ exports.actualizarDetalleTransaccion = function(req) {
           respuesta: error
         });
       } else {
-        let query = `update detallesTransacciones set ? where idDetalleTransaccion = ${idDetalleTransaccion}`; //las comillas son diferentes
+        let query = `update envios set ? where idEnvio = ${idEnvio}`; //las comillas son diferentes
 
         let requestBody = {
-          ciudadDetalleTransaccion: body.ciudadDetalleTransaccion,
-          estadoDetalleTransaccion: body.estadoDetalleTransaccion,
-          paisDetalleTransaccion: body.paisDetalleTransaccion,
-          observacionesDetalleTransaccion: body.observacionesDetalleTransaccion,
+          ciudadEnvio: body.ciudadEnvio,
+          estadoEnvio: body.estadoEnvio,
+          paisEnvio: body.paisEnvio,
+          observacionesEnvio: body.observacionesEnvio,
           idTransaccion: body.idTransaccion,
           idMedioEntrega: body.idMedioEntrega
         };
@@ -130,23 +130,23 @@ exports.actualizarDetalleTransaccion = function(req) {
           } else {
             resolve({
               estatus: 1,
-              respuesta: 'detalle transaccion actualizada correctamente'
+              respuesta: 'envio actualizada correctamente'
             });
           }
         });
       }
     });
   });
-} //fin actualizarDetalleTransaccion
+} //fin actualizarEnvio
 
 
-/*WEB SERVICE --ELIMINAR DETALLES TRANSACCIONES-- CON UN TOQUE DE BORRADO LOGICO*/
-exports.eliminarDetalleTransaccion = function(req) {
+/*WEB SERVICE --ELIMINAR ENVIOS-- CON UN TOQUE DE BORRADO LOGICO*/
+exports.eliminarEnvio = function(req) {
   //regresaremos una promesa
   console.log("eliminando...");
   return new Promise((resolve, reject) => {
     /*web service para eliminar un registro*/
-    let idDetalleTransaccion = req.params.idDetalleTransaccion;
+    let idEnvio = req.params.idEnvio;
     req.getConnection(function(error, database) {
       if (error) {
         reject({
@@ -154,7 +154,7 @@ exports.eliminarDetalleTransaccion = function(req) {
           respuesta: error
         });
       } else {
-        let query = `update detallesTransacciones set ? where idDetalleTransaccion = ${idDetalleTransaccion}`; //las comillas son diferentes
+        let query = `update envios set ? where idEnvio = ${idEnvio}`; //las comillas son diferentes
 
         let requestBody = {
           estatusBL: 0,
@@ -169,11 +169,11 @@ exports.eliminarDetalleTransaccion = function(req) {
           } else {
             resolve({
               estatus: 1,
-              respuesta: 'detalle transaccion eliminada correctamente'
+              respuesta: 'envio eliminada correctamente'
             });
           }
         });
       }
     });
   });
-} //fin eliminarDetalleTransaccion
+} //fin eliminarEnvio

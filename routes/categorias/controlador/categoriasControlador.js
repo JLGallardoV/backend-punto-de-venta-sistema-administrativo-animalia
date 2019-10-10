@@ -15,17 +15,25 @@ router.use(function(req,res,next){
 
 
 // LISTAR CATEGORIAS - EXPORTANDO RUTA
-router.get('/listarCategorias', jwt.verificarExistenciaToken, function(req, res, next) {
+router.get('/listarCategorias', jwt.verificarExistenciaToken, function(req,res,next) {
   try {
-    jsonWebToken.verify(req.token, jwt.claveSecreta, function(error, success) {
-          categoriasModelo.listarCategorias(req).then(
-            (success) => {
-              res.json(success);
-            },
-            (error) => {
-              return next(error)
-            }
-          );
+    jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				categoriasModelo.listarCategorias(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+			}else if(error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+
     });
   }catch (error) {
     return next(error);

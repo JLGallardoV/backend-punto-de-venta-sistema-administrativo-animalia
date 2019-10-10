@@ -81,10 +81,10 @@ VALUES ('300.00', '1','1'),
 			 ('200.00', '1','1'),
 			('400.00', '1','1');
 
---VENTAS - COMPRAS:
+/*VENTAS/COMPRAS:
 INSERT INTO transacciones (idTransaccion,montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,idVendedor)
 VALUES (NULL, '30.00', '16','34.80','1'),
-			 (NULL, '299.99', '16','347.98','1');
+			 (NULL, '299.99', '16','347.98','1');*/
 
 --COMPENSACIONES:
 INSERT INTO compensaciones (idCompensacion,tipoCompensacion,descripcionCompensacion)
@@ -102,12 +102,20 @@ VALUES ('1', '1','5'),
 			 ('1', '2','2'),
 			 ('2', '2','2');
 
---RELACION COMPENSACIONES-CLIENTES:
-INSERT INTO compensaciones_clientes (idCompensacion,idCliente)
-VALUES ('2', '1'),
-		('1', '2');
 
---PARAMETROS:montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,idVendedor,
---idTipoPago,idProducto,numeroProductosEnTransaccion,idCliente: MAL, EN ESTA TRANSACCION SOLO ACEPTA UN PRODUCTO POR
---TRANSACCION
-CALL transaccionCompleta_procedimiento(40.00,16,44.80,1,1,1,2,1);
+/*INSERT INTO transacciones_clientes (idTransaccion,idCliente)
+VALUES ('2', '1'),
+			 ('1', '2');*/
+
+/*INSERT INTO transacciones_productos (idTransaccion,idProducto,numeroProductosEnTransaccion)
+VALUES ('1', '3','3'),
+			 ('1', '2','2');*
+
+/*INSERT INTO transacciones_tiposDePagos(idTransaccion,idTipoPago)
+VALUES ('2', '1'),
+			 ('1', '2');*/
+
+/*PARAMETROS:
+montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,idVendedor,
+idTipoPago,idTransaccion,idProducto,numeroProductosEnTransaccion,idCliente*/
+--CALL transaccionCompleta_procedimiento(40.00,16,44.80,1,1,1,1,2,1);

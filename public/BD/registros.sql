@@ -15,12 +15,10 @@ INSERT INTO tiposDeProblemas (idTipoProblema,tipoProblema)
 VALUES (NULL, 'caducado'),
 			 (NULL, 'mal estado');
 
-
 --TIPOS DE USUARIOS
 INSERT INTO tiposDeUsuarios (idTipoUsuario,tipoUsuario,descripcionTipoUsuario)
 VALUES (NULL, 'gerente','opciones completas'),
 			 (NULL, 'vendedor', 'opciones limitadas');
-
 
 --TIPOS DE PAGO:
 INSERT INTO tiposDePagos (idTipoPago,tipoPago,viaTipoPago, descripcionTipoPago)
@@ -75,11 +73,11 @@ VALUES (NULL, 'collar de castigo', 'marca granpet','1 corrar de castigo mediano'
 			 (NULL, 'collar de entrenar', 'marca grandog','1 corrar de entrenamiento mediano',NULL,'e.u.','20','100','30.00','23.22','1','1'),
 			 (NULL, 'bulto croqueta adulto', 'marca pedigrie','25 kg','2020-02-10','mexico.','20','100','30.00','23.22','1','1');
 
---COMPRAS:
+/*COMPRAS:
 INSERT INTO compras (montoCompra,idUsuario,idProveedor)
 VALUES ('300.00', '1','1'),
 			 ('200.00', '1','1'),
-			('400.00', '1','1');
+			('400.00', '1','1');*/
 
 --COMPENSACIONES:
 INSERT INTO compensaciones (idCompensacion,tipoCompensacion,descripcionCompensacion)
@@ -91,13 +89,11 @@ INSERT INTO devoluciones (idDevolucion,ivaDevolucion,montoConIvaDevolucion,motiv
 VALUES (NULL, '16','34.80','mal estado, oxidado','1','1','1','1'),
 			 (NULL, '16','347.98','caducada','1','2','1','2');
 
---RELACION 	COMPRAS-PRODUCTOS:
-INSERT INTO compras_productos (idCompra,idProducto,numeroProductosEnCompra)
-VALUES ('1', '1','5'),
-			 ('1', '2','2'),
-			 ('2', '2','2');
-
 /*PARAMETROS:
 montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,idVendedor,
 idTipoPago,idTransaccion,idProducto,numeroProductosEnTransaccion,idCliente*/
-CALL transaccionCompleta_procedimiento(40.00,16,44.80,1,2,2,2,2,2);
+CALL transaccionCompleta_procedimiento(40.00,16,44.80,1,2,6,1,2,1);
+
+/*PARAMETROS:
+montoCompra,idCompra,idProducto,numeroProductosEnTransaccion,idProveedor,idUsuario*/
+CALL compraCompleta_procedimiento(40.00,1,2,2,1,1);

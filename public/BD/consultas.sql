@@ -127,16 +127,3 @@ SELECT compras_productos.idCompra, productos.nombreProducto, compras.idUsuario
 FROM compras_productos
 INNER JOIN productos ON compras_productos.idProducto = productos.idProducto
 INNER JOIN compras ON compras_productos.idCompra = compras.idCompra;
-
-
-
-
-
-
-
-
-
-
-
---PROBANDO EVITAR UN REGISTRO INEXISTENTE:
-`IF NOT EXISTS(SELECT nombreCliente, emailCliente FROM clientes WHERE nombreCliente = '${nombreCliente}' AND emailCliente = '${emailCliente}') INSERT INTO clientes (idCliente,nombreCliente,apellidoPaternoCliente,apellidoMaternoCliente,ciudadCliente,estadoCliente,paisCliente,direccionCliente,coloniaCliente,cpCliente,telefonoCliente,emailCliente, contraseniaCliente, puntuajeCliente,fechaRegistroCliente,fechaActualizacionCliente,idTipoCliente) VALUES ('${nombreCliente}','${apellidoPaternoCliente}','${apellidoMaternoCliente}','${ciudadCliente}','${estadoCliente}','${paisCliente}','${direccionCliente}','${coloniaCliente}','${cpCliente}','${telefonoCliente}','${emailCliente}','${contraseniaCliente}','${puntuajeCliente}','${idTipoCliente}');`

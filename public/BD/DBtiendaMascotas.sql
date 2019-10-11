@@ -338,14 +338,15 @@ CREATE TABLE compensaciones_clientes(
 );
 
 --PROCEDIMIENTO ALMACENADO INSERTAR DATOS A TRANSACCIONES CON SU RESPECTIVO PRODUCTO Y CANTIDAD DE PRODUCTOS
-
---PROCESO
 DELIMITER $$
 CREATE PROCEDURE transaccionCompleta_procedimiento(IN _montoNoIvaTransaccion DECIMAL(7,2) UNSIGNED, IN _ivaTransaccion INT(5) UNSIGNED, IN _montoConIvaTransaccion DECIMAL(7,2) UNSIGNED, IN _idVendedor INT, IN _idTipoPago INT,IN _idTransaccion INT, IN _idProducto INT, IN _numeroProductosEnTransaccion INT, IN _idCliente INT)
 	BEGIN
+		 IF NOT EXISTS(SELECT idTransaccion FROM transacciones WHERE idTransaccion = _idTransaccion) THEN
+		 		SET _idTransaccion = (select count(*) as existenciaTransacciones from transacciones order by idTransaccion desc limit 1) + 1;
+		 END IF;
 
 		 IF _idTransaccion > (select count(*) as existenciaTransacciones from transacciones order by idTransaccion desc limit 1) THEN
-			 INSERT INTO transacciones (montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,idVendedor)
+			 INSERT INTO transacciones (montoNoIvaTransaccion	,ivaTransaccion,montoConIvaTransaccion,idVendedor)
 			 VALUES (_montoNoIvaTransaccion, _ivaTransaccion, _montoConIvaTransaccion, _idVendedor);
 		 END IF;
 
@@ -367,5 +368,27 @@ CREATE PROCEDURE transaccionCompleta_procedimiento(IN _montoNoIvaTransaccion DEC
 			END IF;
 		 END IF;
 
-	END;
+  END;
 	$$
+
+--PROCEDIMIENTO ALMACENADO INSERTAR DATOS A COMPRAS CON SU RESPECTIVO PRODUCTO Y CANTIDAD DE PRODUCTOS
+DELIMITER $$
+CREATE PROCEDURE compraCompleta_procedimiento(IN _montoCompra DECIMAL(7,2) UNSIGNED,IN _idCompra INT,IN _idProducto INT, IN _numeroProductosEnCompra INT,IN _idProveedor INT,IN _idUsuario INT)
+	BEGIN
+			IF NOT EXISTS(SELECT idCompra FROM compras WHERE idCompra = _idCompra) THEN
+				SET _idCompra = (select count(*) as existenciaCompras from compras order by idCompra desc limit 1) + 1;
+ 			END IF;
+
+			IF _idCompra > (select count(*) as existenciaCompras from compras order by idCompra desc limit 1) THEN
+				INSERT INTO compras (montoCompra,idUsuario,idProveedor)
+				VALUES (_montoCompra, _idUsuario, _idProveedor);
+			END IF;
+
+			IF NOT EXISTS(SELECT idCompra, idProducto FROM compras_productos WHERE idCompra = _idCompra AND idProducto = _idProducto) THEN
+				INSERT INTO compras_productos (idCompra,idProducto,numeroProductosEnCompra)
+			 	VALUES (_idCompra,_idProducto, _numeroProductosEnCompra);
+				UPDATE productos SET stockProducto = stockProducto - _numeroProductosEnCompra WHERE idProducto = _idProducto;
+			END IF;
+
+  END;
+  $$

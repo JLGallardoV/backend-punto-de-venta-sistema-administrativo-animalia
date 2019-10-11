@@ -171,7 +171,14 @@
 					"name": "GET listarCategorias",
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJwZWRyaXRvIiwiYXBlbGxpZG9zIjoidmFjYSIsImNvcnJlbyI6InBlZHJpdG9AZ3J1cG8zNzUuY29tIiwiaWF0IjoxNTY5OTY4NzEyfQ.VNSZz1xMnJMtjLqsQHsyr8Be0GjAcr5K1rv_QmTyDiI",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
 						"header": [
@@ -195,7 +202,8 @@
 								"categoriasWS",
 								"listarCategorias"
 							]
-						}
+						},
+						"description": ">Este modulo pretende estandarizar los productos, si bien puede haber distintos tipos de productos, este WS se encarga de clasificarlos ya que esta relacionado con la entidad productos."
 					},
 					"response": []
 				},
@@ -308,7 +316,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "localhost:3000/popularidadProductosWS/listarPopularidadProductos/2019-09-26/2019-09-28",
+							"raw": "localhost:3000/popularidadProductosWS/listarPopularidadProductos/2019-09-26/2019-10-28",
 							"host": [
 								"localhost"
 							],
@@ -317,9 +325,10 @@
 								"popularidadProductosWS",
 								"listarPopularidadProductos",
 								"2019-09-26",
-								"2019-09-28"
+								"2019-10-28"
 							]
-						}
+						},
+						"description": ">Este WS se encarga de clasificar el *\"que tan bueno es un producto\"* entre una fecha de inicio A y una de fin B, los parametros para decir que tan popular es un producto quedán de la siguiente manera:\n\n- De 1 a 20: Malo\n- 21 a 40: bueno\n- mayor a 40: excelente"
 					},
 					"response": []
 				}
@@ -358,7 +367,8 @@
 								"2019-09-26",
 								"2019-09-28"
 							]
-						}
+						},
+						"description": ">Este WS se encarga de clasificar el *\"que tan buen vendedor es un vendedor\"* entre una fecha de inicio A y una de fin B, los parametros para decir que tan popular es un producto quedán de la siguiente manera:\n\n- De 1 a 20: Malo\n- 21 a 40: bueno\n- mayor a 40: excelente"
 					},
 					"response": []
 				}
@@ -517,7 +527,8 @@
 								"almacenesWS",
 								"listarAlmacenes"
 							]
-						}
+						},
+						"description": ">Este modulo simplemente es para en dado caso de que productos no se encuentren en la tienda. Este ws solo muestra una descripcion de la ubicación y el producto esta relacionado con esta."
 					},
 					"response": []
 				},
@@ -547,7 +558,8 @@
 								"almacenesWS",
 								"agregarAlmacen"
 							]
-						}
+						},
+						"description": ">Todos los campos son varchar(100), el esqueleto se ve marcado en el body"
 					},
 					"response": []
 				},
@@ -639,7 +651,8 @@
 								"rendimientoVendedoresWS",
 								"listarVentasVendedores"
 							]
-						}
+						},
+						"description": ">Este WS muestra el numero de ventas entre determinadas fechas A y B que realizo un vendedor"
 					},
 					"response": []
 				}
@@ -667,7 +680,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "localhost:3000/reportesEconomicosWS/listarReportesEconomicos/2019-08-11/2019-09-28/2019-09-23/2019-09-28",
+							"raw": "localhost:3000/reportesEconomicosWS/listarReportesEconomicos/2019-08-11/2019-09-28/2019-09-23/2019-10-28",
 							"host": [
 								"localhost"
 							],
@@ -678,9 +691,10 @@
 								"2019-08-11",
 								"2019-09-28",
 								"2019-09-23",
-								"2019-09-28"
+								"2019-10-28"
 							]
-						}
+						},
+						"description": ">Este WS muestra la utilidad que se consiguio entre determinadas fechas A y B."
 					},
 					"response": []
 				}
@@ -1088,38 +1102,6 @@
 					"response": []
 				},
 				{
-					"name": "GET montoTransacciones",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "localhost:3000/transaccionesWS/montoTransacciones",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"transaccionesWS",
-								"montoTransacciones"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "POST agregarTransaccion",
 					"request": {
 						"method": "POST",
@@ -1133,7 +1115,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"montoNoIvaTransaccion\": \"40\",\n    \"ivaTransaccion\": \"16\",\n    \"montoConIvaTransaccion\": \"44.8\",\n    \"idVendedor\": \"2\",\n    \"idTipoPago\": \"2\",\n    \"idTransaccion\":\"2\",\n    \"idProducto\":\"2\",\n    \"numeroProductosEnTransaccion\":\"4\",\n    \"idCliente\":\"2\"\n}"
+							"raw": "{\n\t\"montoNoIvaTransaccion\": \"40\",\n    \"ivaTransaccion\": \"16\",\n    \"montoConIvaTransaccion\": \"44.8\",\n    \"idVendedor\": \"2\",\n    \"idTipoPago\": \"2\",\n    \"idProducto\":\"1\",\n    \"numeroProductosEnTransaccion\":\"1\",\n    \"idCliente\":\"1\"\n}\n"
 						},
 						"url": {
 							"raw": "localhost:3000/transaccionesWS/agregarTransaccion",
@@ -1144,61 +1126,6 @@
 							"path": [
 								"transaccionesWS",
 								"agregarTransaccion"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "PUT actualizarTransaccion",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"montoNoIvaTransaccion\": \"36\",\n    \"ivaTransaccion\": \"16\",\n    \"montoConIvaTransaccion\": \"37.8\",\n    \"cantidadTransaccion\": \"1\",\n    \"idVendedor\": \"2\",\n    \"idTipoPago\": \"2\"\n}"
-						},
-						"url": {
-							"raw": "localhost:3000/transaccionesWS/actualizarTransaccion/3",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"transaccionesWS",
-								"actualizarTransaccion",
-								"3"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DELETE eliminarTransaccion",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "localhost:3000/transaccionesWS/eliminarTransaccion/3",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"transaccionesWS",
-								"eliminarTransaccion",
-								"3"
 							]
 						}
 					},
@@ -1223,7 +1150,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "localhost:3000/transaccionesWS/filtrarxFechaTransacciones/2019-08-11/2019-09-27",
+							"raw": "localhost:3000/transaccionesWS/filtrarxFechaTransacciones/2019-08-11/2019-10-27",
 							"host": [
 								"localhost"
 							],
@@ -1232,7 +1159,7 @@
 								"transaccionesWS",
 								"filtrarxFechaTransacciones",
 								"2019-08-11",
-								"2019-09-27"
+								"2019-10-27"
 							]
 						}
 					},
@@ -1241,10 +1168,10 @@
 			]
 		},
 		{
-			"name": "detallesTransacciones",
+			"name": "envios",
 			"item": [
 				{
-					"name": "GET listarDetallesTransacciones",
+					"name": "GET listarEnvios",
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -1262,21 +1189,21 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "localhost:3000/detallesTransaccionesWS/listarDetallesTransacciones",
+							"raw": "localhost:3000/enviosWS/listarEnvios",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"detallesTransaccionesWS",
-								"listarDetallesTransacciones"
+								"enviosWS",
+								"listarEnvios"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "POST agregarDetalleTransaccion",
+					"name": "POST agregarEnvio",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -1289,24 +1216,24 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"ciudadDetalleTransaccion\": \"abasolo\",\n    \"estadoDetalleTransaccion\": \"gto\",\n    \"paisDetalleTransaccion\": \"mexico\",\n    \"observacionesDetalleTransaccion\": \"sin descripcion\",\n    \"idTransaccion\":\"2\",\n    \"idMedioEntrega\":\"2\"\n}"
+							"raw": "{\n\t\"ciudadEnvio\": \"abasolo\",\n    \"estadoEnvio\": \"gto\",\n    \"paisEnvio\": \"mexico\",\n    \"observacionesEnvio\": \"sin descripcion\",\n    \"idTransaccion\":\"2\",\n    \"idMedioEntrega\":\"2\"\n}"
 						},
 						"url": {
-							"raw": "localhost:3000/detallesTransaccionesWS/agregardetalleTransaccion",
+							"raw": "localhost:3000/enviosWS/agregarEnvio",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"detallesTransaccionesWS",
-								"agregardetalleTransaccion"
+								"enviosWS",
+								"agregarEnvio"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "PUT actualizarDetalleTransaccion",
+					"name": "PUT actualizarEnvio",
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -1319,17 +1246,17 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"ciudadDetalleTransaccion\": \"valle de stgo\",\n    \"estadoDetalleTransaccion\": \"gto\",\n    \"paisDetalleTransaccion\": \"mexico\",\n    \"observacionesDetalleTransaccion\": \"sin descripcion\",\n    \"idTransaccion\":\"2\",\n    \"idMedioEntrega\":\"2\"\n}"
+							"raw": "{\n\t\"ciudadEnvio\": \"silao\",\n    \"estadoEnvio\": \"gto\",\n    \"paisEnvio\": \"mexico\",\n    \"observacionesEnvio\": \"sin descripcion\",\n    \"idTransaccion\":\"2\",\n    \"idMedioEntrega\":\"2\"\n}"
 						},
 						"url": {
-							"raw": "localhost:3000/detallesTransaccionesWS/actualizarDetalleTransaccion/1",
+							"raw": "localhost:3000/enviosWS/actualizarEnvio/1",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"detallesTransaccionesWS",
-								"actualizarDetalleTransaccion",
+								"enviosWS",
+								"actualizarEnvio",
 								"1"
 							]
 						}
@@ -1337,7 +1264,7 @@
 					"response": []
 				},
 				{
-					"name": "DELETE eliminarDetalleTransaccion",
+					"name": "DELETE eliminarEnvio",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -1346,14 +1273,14 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "localhost:3000/detallesTransaccionesWS/eliminarDetalleTransaccion/1",
+							"raw": "localhost:3000/enviosWS/eliminarEnvio/1",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"detallesTransaccionesWS",
-								"eliminarDetalleTransaccion",
+								"enviosWS",
+								"eliminarEnvio",
 								"1"
 							]
 						}
@@ -1515,7 +1442,8 @@
 								"compensacionesWS",
 								"listarCompensaciones"
 							]
-						}
+						},
+						"description": ">Este WS unicamente define los tipos de compensaciones que se darán en caso de tener una devolución."
 					},
 					"response": []
 				},
@@ -1533,7 +1461,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"tipoCompensacion\": \"cupon\",\n    \"idDevolucion\": 1\n}"
+							"raw": "{\n    \"tipoCompensacion\": \"cupon\",\n    \"descripcionCompensacion\": \"compras 2x1 en toda la tienda\"\n}"
 						},
 						"url": {
 							"raw": "localhost:3000/compensacionesWS/agregarCompensacion",
@@ -1563,7 +1491,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"tipoCompensacion\": \"cupon\",\n    \"idDevolucion\": 2\n}"
+							"raw": "{\n    \"tipoCompensacion\": \"cupon\",\n    \"descripcionCompensacion\": \"compras 2x1 en toda la tienda\"\n}"
 						},
 						"url": {
 							"raw": "localhost:3000/compensacionesWS/actualizarCompensacion/3",
@@ -1607,130 +1535,6 @@
 			]
 		},
 		{
-			"name": "transacciones_productos",
-			"item": [
-				{
-					"name": "GET listarTransacciones_productos",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "localhost:3000/transaccionesWS/listarTransacciones_productos",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"transaccionesWS",
-								"listarTransacciones_productos"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "POST agregarTransaccion_producto",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"idTransaccion\":1,\n\t\"idProducto\":1,\n\t\"numeroProductosEnTransaccion\":\"2\"\n}"
-						},
-						"url": {
-							"raw": "localhost:3000/transaccionesWS/agregarTransaccion_producto",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"transaccionesWS",
-								"agregarTransaccion_producto"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "PUT actualizarTransaccion_producto",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"idTransaccion\":\"1\",\n\t\"idProducto\":\"1\",\n\t\"numeroProductosEnTransaccion\":\"5\"\n}"
-						},
-						"url": {
-							"raw": "localhost:3000/transaccionesWS/actualizarTransaccion_producto/1/1",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"transaccionesWS",
-								"actualizarTransaccion_producto",
-								"1",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DELETE eliminarTransaccion_producto",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "localhost:3000/transaccionesWS/eliminarTransaccion_producto/1/1",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"transaccionesWS",
-								"eliminarTransaccion_producto",
-								"1",
-								"1"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "transacciones_clientes",
 			"item": [
 				{
@@ -1761,7 +1565,8 @@
 								"transaccionesWS",
 								"listarTransacciones_clientes"
 							]
-						}
+						},
+						"description": ">Este WS muestra informacion acerca de las transacciones, ¿a quien se le vendio? ¿cuando fue fecha de transaccion? ¿que producto se compro?"
 					},
 					"response": []
 				},
@@ -2037,7 +1842,8 @@
 								"usuariosWS",
 								"agregarUsuario"
 							]
-						}
+						},
+						"description": ">Este WS esta dedicado principalmente a la insercion de un nuevo usuario (en el rol de punto de venta del sistema).\n\n>**NOTA:** No puede haber mas de 1 usuario con el mismo nombre de Usuario."
 					},
 					"response": []
 				},
@@ -2129,7 +1935,8 @@
 								"accesosWS",
 								"listarAccesos"
 							]
-						}
+						},
+						"description": ">Este modulo tiene la funcionde una bitacora de accesos, y sirve para verificar\nel acceso de cada usuario al sistema, asi como sus acciones."
 					},
 					"response": []
 				},
@@ -2158,61 +1965,6 @@
 							"path": [
 								"accesosWS",
 								"agregarAcceso"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "PUT actualizarAcceso",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"accionAcceso\": \"editar registro\",\n\t\"idUsuario\": \"1\"\n}"
-						},
-						"url": {
-							"raw": "localhost:3000/accesosWS/actualizarAcceso/1",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"accesosWS",
-								"actualizarAcceso",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DELETE eliminarAcceso",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "localhost:3000/accesosWS/eliminarAcceso/1",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"accesosWS",
-								"eliminarAcceso",
-								"1"
 							]
 						}
 					},
@@ -2251,7 +2003,8 @@
 								"comprasWS",
 								"listarCompras"
 							]
-						}
+						},
+						"description": ">Este WS muestra las diferentes compras existentes, quien fue el proveedor, que producto se compro y quien lo compro"
 					},
 					"response": []
 				},
@@ -2274,7 +2027,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "localhost:3000/comprasWS/filtrarxFechaCompras/2019-09-23/2019-09-24",
+							"raw": "localhost:3000/comprasWS/filtrarxFechaCompras/2019-09-23/2019-10-24",
 							"host": [
 								"localhost"
 							],
@@ -2283,41 +2036,10 @@
 								"comprasWS",
 								"filtrarxFechaCompras",
 								"2019-09-23",
-								"2019-09-24"
+								"2019-10-24"
 							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET montoCompras",
-					"request": {
-						"auth": {
-							"type": "noauth"
 						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "localhost:3000/comprasWS/montoCompras",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"comprasWS",
-								"montoCompras"
-							]
-						}
+						"description": ">Este WS calcula el monto total de todas las compras entre una fecha A y una fecha B"
 					},
 					"response": []
 				},
@@ -2346,61 +2068,6 @@
 							"path": [
 								"comprasWS",
 								"agregarCompra"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "PUT actualizarCompra",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"montoCompra\": \"1000.00\"\n}"
-						},
-						"url": {
-							"raw": "localhost:3000/comprasWS/actualizarCompra/1",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"comprasWS",
-								"actualizarCompra",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DELETE eliminarCompra",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "localhost:3000/comprasWS/eliminarCompra/1",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"comprasWS",
-								"eliminarCompra",
-								"1"
 							]
 						}
 					},
@@ -2439,7 +2106,8 @@
 								"clientesWS",
 								"listarClientes"
 							]
-						}
+						},
+						"description": ">En este WS se muestran todas las propiedades de un cliente a excepcion de su contraseña."
 					},
 					"response": []
 				},
@@ -2472,7 +2140,8 @@
 								"listarPuntosClientes",
 								""
 							]
-						}
+						},
+						"description": ">Este WS muestra los puntos que tiene cada cliente, puntos que se canjearan posteriormente por premios. Para poder sacar los el total de puntos se hizo la siguiente operacion:\n\n- puntosTotales = puntosTotales + (puntosProducto * numeroDeProductosEnTransaccion)\n\n>Donde puntosTotales funje como un acumulador cada que uno o varios productos del mismo tipo son comprados se van acumulando en esta variable con el valor que ya se tenia. En SQL:\n\n- SUM(puntosProductos * numeroDeProductosEnTransaccion) GROUP BY nombreCliente"
 					},
 					"response": []
 				},
@@ -2490,7 +2159,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"nombreCliente\": \"mario\",\n    \"apellidoPaternoCliente\": \"perez\",\n    \"apellidoMaternoCliente\": \"figueroa\",\n    \"ciudadCliente\": \"abasolo\",\n    \"estadoCliente\": \"gto\",\n    \"paisCliente\": \"mexico\",\n    \"direccionCliente\": \"juarez 101\",\n    \"coloniaCliente\": \"juarez\",\n    \"cpCliente\": \"36970\",\n    \"telefonoCliente\": \"4291093598\",\n    \"emailCliente\": \"dulce@hotmial.com\",\n    \"contraseniaCliente\": \"1243\",\n    \"puntuajeCliente\": \"32\",\n    \"idTipoCliente\": \"1\"\n}"
+							"raw": "{\n\t\"nombreCliente\": \"cliente2\",\n    \"apellidoPaternoCliente\": \"perez\",\n    \"apellidoMaternoCliente\": \"figueroa\",\n    \"ciudadCliente\": \"abasolo\",\n    \"estadoCliente\": \"gto\",\n    \"paisCliente\": \"mexico\",\n    \"direccionCliente\": \"juarez 101\",\n    \"coloniaCliente\": \"juarez\",\n    \"cpCliente\": \"36970\",\n    \"telefonoCliente\": \"4291093598\",\n    \"emailCliente\": \"cliente2@cliente2.com\",\n    \"contraseniaCliente\": \"1243\",\n    \"puntuajeCliente\": \"32\",\n    \"idTipoCliente\": \"1\"\n}"
 						},
 						"url": {
 							"raw": "localhost:3000/clientesWS/agregarCliente",
@@ -2502,7 +2171,8 @@
 								"clientesWS",
 								"agregarCliente"
 							]
-						}
+						},
+						"description": ">El campo tipoCliente es forzoso y hace referencia a si el cliente es:\n\n- Premium : idTipoCliente = 1\n- Premiado : idTipoCliente = 2\n- Normal : idTipoCliente = 3\n\n>**NOTA:** Un cliente no se puede dar de alta mas de 1 vez, para esto se valido por email debido a:\n- Sera la manera de loguearse por parte de los clientes.\n- Es muy dificil que un distinto usuarios coincidan en su email, la primer validación viene desde el servidor de correo de este."
 					},
 					"response": []
 				},
@@ -2594,7 +2264,42 @@
 								"carritosWS",
 								"listarCarritos"
 							]
-						}
+						},
+						"description": ">Es buena idea dejar un select * from de carritos, esto por parte del administrador del sistema, asi se puede dar cuenta de forma mas detallada los montos, numero de productos y clientes (en relacion con el carrito) y de alguna u otra forma la actividad de sus clientes por medio de sus gustos o proximas compras."
+					},
+					"response": []
+				},
+				{
+					"name": "GET listarCarritoUsuario",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/carritosWS/listarCarritoUsuario/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"carritosWS",
+								"listarCarritoUsuario",
+								"1"
+							]
+						},
+						"description": ">De igual manera se requiere select * from where para cada usuario con su respectivo carrito, es decir, este WS prentede mostrar unicamente el carrito del usuario en sesion."
 					},
 					"response": []
 				},
@@ -2716,7 +2421,8 @@
 								"vendedoresWS",
 								"listarVendedores"
 							]
-						}
+						},
+						"description": ">Este WS muestra la informacion del vendedor unicamente, datos personales. Este WS pretende almacenar informacion tanto de vendedores que estan capacitados para usar el sistema como para aquellos que simplemente son vendedores de parador."
 					},
 					"response": []
 				},
@@ -2734,7 +2440,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"nombreVendedor\": \"vendedor3\",\n    \"ciudadVendedor\": \"cuaramaro\",\n    \"estadoVendedor\": \"gto\",\n    \"direccionVendedor\": \"primavera 217\",\n    \"telefonoVendedor\": \"4291226929\",\n    \"emailVendedor\": \"vendedor1@vendedor1.com\",\n    \"fechaNacimientoVendedor\": \"2019-08-13T05:00:00.000Z\",\n    \"rfcVendedor\": \"JKSLEOR\",\n    \"numeroSeguroSocialVendedor\": \"234211\",\n    \"antiguedadVendedor\": \"4\"\n}"
+							"raw": "{\n\t\"nombreVendedor\": \"vendedor3\",\n    \"ciudadVendedor\": \"cuaramaro\",\n    \"estadoVendedor\": \"gto\",\n    \"direccionVendedor\": \"primavera 217\",\n    \"telefonoVendedor\": \"4291226929\",\n    \"emailVendedor\": \"vendedor1@vendedor1.com\",\n    \"fechaNacimientoVendedor\": \"1969-08-13\",\n    \"rfcVendedor\": \"JKSLEOR\",\n    \"numeroSeguroSocialVendedor\": 234213,\n    \"antiguedadVendedor\": 4\n}"
 						},
 						"url": {
 							"raw": "localhost:3000/vendedoresWS/agregarVendedor",
@@ -2746,7 +2452,8 @@
 								"vendedoresWS",
 								"agregarVendedor"
 							]
-						}
+						},
+						"description": ">La mayoria de los datos son varchar(100) a excepcion del numero de seguro social y antiguedad del vendedor estos ultimos 2 son numeros enteros. Por ultimo el campo fechaNacimientoVendedor es de tipo date y tiene un formato:\n- año-mes-dia: 1999-10-09"
 					},
 					"response": []
 				},
@@ -2886,10 +2593,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"nombreProveedor\": \"proveedor3\",\n    \"ciudadProveedor\": \"abdul\",\n    \"estadoProveedor\": \"guato\",\n    \"paisProveedor\": \"malasia\",\n    \"direccionProveedor\": \"alaa 210\",\n    \"telefonoProveedor\": \"2121230987\",\n    \"emailProveedor\": \"proveedor1@proveedor\",\n    \"descripcionProveedor\": \"croquetas premium ba\"\n}"
+							"raw": "{\n\t\"nombreProveedor\": \"proveedor2\",\n    \"ciudadProveedor\": \"abdul\",\n    \"estadoProveedor\": \"guana\",\n    \"paisProveedor\": \"india\",\n    \"direccionProveedor\": \"alaa 210\",\n    \"telefonoProveedor\": \"2121230987\",\n    \"emailProveedor\": \"proveedor1@proveedor\",\n    \"descripcionProveedor\": \"croquetas premium ba\"\n}"
 						},
 						"url": {
-							"raw": "localhost:3000/proveedoresWS/actualizarProveedor/3",
+							"raw": "localhost:3000/proveedoresWS/actualizarProveedor/2",
 							"host": [
 								"localhost"
 							],
@@ -2897,7 +2604,7 @@
 							"path": [
 								"proveedoresWS",
 								"actualizarProveedor",
-								"3"
+								"2"
 							]
 						}
 					},
@@ -2960,7 +2667,8 @@
 								"productosWS",
 								"listarProductos"
 							]
-						}
+						},
+						"description": ">Este WS muestra los productos que existen en el sistema, la mayoria de datos de de tipo varchar a excepcion de:\n- stock: entero\n- puntos: entero\n- precioUnitario: flotante\n- precioMayoreo: flotante\n- fechaCaducidad: data (formato: año - mes -dia)\n\n>**Nota:** En caso de que un producto no tenga fecha de caducidad se dejará valor nulo"
 					},
 					"response": []
 				},
@@ -2990,7 +2698,8 @@
 								"productosWS",
 								"agregarProducto"
 							]
-						}
+						},
+						"description": ">Tipos de datos para el body:\n\n- stock: entero\n- puntos: entero\n- precioUnitario: flotante\n- precioMayoreo: flotante\n- fechaCaducidad: data (formato: año - mes -dia)\n\n>**Nota:** En caso de que un producto no tenga fecha de caducidad se dejará valor nulo"
 					},
 					"response": []
 				},

@@ -343,20 +343,29 @@ CREATE TABLE compensaciones_clientes(
 DELIMITER $$
 CREATE PROCEDURE transaccionCompleta_procedimiento(IN _montoNoIvaTransaccion DECIMAL(7,2) UNSIGNED, IN _ivaTransaccion INT(5) UNSIGNED, IN _montoConIvaTransaccion DECIMAL(7,2) UNSIGNED, IN _idVendedor INT, IN _idTipoPago INT,IN _idTransaccion INT, IN _idProducto INT, IN _numeroProductosEnTransaccion INT, IN _idCliente INT)
 	BEGIN
-		 IF _idTransaccion > (select ifnull(idTransaccion,0) from transacciones order by idTransaccion desc limit 1) THEN
+
+		 IF _idTransaccion > (select count(*) as existenciaTransacciones from transacciones order by idTransaccion desc limit 1) THEN
 			 INSERT INTO transacciones (montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,idVendedor)
 			 VALUES (_montoNoIvaTransaccion, _ivaTransaccion, _montoConIvaTransaccion, _idVendedor);
 		 END IF;
-		 INSERT INTO transacciones_productos (idTransaccion,idProducto, numeroProductosEnTransaccion)
-		 VALUES (_idTransaccion,_idProducto, _numeroProductosEnTransaccion);
 
-		 INSERT INTO transacciones_tiposDePagos(idTransaccion,idTipoPago)
-		 VALUES (_idTransaccion,_idTipoPago);
-		 IF _idTransaccion
-		 INSERT INTO transacciones_clientes(idTransaccion,idCliente)
-		 VAlUES (_idTransaccion,_idCliente);
+		 IF NOT EXISTS(SELECT idTransaccion, idProducto FROM transacciones_productos WHERE idTransaccion = _idTransaccion AND idProducto = _idProducto) THEN
+		 	INSERT INTO transacciones_productos (idTransaccion,idProducto, numeroProductosEnTransaccion)
+		 	VALUES (_idTransaccion,_idProducto, _numeroProductosEnTransaccion);
+			UPDATE productos SET stockProducto = stockProducto - _numeroProductosEnTransaccion WHERE idProducto = _idProducto;
+		 END IF;
 
-		 UPDATE productos SET stockProducto = stockProducto - _numeroProductosEnTransaccion WHERE idProducto = _idProducto;
+		 IF NOT EXISTS(SELECT idTransaccion, idTipoPago FROM transacciones_tiposDePagos WHERE idTransaccion = _idTransaccion AND idTipoPago = _idTipoPago) THEN
+		 	INSERT INTO transacciones_tiposDePagos(idTransaccion,idTipoPago)
+		 	VALUES (_idTransaccion,_idTipoPago);
+		 END IF;
+
+		 IF NOT EXISTS(SELECT idTransaccion, idCliente FROM transacciones_clientes WHERE idTransaccion = _idTransaccion AND idCliente = _idCliente) THEN
+		 	IF NOT EXISTS(SELECT idTransaccion FROM transacciones_clientes WHERE idTransaccion = _idTransaccion) THEN
+		 		INSERT INTO transacciones_clientes(idTransaccion,idCliente)
+		 		VAlUES (_idTransaccion,_idCliente);
+			END IF;
+		 END IF;
 
 	END;
 	$$

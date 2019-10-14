@@ -20,7 +20,7 @@ exports.listarTransacciones = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'SELECT transacciones.idTransaccion, transacciones.montoNoIvaTransaccion, transacciones.ivaTransaccion, transacciones.montoConIvaTransaccion, transacciones.fechaTransaccion, vendedores.nombreVendedor FROM transacciones INNER JOIN vendedores ON transacciones.idVendedor = vendedores.idVendedor WHERE vendedores.estatusBL = 1;';
+        var query = 'SELECT transacciones_productos.idTransaccion, productos.nombreProducto, transacciones.montoConIvaTransaccion, transacciones.fechaTransaccion, transacciones_productos.numeroProductosEnTransaccion, vendedores.nombreVendedor, clientes.nombreCliente FROM transacciones_productos INNER JOIN productos ON transacciones_productos.idProducto = productos.idProducto INNER JOIN transacciones ON transacciones_productos.idTransaccion = transacciones.idTransaccion INNER JOIN vendedores ON transacciones.idTransaccion = vendedores.idVendedor INNER JOIN transacciones_clientes ON transacciones_productos.idTransaccion = transacciones_clientes.idTransaccion INNER JOIN clientes ON transacciones_clientes.idCliente = clientes.idCliente;';
 
         //ejecutamos el query
         database.query(query, function(error, success) {
@@ -70,12 +70,12 @@ exports.agregarTransaccion = function(req) {
         let montoConIvaTransaccion = body.montoConIvaTransaccion;
         let idVendedor = body.idVendedor;
         let idTipoPago = body.idTipoPago;
+        let idTransaccion = body.idTransaccion;
         let idProducto = body.idProducto;
         let numeroProductosEnTransaccion = body.numeroProductosEnTransaccion;
         let idCliente = body.idCliente;
-        let query = `CALL transaccionCompleta_procedimiento('${montoNoIvaTransaccion}','${ivaTransaccion},'${montoConIvaTransaccion}','${idVendedor}','${idTipoPago}','${idProducto}','${numeroProductosEnTransaccion}','${idCliente}');`;
 
-        console.log("idProducto: ",idProducto, "\n numeroProductosEnTransaccion: ", numeroProductosEnTransaccion);
+        let query = `CALL transaccionCompleta_procedimiento('${montoNoIvaTransaccion}','${ivaTransaccion}','${montoConIvaTransaccion}','${idVendedor}','${idTipoPago}','${idTransaccion}','${idProducto}','${numeroProductosEnTransaccion}','${idCliente}');`;
 
         database.query(query, function(error, success) {
           if (error) {

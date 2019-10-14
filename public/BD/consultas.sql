@@ -24,21 +24,6 @@ INNER JOIN vendedores ON transacciones.idVendedor = vendedores.idVendedor
 WHERE fechaTransaccion between '2019-09-23 00:00:00' and '2019-09-26 23:59:59'
 group by nombreVendedor order by vendidos DESC;
 
-
-/*TRANSACCIONES_PRODUCTOS:
-SELECT transacciones_productos.idTransaccion, productos.nombreProducto, transacciones.fechaTransaccion
-FROM transacciones_productos
-INNER JOIN productos ON transacciones_productos.idProducto = productos.idProducto
-INNER JOIN transacciones ON transacciones_productos.idTransaccion = transacciones.idTransaccion;*/
-
---TRANSACCIONES_CLIENTES: MAL SOLO DEJA VER UNA TRANSACCION X PRODUCTO
-  SELECT transacciones_clientes.idTransaccion, clientes.nombreCliente, transacciones.fechaTransaccion, productos.nombreProducto
-  FROM transacciones_clientes
-  INNER JOIN clientes ON transacciones_clientes.idCliente = clientes.idCliente
-  INNER JOIN productos ON transacciones_clientes.idTransaccion = productos.idProducto
-  INNER JOIN transacciones ON transacciones_clientes.idTransaccion = transacciones.idTransaccion;
-
-
 --PUNTOS POR NUMERO DE COMPRAS A CLIENTES - ALTERNATIVA:
 SELECT clientes.nombreCliente, clientes.idCliente, clientes.puntuajeCliente, count(*) as compras
 FROM transacciones_clientes
@@ -58,6 +43,15 @@ INNER JOIN transacciones_productos ON transacciones_clientes.idTransaccion = tra
 group by nombreCliente;
 
 --A CONTINUACION SE MUESTRAN LOS INNER JOINS ADECUADOS PARA ESPECIFICAR LAS ENTIDADES DE LOS VALORES DE ID EN LAS RELACIONES:
+
+--TRANSACCIONES_PRODUCTOS_CLIENTES:
+    SELECT transacciones_productos.idTransaccion, productos.nombreProducto, transacciones.montoConIvaTransaccion, transacciones.fechaTransaccion, transacciones_productos.numeroProductosEnTransaccion, vendedores.nombreVendedor, clientes.nombreCliente
+    FROM transacciones_productos
+    INNER JOIN productos ON transacciones_productos.idProducto = productos.idProducto
+    INNER JOIN transacciones ON transacciones_productos.idTransaccion = transacciones.idTransaccion
+    INNER JOIN vendedores ON transacciones.idTransaccion = vendedores.idVendedor
+    INNER JOIN transacciones_clientes ON transacciones_productos.idTransaccion = transacciones_clientes.idTransaccion
+    INNER JOIN clientes ON transacciones_clientes.idCliente = clientes.idCliente;
 
 --ACCESOS - ¿QUIEN ACCEDIO?
 SELECT accesos.idAcceso, accesos.fechaAcceso, accesos.accionAcceso, usuarios.nombreUsuario
@@ -81,9 +75,9 @@ WHERE clientes.estatusBL = 1;
 SELECT devoluciones.idDevolucion,productos.nombreProducto,devoluciones.montoConIvaDevolucion,devoluciones.fechaDevolucion,devoluciones.motivoDevolucion,clientes.nombreCliente,tiposDeProblemas.tipoProblema,compensaciones.tipoCompensacion
 FROM devoluciones
 INNER JOIN clientes ON devoluciones.idCliente = clientes.idCliente
-INNER JOIN compensaciones ON devoluciones.idDevolucion = compensaciones.idCompensacion
-INNER JOIN productos ON devoluciones.idDevolucion = productos.idProducto
-INNER JOIN tiposDeProblemas ON devoluciones.idDevolucion = tiposDeProblemas.idTipoProblema;
+INNER JOIN compensaciones ON devoluciones.idCompensacion = compensaciones.idCompensacion
+INNER JOIN productos ON devoluciones.idProducto = productos.idProducto
+INNER JOIN tiposDeProblemas ON devoluciones.idTipoProblema = tiposDeProblemas.idTipoProblema;
 
 --PRODUCTOS - ¿A QUE CATEGORIA PERTENECE? ¿EN CUAL ALMACEN ESTA?
 SELECT productos.idProducto,productos.nombreProducto,productos.detalleProducto,productos.contenidoProducto,productos.fechaCaducidadProducto,productos.paisOrigenProducto,productos.stockProducto,productos.puntosProducto,productos.precioUnitarioProducto,productos.precioMayoreoProducto,categorias.nombreCategoria,almacenes.ciudadAlmacen,almacenes.telefonoAlmacen
@@ -109,21 +103,19 @@ FROM envios
 INNER JOIN mediosDeEntrega ON envios.idMedioEntrega = mediosDeEntrega.idMedioEntrega;
 
 
---COMPRAS - ¿QUIEN HIZO LA COMPRA? ¿A QUIEN SE LE REALIZO LA COMPRA?: PROCESO
---OPC 1
-SELECT compras_productos.idCompra, productos.nombreProducto, usuarios.nombreUsuario
+/*COMPRAS - ¿QUIEN HIZO LA COMPRA? ¿A QUIEN SE LE REALIZO LA COMPRA?: PROCESO
+OPC 1: ALTERNATIVA
+SELECT compras_productos.idCompra, productos.nombreProducto, usuarios.nombreUsuario, compras_productos.numeroProductosEnCompra
 FROM compras_productos
 INNER JOIN productos ON compras_productos.idProducto = productos.idProducto
 INNER JOIN
-(compras INNER JOIN usuarios ON compras.idUsuario = usuarios.idUsuario);
---OPC 2
-  SELECT compras.idCompra, productos.nombreProducto, usuarios.nombreUsuario, proveedores.nombreProveedor
+(compras INNER JOIN usuarios ON compras.idUsuario = usuarios.idUsuario)
+GROUP BY idCompra;*/
+
+--OPC 2: EN USO
+  SELECT compras.idCompra, productos.nombreProducto, usuarios.nombreUsuario, compras_productos.numeroProductosEnCompra, proveedores.nombreProveedor
   FROM compras
   INNER JOIN proveedores ON compras.idProveedor = proveedores.idProveedor
   INNER JOIN usuarios ON compras.idUsuario = usuarios.idUsuario
-  INNER JOIN productos ON compras.idCompra = productos.idProducto;
---OPC 3
-SELECT compras_productos.idCompra, productos.nombreProducto, compras.idUsuario
-FROM compras_productos
-INNER JOIN productos ON compras_productos.idProducto = productos.idProducto
-INNER JOIN compras ON compras_productos.idCompra = compras.idCompra;
+  INNER JOIN compras_productos ON compras.idCompra = compras_productos.idCompra
+  INNER JOIN productos ON compras_productos.idCompra = productos.idProducto;

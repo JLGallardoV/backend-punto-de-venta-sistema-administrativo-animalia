@@ -1,8 +1,8 @@
 --Nota: SE USO ON DELETE CASCADE PARA QUE AL MOMENTO DE ELIMINAR UN REGISTRO QUE ESTE SINCRONIZADO MEDIANTE RELACIONES, NO AFECTE Y ELIMINE ORDENADAMENTE CADA RELACION DONDE SE HAGA PRESENTE.
 --anexar a datos importantes fecha de registro y modificacion.
-CREATE DATABASE tiendaMascotas;
+CREATE DATABASE tiendaMascotas_JLGallardoV;
 
-USE tiendaMascotas;
+USE tiendaMascotas_JLGallardoV;
 
 CREATE TABLE premios(
 	idPremio INT UNSIGNED AUTO_INCREMENT,
@@ -387,7 +387,7 @@ CREATE PROCEDURE compraCompleta_procedimiento(IN _montoCompra DECIMAL(7,2) UNSIG
 			IF NOT EXISTS(SELECT idCompra, idProducto FROM compras_productos WHERE idCompra = _idCompra AND idProducto = _idProducto) THEN
 				INSERT INTO compras_productos (idCompra,idProducto,numeroProductosEnCompra)
 			 	VALUES (_idCompra,_idProducto, _numeroProductosEnCompra);
-				UPDATE productos SET stockProducto = stockProducto - _numeroProductosEnCompra WHERE idProducto = _idProducto;
+				UPDATE productos SET stockProducto = stockProducto + _numeroProductosEnCompra WHERE idProducto = _idProducto;
 			END IF;
 
   END;

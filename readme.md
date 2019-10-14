@@ -30,3 +30,9 @@
 > 2. *El Verify de los JWT ya salio el proceso por completo y respeta el token que es, pero por el momento solo la tengo en el listar categorias, me falta ese mismo codigo incrustrarlo en cada uno de los demas WS, pero pues es lo mismo*
 
 # Gracias
+
+
+
+###PENDIENTES:
+
+- Verificar el listar compras.

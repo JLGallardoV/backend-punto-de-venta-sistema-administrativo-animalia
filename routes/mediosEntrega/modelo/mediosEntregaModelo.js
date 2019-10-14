@@ -20,7 +20,7 @@ exports.listarMediosEntrega = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'select idMedioEntrega,medioEntrega,viaMedioEntrega,descripcionMedioEntrega from mediosDeEntrega where estatusBL = 1';
+        var query = 'select idMedioEntrega,viaMedioEntrega,descripcionMedioEntrega from mediosDeEntrega where estatusBL = 1';
 
         //ejecutamos el query
         database.query(query, function(error, success) {

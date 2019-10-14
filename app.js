@@ -52,7 +52,7 @@ app.use(mysqlConnection(mysql, {
 	host: 'localhost',
 	user: 'root',
 	password: '',
-	database: 'tiendaMascotas'
+	database: 'tiendaMascotas_JLGallardoV'
 }, 'request'));
 
 //usar body parser en mi aplicación express en formato json

@@ -19,7 +19,7 @@ exports.listarCompras = function(req) {
         });
       } else {
         //muestra las diferentes compras existentes, quien fue el proveedor, que producto se compro y quien lo compro
-        var query = 'SELECT compras.idCompra, proveedores.idProveedor, compras.fechaCompra, productos.nombreProducto, usuarios.nombreUsuario FROM compras INNER JOIN proveedores ON compras.idProveedor = proveedores.idProveedor INNER JOIN usuarios ON compras.idUsuario = usuarios.idUsuario INNER JOIN productos ON compras.idCompra = productos.idCompra;';
+        var query = '  SELECT compras.idCompra, productos.nombreProducto, usuarios.nombreUsuario, compras_productos.numeroProductosEnCompra, proveedores.nombreProveedor FROM compras INNER JOIN proveedores ON compras.idProveedor = proveedores.idProveedor INNER JOIN usuarios ON compras.idUsuario = usuarios.idUsuario INNER JOIN compras_productos ON compras.idCompra = compras_productos.idCompra INNER JOIN productos ON compras_productos.idCompra = productos.idProducto;';
 
         //ejecutamos el query
         database.query(query, function(error, success) {
@@ -63,16 +63,16 @@ exports.agregarCompra = function(req) {
           respuesta: error
         });
       } else {
-        let query = 'insert into compras set ?';
+        let montoCompra = body.montoCompra;
+        let idCompra = body.idCompra;
+        let idProducto = body.idProducto;
+        let numeroProductosEnCompra = body.numeroProductosEnCompra;
+        let idProveedor = body.idProveedor;
+        let idUsuario = body.idUsuario;
 
-        let requestBody = {
-          montoCompra: body.montoCompra,
-          idUsuario: body.idUsuario,
-          idProveedor: body.idProveedor,
-          idReporteEconomico: body.idReporteEconomico
-        };
+        let query = `CALL compraCompleta_procedimiento('${montoCompra}','${idCompra}','${idProducto}','${numeroProductosEnCompra}','${idProveedor}','${idUsuario}');`;
 
-        database.query(query, requestBody, function(error, success) {
+        database.query(query, function(error, success) {
           if (error) {
             reject({
               estatus: -1,

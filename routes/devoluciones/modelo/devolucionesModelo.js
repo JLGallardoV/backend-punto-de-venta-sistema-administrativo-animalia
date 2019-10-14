@@ -20,7 +20,7 @@ exports.listarDevoluciones = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'SELECT devoluciones_productos.idDevolucion,productos.nombreProducto,devoluciones.montoConIvaDevolucion,devoluciones.fechaDevolucion,devoluciones.motivoDevolucion,clientes.nombreCliente,tiposDeProblemas.tipoProblema,compensaciones.tipoCompensacion FROM devoluciones INNER JOIN clientes ON devoluciones.idDevolucion = clientes.idCliente INNER JOIN compensaciones ON devoluciones.idDevolucion = compensaciones.idCompensacion INNER JOIN productos ON devoluciones.idDevolucion = productos.idProducto INNER JOIN tiposDeProblemas ON devoluciones.idDevolucion = tiposDeProblemas.idTipoProblema;';
+        var query = 'SELECT devoluciones.idDevolucion,productos.nombreProducto,devoluciones.montoConIvaDevolucion,devoluciones.fechaDevolucion,devoluciones.motivoDevolucion,clientes.nombreCliente,tiposDeProblemas.tipoProblema,compensaciones.tipoCompensacion FROM devoluciones INNER JOIN clientes ON devoluciones.idCliente = clientes.idCliente INNER JOIN compensaciones ON devoluciones.idCompensacion = compensaciones.idCompensacion INNER JOIN productos ON devoluciones.idProducto = productos.idProducto INNER JOIN tiposDeProblemas ON devoluciones.idTipoProblema = tiposDeProblemas.idTipoProblema;';
 
         //ejecutamos el query
         database.query(query, function(error, success) {
@@ -71,7 +71,9 @@ exports.agregarDevolucion = function(req) {
           montoConIvaDevolucion: body.montoConIvaDevolucion,
           motivoDevolucion: body.motivoDevolucion,
           idCliente : body.idCliente,
-          idTipoProblema: body.idTipoProblema
+          idTipoProblema: body.idTipoProblema,
+          idProducto: body.idProducto,
+          idCompensacion: body.idCompensacion
         };
 
         database.query(query, requestBody, function(error, success) {

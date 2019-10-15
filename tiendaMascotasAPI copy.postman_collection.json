@@ -233,7 +233,8 @@
 								"categoriasWS",
 								"agregarCategoria"
 							]
-						}
+						},
+						"description": ">Las categorias son definidas segun el crecimiento de la tienda, pero por lo pronto las categorias son las siguientes:\n\n- nombre categoria: mascotas\n\t- subcategoria: perros,gatos,reptiles,roedores,aves.\n\n- nombre categoria: alimentos\n\t- subcategoria: alimento seco, alimento humedo, semillas, premios.\n\n- nombre categoria: juguetes\n\t- subcategoria: pelotas, peluches, sogas.\n\n- nombre categoria: accesorios\n\t- subcategoria: ropa, arneses, tazones."
 					},
 					"response": []
 				},
@@ -423,7 +424,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"medioEntrega\":\"sucursal irapuato\",\n\t\"viaMedioEntrega\":\"presencial\",\n\t\"descripcionMedioEntrega\":\"vendedor a cliente\"\n}"
+							"raw": "{\n\t\"viaMedioEntrega\":\"castores\",\n\t\"descripcionMedioEntrega\":\"sucursal\"\n}"
 						},
 						"url": {
 							"raw": "localhost:3000/mediosEntregaWS/agregarMedioEntrega",
@@ -435,7 +436,8 @@
 								"mediosEntregaWS",
 								"agregarMedioEntrega"
 							]
-						}
+						},
+						"description": "> Este modulo denota los medios por los que puede ser realizado un envio. la viaMedioEntrega hace referencia al servicio contratado para enviar productos ejemplo:\n\n- DHL, UPS, fedex, correos, etc...\n\n> La descripcion hace referencia al lugar donde sera enviado directamente:\n\n- sucursal / domicilio"
 					},
 					"response": []
 				},
@@ -453,7 +455,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"medioEntrega\":\"sucursal leon\",\n\t\"viaMedioEntrega\":\"presencial\",\n\t\"descripcionMedioEntrega\":\"vendedor a cliente\"\n}"
+							"raw": "{\n\t\"viaMedioEntrega\":\"UPS\",\n\t\"descripcionMedioEntrega\":\"sucursal\"\n}"
 						},
 						"url": {
 							"raw": "localhost:3000/mediosEntregaWS/actualizarMedioEntrega/3",
@@ -697,6 +699,75 @@
 						"description": ">Este WS muestra la utilidad que se consiguio entre determinadas fechas A y B."
 					},
 					"response": []
+				},
+				{
+					"name": "GET filtrarxFechaTransacciones",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/transaccionesWS/filtrarxFechaTransacciones/2019-08-11/2019-10-27",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"transaccionesWS",
+								"filtrarxFechaTransacciones",
+								"2019-08-11",
+								"2019-10-27"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET filtrarxFechaCompras",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/comprasWS/filtrarxFechaCompras/2019-09-23/2019-10-24",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"comprasWS",
+								"filtrarxFechaCompras",
+								"2019-09-23",
+								"2019-10-24"
+							]
+						},
+						"description": ">Este WS calcula el monto total de todas las compras entre una fecha A y una fecha B"
+					},
+					"response": []
 				}
 			]
 		},
@@ -731,7 +802,8 @@
 								"tiposClientesWS",
 								"listarTiposClientes"
 							]
-						}
+						},
+						"description": ">Describe los diferentes tipos de clientes permitidos en el sistema, esto para dar uso de promociones, premiaciones o descuentos segun su tipo."
 					},
 					"response": []
 				},
@@ -761,7 +833,8 @@
 								"tiposClientesWS",
 								"agregarTipoCliente"
 							]
-						}
+						},
+						"description": ">Este modulo es un catalogo para ingresar los tipos de clientes que habrá en el sistema:\n\n- normal\n- premium\n- premiado"
 					},
 					"response": []
 				},
@@ -883,7 +956,8 @@
 								"tiposPagosWS",
 								"agregarTipoPago"
 							]
-						}
+						},
+						"description": ">Este modulo hace referencia a los tipos de pagos aceptados en la tienda, las opciones a llenar son las siguientes:\n\n- tipoPago: tarjeta debito, tarjeta credito, efectivo, prepago\n- viaTipoPago: visa, master card, american express, carnet"
 					},
 					"response": []
 				},
@@ -1005,7 +1079,8 @@
 								"tiposProblemasWS",
 								"agregarTipoProblema"
 							]
-						}
+						},
+						"description": ">Este modulo tiene la funcion de un catalogo en el que se definen los diferentes motivos por los que puede ser devuelto un producto y esta estrechamente ligado al modulo de devoluciones. Los diferententes tipos de problemas a aceptas son:\n\n- caducado\n- mal estado\n- no era lo que esperaba\n- fuera de tiempo"
 					},
 					"response": []
 				},
@@ -1115,7 +1190,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"montoNoIvaTransaccion\": \"40\",\n    \"ivaTransaccion\": \"16\",\n    \"montoConIvaTransaccion\": \"44.8\",\n    \"idVendedor\": \"2\",\n    \"idTipoPago\": \"2\",\n    \"idProducto\":\"1\",\n    \"numeroProductosEnTransaccion\":\"1\",\n    \"idCliente\":\"1\"\n}\n"
+							"raw": "{\n\t\"montoNoIvaTransaccion\": \"40\",\n    \"ivaTransaccion\": \"16\",\n    \"montoConIvaTransaccion\": \"44.8\",\n    \"idVendedor\": \"2\",\n    \"idTipoPago\": \"2\",\n    \"idTransaccion\":\"2\",\n    \"idProducto\":\"2\",\n    \"numeroProductosEnTransaccion\":\"1\",\n    \"idCliente\":\"1\"\n}\n"
 						},
 						"url": {
 							"raw": "localhost:3000/transaccionesWS/agregarTransaccion",
@@ -1127,41 +1202,8 @@
 								"transaccionesWS",
 								"agregarTransaccion"
 							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET filtrarxFechaTransacciones",
-					"request": {
-						"auth": {
-							"type": "noauth"
 						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "localhost:3000/transaccionesWS/filtrarxFechaTransacciones/2019-08-11/2019-10-27",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"transaccionesWS",
-								"filtrarxFechaTransacciones",
-								"2019-08-11",
-								"2019-10-27"
-							]
-						}
+						"description": "> **¿como funciona idTransaccion?** si se coloca un numero diferente al numero siguiente auntomaticamente pone el id siguiente para evitar un error debido al autoincrement de la transaccion, si se pone el mismo id en el que permanece la transaccion es simular que se esta agregando un producto y esto se ve reflejado al listar la transaccion, los productos se van agregando.\n\n> idTipoPago,idVendedor,idProducto,idCliente."
 					},
 					"response": []
 				}
@@ -1228,7 +1270,8 @@
 								"enviosWS",
 								"agregarEnvio"
 							]
-						}
+						},
+						"description": ">Este modulo especifica direcciones que hacen referencia a un envio dada una transaccion."
 					},
 					"response": []
 				},
@@ -1338,7 +1381,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"ivaDevolucion\": 16,\n    \"montoConIvaDevolucion\": 44.8,\n    \"motivoDevolucion\": \"mal estado, engusanada\",\n    \"idCliente\": 1,\n    \"idTipoProblema\": 1\n}"
+							"raw": "{\n    \"ivaDevolucion\": 16,\n    \"montoConIvaDevolucion\": 44.8,\n    \"motivoDevolucion\": \"mal estado, engusanada\",\n    \"idCliente\": 1,\n    \"idTipoProblema\": 1,\n    \"idProducto\":1,\n    \"idCompensacion\":1\n}"
 						},
 						"url": {
 							"raw": "localhost:3000/devolucionesWS/agregarDevolucion",
@@ -1350,7 +1393,8 @@
 								"devolucionesWS",
 								"agregarDevolucion"
 							]
-						}
+						},
+						"description": ">Este modulo esta orientado para el dado caso de una devolucion, los campos que contienen idCliente, idTipoProblema, idProducto y idCompensacion estan definidos en sus respectivos modulos, como prueba existen los siguientes registros:\n\n- idCliente: 1 (cliente1), 2 (cliente2)\n- idTipoProblema: 1 (caducado), 2 (mal estado)\n- idProducto: 1(collar castigo), 2 (collar de entrenar), 3 (bto croquetas)"
 					},
 					"response": []
 				},
@@ -1473,7 +1517,8 @@
 								"compensacionesWS",
 								"agregarCompensacion"
 							]
-						}
+						},
+						"description": "> Este modulo tiene como fin catalogar las compensaciones las cuales estan ligadas a una devolucion. Los datos pueden llenarse de tal manera:\n\n- tipoCompensacion: cupon, descuento, envio gratis, devolucion dinero.\n\n> DescripcionCompensacion: es el detalle de la compensacion"
 					},
 					"response": []
 				},
@@ -1527,131 +1572,6 @@
 								"compensacionesWS",
 								"eliminarCompensacion",
 								"3"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "transacciones_clientes",
-			"item": [
-				{
-					"name": "GET listarTransacciones_clientes",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "localhost:3000/transaccionesWS/listarTransacciones_clientes",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"transaccionesWS",
-								"listarTransacciones_clientes"
-							]
-						},
-						"description": ">Este WS muestra informacion acerca de las transacciones, ¿a quien se le vendio? ¿cuando fue fecha de transaccion? ¿que producto se compro?"
-					},
-					"response": []
-				},
-				{
-					"name": "POST agregarTransaccion_cliente",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"idTransaccion\":4,\n\t\"idCliente\":2\n}"
-						},
-						"url": {
-							"raw": "localhost:3000/transaccionesWS/agregarTransaccion_cliente",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"transaccionesWS",
-								"agregarTransaccion_cliente"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "PUT actualizarTransaccion_cliente",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"idTransaccion\":5,\n\t\"idCliente\":1\n}"
-						},
-						"url": {
-							"raw": "localhost:3000/transaccionesWS/actualizarTransaccion_cliente/1/1",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"transaccionesWS",
-								"actualizarTransaccion_cliente",
-								"1",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DELETE eliminarTransaccion_cliente",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "localhost:3000/transaccionesWS/eliminarTransaccion_cliente/5/1",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"transaccionesWS",
-								"eliminarTransaccion_cliente",
-								"5",
-								"1"
 							]
 						}
 					},
@@ -1720,7 +1640,8 @@
 								"tiposUsuariosWS",
 								"agregarTipoUsuario"
 							]
-						}
+						},
+						"description": "> Este modulo catalogo, esta pensado para aquel caso en el que se decida agregar un nuevo tipo de usuario, esto da parte a nuevos privilegios o bloqueos."
 					},
 					"response": []
 				},
@@ -1843,7 +1764,7 @@
 								"agregarUsuario"
 							]
 						},
-						"description": ">Este WS esta dedicado principalmente a la insercion de un nuevo usuario (en el rol de punto de venta del sistema).\n\n>**NOTA:** No puede haber mas de 1 usuario con el mismo nombre de Usuario."
+						"description": ">Este WS esta dedicado principalmente a la insercion de un nuevo usuario (en el rol de punto de venta del sistema).\n\n>**NOTA:** No puede haber mas de 1 usuario con el mismo nombre de Usuario, de ser asi, lanzara msj de usuario registrado.\n\n> *si el vendedor es el gerente se pone un null*"
 					},
 					"response": []
 				},
@@ -1966,7 +1887,8 @@
 								"accesosWS",
 								"agregarAcceso"
 							]
-						}
+						},
+						"description": "> El idUsuario proviene de su respectivo modulo. En este caso para registros solo se tiene el id de usuario 1."
 					},
 					"response": []
 				}
@@ -2009,41 +1931,6 @@
 					"response": []
 				},
 				{
-					"name": "GET filtrarxFechaCompras",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "localhost:3000/comprasWS/filtrarxFechaCompras/2019-09-23/2019-10-24",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"comprasWS",
-								"filtrarxFechaCompras",
-								"2019-09-23",
-								"2019-10-24"
-							]
-						},
-						"description": ">Este WS calcula el monto total de todas las compras entre una fecha A y una fecha B"
-					},
-					"response": []
-				},
-				{
 					"name": "POST agregarCompra",
 					"request": {
 						"method": "POST",
@@ -2057,7 +1944,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n \"montoCompra\": \"200.00\",\n \"idUsuario\":\"1\",\n \"idProveedor\":\"1\",\n \"idReporteEconomico\":\"1\"\n}"
+							"raw": "{\n \"montoCompra\": \"200.00\",\n \"idCompra\":\"3\",\n \"idProducto\":\"2\",\n \"numeroProductosEnCompra\":\"2\",\n \"idUsuario\":\"1\",\n \"idProveedor\":\"1\"\n}"
 						},
 						"url": {
 							"raw": "localhost:3000/comprasWS/agregarCompra",
@@ -2069,7 +1956,8 @@
 								"comprasWS",
 								"agregarCompra"
 							]
-						}
+						},
+						"description": "> idProducto,idUsuario,idProveedor provienen de sus respectivos modulos.\n\n> **¿como funciona idCompra?** si se coloca un numero diferente al numero siguiente auntomaticamente pone el id siguiente para evitar un error debido al autoincrement de la compra, si se pone el mismo id en el que permanece la compra es simular que se esta agregando un producto y esto se ve reflejado al listar las compras."
 					},
 					"response": []
 				}
@@ -2159,7 +2047,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"nombreCliente\": \"cliente2\",\n    \"apellidoPaternoCliente\": \"perez\",\n    \"apellidoMaternoCliente\": \"figueroa\",\n    \"ciudadCliente\": \"abasolo\",\n    \"estadoCliente\": \"gto\",\n    \"paisCliente\": \"mexico\",\n    \"direccionCliente\": \"juarez 101\",\n    \"coloniaCliente\": \"juarez\",\n    \"cpCliente\": \"36970\",\n    \"telefonoCliente\": \"4291093598\",\n    \"emailCliente\": \"cliente2@cliente2.com\",\n    \"contraseniaCliente\": \"1243\",\n    \"puntuajeCliente\": \"32\",\n    \"idTipoCliente\": \"1\"\n}"
+							"raw": "{\n\t\"nombreCliente\": \"cliente4\",\n    \"apellidoPaternoCliente\": \"perez\",\n    \"apellidoMaternoCliente\": \"figueroa\",\n    \"ciudadCliente\": \"abasolo\",\n    \"estadoCliente\": \"gto\",\n    \"paisCliente\": \"mexico\",\n    \"direccionCliente\": \"juarez 101\",\n    \"coloniaCliente\": \"juarez\",\n    \"cpCliente\": \"36970\",\n    \"telefonoCliente\": \"4291093598\",\n    \"emailCliente\": \"cliente4@cliente4.com\",\n    \"contraseniaCliente\": \"1243\",\n    \"puntuajeCliente\": \"32\",\n    \"idTipoCliente\": \"1\"\n}"
 						},
 						"url": {
 							"raw": "localhost:3000/clientesWS/agregarCliente",
@@ -2575,7 +2463,8 @@
 								"proveedoresWS",
 								"agregarProveedor"
 							]
-						}
+						},
+						"description": "> Todos los campos son de tipo cadena de texto."
 					},
 					"response": []
 				},

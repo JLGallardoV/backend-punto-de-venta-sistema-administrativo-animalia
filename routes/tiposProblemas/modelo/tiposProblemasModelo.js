@@ -64,22 +64,41 @@ exports.agregarTipoProblema = function(req) {
           respuesta: error
         });
       } else {
-        let query = 'insert into tiposDeProblemas set ?';
+        let tipoProblema = body.tipoProblema;
+        var query = `select * from tiposDeProblemas where tipoProblema ='${tipoProblema}' and  estatusBL = 1`;
 
-        let requestBody = {
-          tipoProblema: body.tipoProblema
-        };
-
-        database.query(query, requestBody, function(error, success) {
+        database.query(query,function(error,success){
           if (error) {
             reject({
               estatus: -1,
               respuesta: error
             });
-          } else {
-            resolve({
-              estatus: 1,
-              respuesta: 'tipo de problema dado de alta correctamente'
+          }
+
+          if(success.length == 0) {
+            let query = 'insert into tiposDeProblemas set ?';
+
+            let requestBody = {
+              tipoProblema: body.tipoProblema
+            };
+
+            database.query(query, requestBody, function(error, success) {
+              if (error) {
+                reject({
+                  estatus: -1,
+                  respuesta: error
+                });
+              } else {
+                resolve({
+                  estatus: 1,
+                  respuesta: 'tipo de problema dado de alta correctamente'
+                });
+              }
+            });
+          }else {
+            reject({
+              estatus: -1,
+              respuesta: 'tipo de problema duplicado, intenta nuevamente'
             });
           }
         });

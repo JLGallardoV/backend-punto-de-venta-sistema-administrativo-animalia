@@ -64,24 +64,42 @@ exports.agregarTipoPago = function(req) {
           respuesta: error
         });
       } else {
-        let query = 'insert into tiposDePagos set ?';
-
-        let requestBody = {
-          tipoPago: body.tipoPago,
-          viaTipoPago: body.viaTipoPago,
-          descripcionTipoPago: body.descripcionTipoPago
-        };
-
-        database.query(query, requestBody, function(error, success) {
+        let tipoPago = body.tipoPago;
+        var query = `select * from tiposDePagos where tipoPago ='${tipoPago}' and  estatusBL = 1`;
+        database.query(query,function(error,success){
           if (error) {
             reject({
               estatus: -1,
               respuesta: error
             });
-          } else {
-            resolve({
-              estatus: 1,
-              respuesta: 'tipo de pago dado de alta correctamente'
+          }
+
+          if(success.length == 0) {
+            let query = 'insert into tiposDePagos set ?';
+
+            let requestBody = {
+              tipoPago: body.tipoPago,
+              viaTipoPago: body.viaTipoPago,
+              descripcionTipoPago: body.descripcionTipoPago
+            };
+
+            database.query(query, requestBody, function(error, success) {
+              if (error) {
+                reject({
+                  estatus: -1,
+                  respuesta: error
+                });
+              } else {
+                resolve({
+                  estatus: 1,
+                  respuesta: 'tipo de pago dado de alta correctamente'
+                });
+              }
+            });
+          }else {
+            reject({
+              estatus: -1,
+              respuesta: 'tipo de pago duplicado, intenta nuevamente'
             });
           }
         });

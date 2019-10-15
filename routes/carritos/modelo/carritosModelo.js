@@ -108,24 +108,42 @@ exports.agregarCarrito = function(req) {
           respuesta: error
         });
       } else {
-        let query = 'insert into carritos set ?';
-
-        let requestBody = {
-          numeroProductosCarrito: body.numeroProductosCarrito,
-          montoTotalCarrito: body.montoTotalCarrito,
-          idCliente: body.idCliente
-        };
-
-        database.query(query, requestBody, function(error, success) {
+        let idCliente = body.idCliente;
+        var query = `select * from carritos where idCliente ='${idCliente}' and  estatusBL = 1`;
+        database.query(query,function(error,success){
           if (error) {
             reject({
               estatus: -1,
               respuesta: error
             });
-          } else {
-            resolve({
-              estatus: 1,
-              respuesta: 'carrito dado de alta correctamente'
+          }
+
+          if(success.length == 0) {
+            let query = 'insert into carritos set ?';
+
+            let requestBody = {
+              numeroProductosCarrito: body.numeroProductosCarrito,
+              montoTotalCarrito: body.montoTotalCarrito,
+              idCliente: body.idCliente
+            };
+
+            database.query(query, requestBody, function(error, success) {
+              if (error) {
+                reject({
+                  estatus: -1,
+                  respuesta: error
+                });
+              } else {
+                resolve({
+                  estatus: 1,
+                  respuesta: 'carrito dado de alta correctamente'
+                });
+              }
+            });
+          }else {
+            reject({
+              estatus: -1,
+              respuesta: 'Ese cliente ya tiene un carrito, intenta nuevamente'
             });
           }
         });

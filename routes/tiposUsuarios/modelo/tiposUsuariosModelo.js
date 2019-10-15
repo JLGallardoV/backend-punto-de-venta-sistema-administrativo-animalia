@@ -64,23 +64,42 @@ exports.agregarTipoUsuario = function(req) {
           respuesta: error
         });
       } else {
-        let query = 'insert into tiposDeUsuarios set ?';
+        let tipoUsuario = body.tipoUsuario;
 
-        let requestBody = {
-          tipoUsuario: body.tipoUsuario,
-          privilegiosTipoUsuario: body.privilegiosTipoUsuario
-        };
-
-        database.query(query, requestBody, function(error, success) {
+        var query = `select * from tiposDeUsuarios where tipoUsuario ='${tipoUsuario}' and  estatusBL = 1`;
+        database.query(query,function(error,success){
           if (error) {
             reject({
               estatus: -1,
               respuesta: error
             });
-          } else {
-            resolve({
-              estatus: 1,
-              respuesta: 'tipo de usuario dado de alta correctamente'
+          }
+          console.log("longitud: ",success.length);
+          if(success.length == 0) {
+            let query = 'insert into tiposDeUsuarios set ?';
+
+            let requestBody = {
+              tipoUsuario: body.tipoUsuario,
+              descripcionTipoUsuario: body.descripcionTipoUsuario
+            };
+
+            database.query(query, requestBody, function(error, success) {
+              if (error) {
+                reject({
+                  estatus: -1,
+                  respuesta: error
+                });
+              } else {
+                resolve({
+                  estatus: 1,
+                  respuesta: 'tipo de usuario dado de alta correctamente'
+                });
+              }
+            });
+          }else {
+            reject({
+              estatus: -1,
+              respuesta: 'tipo de usuario duplicado, intenta nuevamente'
             });
           }
         });

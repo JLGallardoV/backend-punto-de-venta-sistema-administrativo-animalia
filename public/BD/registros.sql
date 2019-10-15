@@ -89,11 +89,12 @@ INSERT INTO devoluciones (idDevolucion,ivaDevolucion,montoConIvaDevolucion,motiv
 VALUES (NULL, '16','34.80','mal estado, oxidado','1','1','1','1'),
 			 (NULL, '16','347.98','caducada','1','2','1','2');
 
-/*PARAMETROS:
-montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,idVendedor,
-idTipoPago,idTransaccion,idProducto,numeroProductosEnTransaccion,idCliente*/
-CALL transaccionCompleta_procedimiento(40.00,16,44.80,1,2,6,1,2,1);
 
 /*PARAMETROS:
 montoCompra,idCompra,idProducto,numeroProductosEnTransaccion,idProveedor,idUsuario*/
 CALL compraCompleta_procedimiento(40.00,1,2,2,1,1);
+
+/*PARAMETROS:
+montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,idVendedor,
+idTipoPago,idTransaccion,idProducto,numeroProductosEnTransaccion,idCliente*/
+CALL transaccionCompleta_procedimiento(40.00,16,44.80,1,2,6,1,2,1);

@@ -64,23 +64,41 @@ exports.agregarTipoCliente = function(req) {
           respuesta: error
         });
       } else {
-        let query = 'insert into tiposDeClientes set ?';
-
-        let requestBody = {
-          tipoCliente: body.tipoCliente,
-          descripcionTipoCliente: body.descripcionTipoCliente
-        };
-
-        database.query(query, requestBody, function(error, success) {
+        let tipoCliente = body.tipoCliente;
+        var query = `select * from tiposDeClientes where tipoCliente ='${tipoCliente}' and  estatusBL = 1`;
+        database.query(query,function(error,success){
           if (error) {
             reject({
               estatus: -1,
               respuesta: error
             });
-          } else {
-            resolve({
-              estatus: 1,
-              respuesta: 'tipo de cliente dado de alta correctamente'
+          }
+
+          if(success.length == 0) {
+            let query = 'insert into tiposDeClientes set ?';
+
+            let requestBody = {
+              tipoCliente: body.tipoCliente,
+              descripcionTipoCliente: body.descripcionTipoCliente
+            };
+
+            database.query(query, requestBody, function(error, success) {
+              if (error) {
+                reject({
+                  estatus: -1,
+                  respuesta: error
+                });
+              } else {
+                resolve({
+                  estatus: 1,
+                  respuesta: 'tipo de cliente dado de alta correctamente'
+                });
+              }
+            });
+          }else {
+            reject({
+              estatus: -1,
+              respuesta: 'tipo de cliente duplicado, intenta nuevamente'
             });
           }
         });

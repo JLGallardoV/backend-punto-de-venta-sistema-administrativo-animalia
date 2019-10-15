@@ -25,3 +25,10 @@
 - VERIFICAR WS VERIFY JWT (CATEGORIA) (x)
 
 # Gracias
+
+
+### PENDIENTES:
+
+- Como recibo un premio de una devoñcion
+- Verificar bien la parte de compras y ventas,
+- hacer un solo web services la de reportes

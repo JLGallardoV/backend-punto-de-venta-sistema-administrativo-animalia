@@ -29,6 +29,4 @@
 
 ### PENDIENTES:
 
-- Como recibo un premio de una devoñcion
-- Verificar bien la parte de compras y ventas,
-- hacer un solo web services la de reportes
+- MODIFICA EL POSTMAN DE TRANSACCION, PRODUCTOS ASI COMO SU WS

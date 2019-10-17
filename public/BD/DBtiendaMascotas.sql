@@ -166,10 +166,15 @@ CREATE TABLE transacciones(
 	montoNoIvaTransaccion NUMERIC(7,2) UNSIGNED,
 	ivaTransaccion INT(5) UNSIGNED,
 	montoConIvaTransaccion NUMERIC(7,2) UNSIGNED,
+	cantidadProductosTransaccion NUMERIC UNSIGNED,
 	fechaTransaccion DATETIME DEFAULT NOW(),
+	pagoTransaccion NUMERIC(7,2) UNSIGNED,
+	cambioTransaccion NUMERIC(7,2) UNSIGNED,
 	estatusBL tinyint(2) default 1,
+	idCliente INT UNSIGNED NOT NULL,
 	idVendedor INT UNSIGNED NOT NULL,
 	PRIMARY KEY (idTransaccion),
+	FOREIGN KEY (idCliente) REFERENCES clientes (idCliente) ON DELETE CASCADE,
 	FOREIGN KEY (idVendedor) REFERENCES vendedores (idVendedor) ON DELETE CASCADE
 );
 
@@ -231,7 +236,6 @@ CREATE TABLE productos(
 	stockProducto INT(5) UNSIGNED,
 	puntosProducto INT(5) UNSIGNED,
 	precioUnitarioProducto NUMERIC(7,2) UNSIGNED,
-	precioMayoreoProducto NUMERIC(7,2) UNSIGNED,
 	estatusBL tinyint(2) default 1,
 	fechaRegistroProducto DATETIME DEFAULT NOW(),
 	fechaActualizacionProducto DATETIME DEFAULT NOW(),
@@ -284,6 +288,9 @@ CREATE TABLE transacciones_productos(
 	idTransaccion INT UNSIGNED NOT NULL,
 	idProducto INT UNSIGNED NOT NULL,
 	numeroProductosEnTransaccion INT(6),
+	subtotalTransaccionProducto NUMERIC(7,2) UNSIGNED,
+	totalTransaccionProducto NUMERIC(7,2) UNSIGNED,
+	ivaTransaccionProducto NUMERIC(7,2) UNSIGNED,
 	estatusBL tinyint(2) default 1,
 	PRIMARY KEY (idTransaccion, idProducto),
 	FOREIGN KEY (idTransaccion) REFERENCES transacciones (idTransaccion) ON DELETE CASCADE,
@@ -294,19 +301,13 @@ CREATE TABLE compras_productos(
 	idCompra INT UNSIGNED NOT NULL,
 	idProducto INT UNSIGNED NOT NULL,
 	numeroProductosEnCompra INT(6),
+	subtotalCompraProducto NUMERIC(7,2) UNSIGNED,
+	totalCompraProducto NUMERIC(7,2) UNSIGNED,
+	ivaCompraProducto NUMERIC(7,2) UNSIGNED,
 	estatusBL tinyint(2) default 1,
 	PRIMARY KEY (idCompra, idProducto),
 	FOREIGN KEY (idCompra) REFERENCES compras (idCompra) ON DELETE CASCADE,
 	FOREIGN KEY (idProducto) REFERENCES productos (idProducto) ON DELETE CASCADE
-);
-
-CREATE TABLE transacciones_clientes(
-	idTransaccion INT UNSIGNED NOT NULL,
-	idCliente INT UNSIGNED NOT NULL,
-	estatusBL tinyint(2) default 1,
-	PRIMARY KEY (idTransaccion, idCliente),
-	FOREIGN KEY (idTransaccion) REFERENCES transacciones (idTransaccion) ON DELETE CASCADE,
-	FOREIGN KEY (idCliente) REFERENCES clientes (idCliente) ON DELETE CASCADE
 );
 
 CREATE TABLE transacciones_tiposDePagos(
@@ -337,7 +338,7 @@ CREATE TABLE compensaciones_clientes(
 	FOREIGN KEY (idCliente) REFERENCES clientes (idCliente) ON DELETE CASCADE
 );
 
---PROCEDIMIENTO ALMACENADO INSERTAR DATOS A TRANSACCIONES CON SU RESPECTIVO PRODUCTO Y CANTIDAD DE PRODUCTOS
+/*PROCEDIMIENTO ALMACENADO INSERTAR DATOS A TRANSACCIONES CON SU RESPECTIVO PRODUCTO Y CANTIDAD DE PRODUCTOS
 DELIMITER $$
 CREATE PROCEDURE transaccionCompleta_procedimiento(IN _montoNoIvaTransaccion DECIMAL(7,2) UNSIGNED, IN _ivaTransaccion INT(5) UNSIGNED, IN _montoConIvaTransaccion DECIMAL(7,2) UNSIGNED, IN _idVendedor INT, IN _idTipoPago INT,IN _idTransaccion INT, IN _idProducto INT, IN _numeroProductosEnTransaccion INT, IN _idCliente INT)
 	BEGIN
@@ -392,3 +393,28 @@ CREATE PROCEDURE compraCompleta_procedimiento(IN _montoCompra DECIMAL(7,2) UNSIG
 
   END;
   $$
+*/
+/*CALCULA LA UTILIDAD ECONOMICA, EL MONTO DE LAS COMPRAS Y EL MONTO DE LAS VENTAS*/
+DELIMITER $$
+CREATE PROCEDURE reportes_procedimiento(IN _fechaInicio DATETIME, IN _fechaFinal DATETIME)
+BEGIN
+
+SELECT (SELECT IFNULL(sum(montoConIvaTransaccion),0)
+FROM transacciones
+WHERE fechaTransaccion BETWEEN _fechaInicio AND _fechaFinal) AS montoTransacciones;
+
+SELECT (SELECT IFNULL(sum(montoCompra),0)
+FROM compras
+WHERE fechaCompra BETWEEN _fechaInicio AND _fechaFinal) AS montoCompras;
+
+SELECT ((SELECT IFNULL(SUM(montoConIvaTransaccion),0)
+FROM transacciones
+WHERE fechaTransaccion
+BETWEEN _fechaInicio AND _fechaFinal) - (SELECT ifnull(sum(montoCompra),0)
+FROM compras
+WHERE fechaCompra BETWEEN _fechaInicio AND _fechaFinal)) AS utilidad;
+
+END;
+$$
+
+DELIMITER ;

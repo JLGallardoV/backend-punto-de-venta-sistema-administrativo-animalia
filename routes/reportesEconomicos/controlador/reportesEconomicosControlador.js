@@ -11,7 +11,7 @@ router.use(function(req,res,next){
 });
 
 // LISTAR REPORTE ECONOMICO - EXPORTANDO RUTA
-router.get('/listarReportesEconomicos/:inicioFechaTransacciones/:finalFechaTransacciones/:inicioFechaCompras/:finalFechaCompras', function(req, res, next) {
+router.get('/listarReportesEconomicos/:inicioFecha/:finalFecha', function(req, res, next) {
   try {
     //web service
     reportesEconomicosModelo.listarReportesEconomicos(req).then(

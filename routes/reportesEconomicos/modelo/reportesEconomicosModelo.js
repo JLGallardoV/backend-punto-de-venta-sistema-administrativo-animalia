@@ -11,10 +11,8 @@ exports.listarReportesEconomicos = function(req) {
   console.log("listando...");
   //regresaremos una promesa...
   return new Promise((resolve, reject) => {
-    let inicioFechaTransacciones = req.params.inicioFechaTransacciones;
-    let finalFechaTransacciones = req.params.finalFechaTransacciones;
-    let inicioFechaCompras = req.params.inicioFechaCompras;
-    let finalFechaCompras = req.params.finalFechaCompras;
+    let inicioFecha= req.params.inicioFecha;
+    let finalFecha = req.params.finalFecha;
     //conectar con la base de datos
     req.getConnection(function(error, database) {
       if (error) {
@@ -24,7 +22,7 @@ exports.listarReportesEconomicos = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = `SELECT ((SELECT IFNULL(SUM(montoConIvaTransaccion),0) FROM transacciones WHERE fechaTransaccion BETWEEN '${inicioFechaTransacciones} 00:00:00' AND '${finalFechaTransacciones} 23:59:59') - (SELECT IFNULL(SUM(montoCompra),0) FROM compras WHERE fechaCompra BETWEEN '${inicioFechaCompras} 00:00:00' AND '${finalFechaCompras} 23:59:59')) AS utilidad;`;
+        var query = `CALL reportes_procedimiento('${inicioFecha} 00:00:00','${finalFecha} 23:59:59')`;
 
         //ejecutamos el query
         database.query(query, function(error, success) {
@@ -41,9 +39,17 @@ exports.listarReportesEconomicos = function(req) {
                 respuesta: success
               });
             } else if (success.length > 0) {
+
+              /*elimino el ultimo elemento (imprime success) que es un objeto nativo del procedure
+              con esto solo muestro los resultados que quiero*/
+
+              var resultado = [];
+              for (var i = 0; i < success.length - 1; i++) {
+                resultado[i] = success[i];
+              }
               resolve({
                 estatus: 1,
-                respuesta: success
+                respuesta: resultado
               });
             }
           }

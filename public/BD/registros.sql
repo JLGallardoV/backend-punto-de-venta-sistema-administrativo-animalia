@@ -83,12 +83,3 @@ VALUES (NULL, 'regreso dinero','devolucion total efectivo'),
 INSERT INTO devoluciones (idDevolucion,ivaDevolucion,montoConIvaDevolucion,motivoDevolucion,idCliente,idTipoProblema,idCompensacion,idProducto)
 VALUES (NULL, '16','34.80','mal estado, oxidado','1','1','1','1'),
 			 (NULL, '16','347.98','caducada','1','2','1','2');
-
-/*
-REALIZANDO UNA TRANSACCION:
-montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,cantidadProductosTransaccion,
-pagoTransaccion,cambioTransaccion,idCliente,idVendedor,productos,numeroProductosEnTransaccion,
-tiposDePagos,subtotalTransaccionProducto
-totalTransaccionProducto,ivaTransaccionProducto
-*/
-CALL transaccion_procedimiento(IN _montoNoIvaTransaccion NUMERIC(7,2),IN _ivaTransaccion NUMERIC(7,2),IN _montoConIvaTransaccion DECIMAL(7,2),IN _cantidadProductosTransaccion INT,IN _pagoTransaccion NUMERIC(7,2),IN _cambioTransaccion DECIMAL(7,2),IN _idCliente INT, IN _idVendedor INT,IN _productos JSON, IN _tiposDePagos JSON,IN _subtotalTransaccionProducto DECIMAL(7,2),IN _totalTransaccionProducto DECIMAL(7,2),IN _ivaTransaccionProducto DECIMAL(7,2))

@@ -338,41 +338,9 @@ CREATE TABLE compensaciones_clientes(
 	FOREIGN KEY (idCliente) REFERENCES clientes (idCliente) ON DELETE CASCADE
 );
 
-/*PROCEDIMIENTO ALMACENADO INSERTAR DATOS A TRANSACCIONES CON SU RESPECTIVO PRODUCTO Y CANTIDAD DE PRODUCTOS
-DELIMITER $$
-CREATE PROCEDURE transaccionCompleta_procedimiento(IN _montoNoIvaTransaccion DECIMAL(7,2) UNSIGNED, IN _ivaTransaccion INT(5) UNSIGNED, IN _montoConIvaTransaccion DECIMAL(7,2) UNSIGNED, IN _idVendedor INT, IN _idTipoPago INT,IN _idTransaccion INT, IN _idProducto INT, IN _numeroProductosEnTransaccion INT, IN _idCliente INT)
-	BEGIN
-		 IF NOT EXISTS(SELECT idTransaccion FROM transacciones WHERE idTransaccion = _idTransaccion) THEN
-		 		SET _idTransaccion = (select count(*) as existenciaTransacciones from transacciones order by idTransaccion desc limit 1) + 1;
-		 END IF;
 
-		 IF _idTransaccion > (select count(*) as existenciaTransacciones from transacciones order by idTransaccion desc limit 1) THEN
-			 INSERT INTO transacciones (montoNoIvaTransaccion	,ivaTransaccion,montoConIvaTransaccion,idVendedor)
-			 VALUES (_montoNoIvaTransaccion, _ivaTransaccion, _montoConIvaTransaccion, _idVendedor);
-		 END IF;
 
-		 IF NOT EXISTS(SELECT idTransaccion, idProducto FROM transacciones_productos WHERE idTransaccion = _idTransaccion AND idProducto = _idProducto) THEN
-		 	INSERT INTO transacciones_productos (idTransaccion,idProducto, numeroProductosEnTransaccion)
-		 	VALUES (_idTransaccion,_idProducto, _numeroProductosEnTransaccion);
-			UPDATE productos SET stockProducto = stockProducto - _numeroProductosEnTransaccion WHERE idProducto = _idProducto;
-		 END IF;
-
-		 IF NOT EXISTS(SELECT idTransaccion, idTipoPago FROM transacciones_tiposDePagos WHERE idTransaccion = _idTransaccion AND idTipoPago = _idTipoPago) THEN
-		 	INSERT INTO transacciones_tiposDePagos(idTransaccion,idTipoPago)
-		 	VALUES (_idTransaccion,_idTipoPago);
-		 END IF;
-
-		 IF NOT EXISTS(SELECT idTransaccion, idCliente FROM transacciones_clientes WHERE idTransaccion = _idTransaccion AND idCliente = _idCliente) THEN
-		 	IF NOT EXISTS(SELECT idTransaccion FROM transacciones_clientes WHERE idTransaccion = _idTransaccion) THEN
-		 		INSERT INTO transacciones_clientes(idTransaccion,idCliente)
-		 		VAlUES (_idTransaccion,_idCliente);
-			END IF;
-		 END IF;
-
-  END;
-	$$
-
---PROCEDIMIENTO ALMACENADO INSERTAR DATOS A COMPRAS CON SU RESPECTIVO PRODUCTO Y CANTIDAD DE PRODUCTOS
+/*PROCEDIMIENTO ALMACENADO INSERTAR DATOS A COMPRAS CON SU RESPECTIVO PRODUCTO Y CANTIDAD DE PRODUCTOS
 DELIMITER $$
 CREATE PROCEDURE compraCompleta_procedimiento(IN _montoCompra DECIMAL(7,2) UNSIGNED,IN _idCompra INT,IN _idProducto INT, IN _numeroProductosEnCompra INT,IN _idProveedor INT,IN _idUsuario INT)
 	BEGIN
@@ -394,6 +362,20 @@ CREATE PROCEDURE compraCompleta_procedimiento(IN _montoCompra DECIMAL(7,2) UNSIG
   END;
   $$
 */
+
+/*AGREGA PRODUCTOS A LA RELACION TRANSACCIONES_PRODUCTOS Y DA USO DE STOCK
+DELIMITER $$
+CREATE PROCEDURE transacciones_productos_procedimiento(IN _idProducto INT,IN _numeroProductosEnTransaccion INT,IN _subtotalTransaccionProducto DECIMAL(7,2),IN _totalTransaccionProducto DECIMAL(7,2),IN _ivaTransaccionProducto DECIMAL(7,2))
+BEGIN
+
+INSERT INTO transacciones_productos(idTransaccion,idProducto,numeroProductosEnTransaccion,subtotalTransaccionProducto,totalTransaccionProducto,ivaTransaccionProducto)
+VALUES(LAST_INSERT_ID(), _idProducto,_numeroProductosEnTransaccion,_subtotalTransaccionProducto,_totalTransaccionProducto,_ivaTransaccionProducto);
+UPDATE productos SET stockProducto = stockProducto - _numeroProductosEnTransaccion WHERE idProducto = _idProducto;
+
+END;
+$$*/
+
+
 /*CALCULA LA UTILIDAD ECONOMICA, EL MONTO DE LAS COMPRAS Y EL MONTO DE LAS VENTAS*/
 DELIMITER $$
 CREATE PROCEDURE reportes_procedimiento(IN _fechaInicio DATETIME, IN _fechaFinal DATETIME)

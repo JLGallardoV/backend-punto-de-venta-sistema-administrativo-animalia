@@ -95,7 +95,7 @@ exports.agregarTransaccion = function(req) {
         let ivaTransaccionProducto = 0;
         /*FIN - GENERANDO VALORES AUTOMATICOS*/
 
-        //INICIO - GENERANDO CONSULTA TRANSACCIONES
+        //INICIO - GENERANDO INSERCION TRANSACCIONES
         let query = `INSERT INTO transacciones(montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,cantidadProductosTransaccion,pagoTransaccion,cambioTransaccion,idCliente,idVendedor)
                      VALUES('${montoNoIvaTransaccion}','${ivaTransaccion}','${montoConIvaTransaccion}','${cantidadProductosTransaccion}','${pagoTransaccion}','${cambioTransaccion}','${idCliente}','${idVendedor}');`;
 
@@ -111,14 +111,15 @@ exports.agregarTransaccion = function(req) {
               respuesta: 'transaccion dada de alta correctamente'
             });
           }
-        });//FIN - GENERANDO CONSULTA TRANSACCIONES
+        });//FIN - GENERANDO INSERCION TRANSACCIONES
 
-        //INICIO - GENERANDO CONSULTA TRANSACCIONES_PRODUCTOS
+        //INICIO - GENERANDO INSERCION TRANSACCIONES_PRODUCTOS
         for (var i = 0; i < productos.length; i++) { //ciclo para asegurarme que se hayan insertado todos los productos.
-          let query = `INSERT INTO transacciones_productos(idTransaccion,idProducto,numeroProductosEnTransaccion,subtotalTransaccionProducto,totalTransaccionProducto,ivaTransaccionProducto)
-                       VALUES(LAST_INSERT_ID(),'${productos[i].idProducto}','${productos[i].cantidadProducto}','${subtotalTransaccionProducto}','${totalTransaccionProducto}','${ivaTransaccionProducto}');`;
+          //con este query vamos agregando los productos a la transaccion
+          let queryI = `INSERT INTO transacciones_productos(idTransaccion,idProducto,numeroProductosEnTransaccion,subtotalTransaccionProducto,totalTransaccionProducto,ivaTransaccionProducto)
+                       VALUES(LAST_INSERT_ID(),${productos[i].idProducto},${productos[i].cantidadProducto},'${subtotalTransaccionProducto}','${totalTransaccionProducto}','${ivaTransaccionProducto}');`;
 
-          database.query(query, function(error, success) {
+          database.query(queryI, function(error, success) {
             if (error) {
               reject({
                 estatus: -1,
@@ -131,9 +132,27 @@ exports.agregarTransaccion = function(req) {
               });
             }
           });
-        }//FIN - GENERANDO CONSULTA TRANSACCIONES_PRODUCTOS
 
-        //INICIO - GENERANDO CONSULTA TRANSACCIONES_TIPOSDEPAGOS
+          //con este query actualizare el stock (lo tenia en un procedimiento almacenado pero por alguna razon no actualizo)
+          let queryU = `UPDATE productos SET stockProducto = stockProducto - ${productos[i].cantidadProducto} WHERE idProducto = ${productos[i].idProducto};`;
+
+          database.query(queryU, function(error, success) {
+            if (error) {
+              reject({
+                estatus: -1,
+                respuesta: error
+              });
+            } else {
+              resolve({
+                estatus: 1,
+                respuesta: 'transaccion dada de alta correctamente'
+              });
+            }
+          });
+
+        }//FIN - GENERANDO INSERCION TRANSACCIONES_PRODUCTOS
+
+        //INICIO - GENERANDO INSERCION TRANSACCIONES_TIPOSDEPAGOS
         for (var i = 0; i < tiposDePagos.length; i++) { //ciclo para asegurarme que se hayan insertado todos los productos.
           let query = `INSERT INTO transacciones_tiposDePagos(idTransaccion,idTipoPago)
                        VALUES(LAST_INSERT_ID(),'${tiposDePagos[i].idTipoPago}');`;
@@ -151,7 +170,7 @@ exports.agregarTransaccion = function(req) {
               });
             }
           });
-        }//FIN - GENERANDO CONSULTA TRANSACCIONES_TIPOSDEPAGOS
+        }//FIN - GENERANDO INSERCION TRANSACCIONES_TIPOSDEPAGOS
 
       }
     });
@@ -160,7 +179,7 @@ exports.agregarTransaccion = function(req) {
 
 
 
-/*WEB SERVICE --ELIMINAR TRANSACCIONES-- CON UN TOQUE DE BORRADO LOGICO*/
+/*INICIO - ELIMINAR TRANSACCIONES CON UN TOQUE DE BORRADO LOGICO*/
 exports.eliminarTransaccion = function(req) {
   //regresaremos una promesa
   console.log("eliminando...");
@@ -196,4 +215,4 @@ exports.eliminarTransaccion = function(req) {
       }
     });
   });
-} //fin eliminarTransaccion
+} //FIN - WS ELIMINAR TRANSACCION

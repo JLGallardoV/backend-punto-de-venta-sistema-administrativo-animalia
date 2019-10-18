@@ -5,7 +5,7 @@ estatus: -1/0/1,
 respuesta: []/string
 }
 */
-/*WEB SERVICE --LISTAR COMPRAS--*/
+/* INICIO- WS LISTAR COMPRAS--*/
 exports.listarCompras = function(req) {
   console.log("listando...");
   //regresaremos una promesa...
@@ -19,7 +19,7 @@ exports.listarCompras = function(req) {
         });
       } else {
         //muestra las diferentes compras existentes, quien fue el proveedor, que producto se compro y quien lo compro
-        var query = '  SELECT compras.idCompra, productos.nombreProducto, usuarios.nombreUsuario, compras_productos.numeroProductosEnCompra, proveedores.nombreProveedor FROM compras INNER JOIN proveedores ON compras.idProveedor = proveedores.idProveedor INNER JOIN usuarios ON compras.idUsuario = usuarios.idUsuario INNER JOIN compras_productos ON compras.idCompra = compras_productos.idCompra INNER JOIN productos ON compras_productos.idCompra = productos.idProducto;';
+        var query = 'SELECT compras.idCompra,productos.nombreProducto, usuarios.nombreUsuario, compras_productos.numeroProductosEnCompra, proveedores.nombreProveedor FROM compras INNER JOIN proveedores ON compras.idProveedor = proveedores.idProveedor INNER JOIN usuarios ON compras.idUsuario = usuarios.idUsuario INNER JOIN compras_productos ON compras.idCompra = compras_productos.idCompra INNER JOIN productos ON compras_productos.idCompra = productos.idProducto;';
 
         //ejecutamos el query
         database.query(query, function(error, success) {
@@ -46,10 +46,10 @@ exports.listarCompras = function(req) {
       }
     });
   });
-} //fin listarCompras
+} //FIN - WS LISTAR COMPRAS
 
 
-/*WEB SERVICE --AGREGAR COMPRAS---*/
+/* INICIO - WS AGREGAR COMPRA */
 exports.agregarCompra = function(req) {
   //regresaremos una promesa
   console.log("agregando...");
@@ -64,14 +64,12 @@ exports.agregarCompra = function(req) {
         });
       } else {
         let montoCompra = body.montoCompra;
-        let idCompra = body.idCompra;
-        let idProducto = body.idProducto;
-        let numeroProductosEnCompra = body.numeroProductosEnCompra;
+        let productos = body.productos; //traer un arreglo de objetos
         let idProveedor = body.idProveedor;
         let idUsuario = body.idUsuario;
 
-        let query = `CALL compraCompleta_procedimiento('${montoCompra}','${idCompra}','${idProducto}','${numeroProductosEnCompra}','${idProveedor}','${idUsuario}');`;
-
+        // INICIO - GENERANDO INSERCION COMPRAS
+        let query = `INSERT INTO compras(montoCompra,idUsuario,idProveedor) VALUES('${montoCompra}','${idUsuario}','${idProveedor}');`;
         database.query(query, function(error, success) {
           if (error) {
             reject({
@@ -84,54 +82,47 @@ exports.agregarCompra = function(req) {
               respuesta: 'compra dada de alta correctamente'
             });
           }
-        });
+        });// FIN - INSERCION COMPRAS
+
+        // INICIO - GENERANDO INSERCION COMPRAS_PRODUCTOS
+        for (var i = 0; i < productos.length; i++) {//con esto me aseguro de que se hayan insertado todos los productos
+          //agregando...
+          let queryI = `INSERT INTO compras_productos(idCompra,idProducto,numeroProductosEnCompra,subtotalCompraProducto,totalCompraProducto,ivaCompraProducto)
+                       VALUES(LAST_INSERT_ID(),'${productos[i].idProducto}','${productos[i].cantidadProducto}',0,0,0);`;
+          database.query(queryI, function(error, success) {
+            if (error) {
+              reject({
+                estatus: -1,
+                respuesta: error
+              });
+            } else {
+              resolve({
+                estatus: 1,
+                respuesta: 'compra dada de alta correctamente'
+              });
+            }
+          });
+
+          //esta parte es para actualizar el stock del producto cada vez que haya una compra
+          let queryU = `UPDATE productos SET stockProducto = stockProducto + ${productos[i].cantidadProducto} WHERE idProducto = ${productos[i].idProducto};`;
+          database.query(queryU, function(error, success) {
+            if (error) {
+              reject({
+                estatus: -1,
+                respuesta: error
+              });
+            } else {
+              resolve({
+                estatus: 1,
+                respuesta: 'transaccion dada de alta correctamente'
+              });
+            }
+          });
+        }// FIN - INSERCION COMPRAS_PRODUCTOS
       }
     });
   });
-} //fin agregarCompra
-
-
-/*WEB SERVICE --ACTUALIZAR COMPRAS--*/
-exports.actualizarCompra = function(req) {
-  //regresaremos una promesa
-  console.log("actualizando...");
-  return new Promise((resolve, reject) => {
-    /*web service para actualizar*/
-    let body = req.body;
-    let idCompra = req.params.idCompra;
-    req.getConnection(function(error, database) {
-      if (error) {
-        reject({
-          estatus: -1,
-          respuesta: error
-        });
-      } else {
-        let query = `update compras set ? where idCompra = ${idCompra}`; //las comillas son diferentes
-
-        let requestBody = {
-          montoCompra: body.montoCompra,
-          idUsuario: body.idUsuario,
-          idProveedor: body.idProveedor,
-          idReporteEconomico: body.idReporteEconomico
-        };
-
-        database.query(query, requestBody, function(error, success) {
-          if (error) {
-            reject({
-              estatus: -1,
-              respuesta: error
-            });
-          } else {
-            resolve({
-              estatus: 1,
-              respuesta: 'compra actualizada correctamente'
-            });
-          }
-        });
-      }
-    });
-  });
-} //fin actualizarCompra
+} // FIN - WS AGREGAR COMPRA
 
 
 /*WEB SERVICE --ELIMINAR COMPRAS-- CON UN TOQUE DE BORRADO LOGICO*/

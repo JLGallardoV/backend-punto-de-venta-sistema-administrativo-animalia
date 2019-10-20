@@ -87,7 +87,7 @@ exports.agregarTransaccion = function(req) {
             cantidadProductosTransaccion = cantidadProductosTransaccion + productos[j].cantidadProducto; //cantidadProducto definelo en el postman
           }
 
-          //obtener precio unitario del producto en la posicion [i]
+          //obtener precio unitario y su id del producto en la posicion [i]
           for (let i = 0; i < productos.length; i++) {
             let queryPU = `SELECT precioUnitarioProducto FROM productos WHERE idProducto = ${productos[i].idProducto}`;
             database.query(queryPU, function(error, success) {
@@ -118,7 +118,7 @@ exports.agregarTransaccion = function(req) {
 
       //hacemos uso de la promesa para meter lo valores del success en el insert
       operaciones().then(
-        (success) => {
+        (success) => {//COMPORTAMIENTO: Al ser exitosa la resolucion de la promesa los valores de las variables globales toman el valor que tomaron en la creacion de la promesa
           console.log("valor success: ", success);
           //INICIO - GENERANDO INSERCION TRANSACCIONES
           let query = `INSERT INTO transacciones(montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,cantidadProductosTransaccion,pagoTransaccion,cambioTransaccion,idCliente,idVendedor)
@@ -137,71 +137,71 @@ exports.agregarTransaccion = function(req) {
               });
             }
           }); //FIN - GENERANDO INSERCION TRANSACCIONES
+
+          //INICIO - GENERANDO INSERCION TRANSACCIONES_PRODUCTOS
+          for (var i = 0; i < productos.length; i++) { //ciclo para asegurarme que se hayan insertado todos los productos.
+            //con este query vamos agregando los productos a la transaccion
+            console.log("\n valor i",i,"\n valor productos[i]",productos[i],"\n producto longitud: ",productos.length);
+            let queryI = `INSERT INTO transacciones_productos(idTransaccion,idProducto,numeroProductosEnTransaccion,subtotalTransaccionProducto,totalTransaccionProducto,ivaTransaccionProducto)
+                           VALUES(LAST_INSERT_ID(),${productos[i].idProducto},${productos[i].cantidadProducto},0,0,0);`;
+
+            database.query(queryI, function(error, success) {
+              if (error) {
+                reject({
+                  estatus: -1,
+                  respuesta: error
+                });
+              } else {
+                resolve({
+                  estatus: 1,
+                  respuesta: 'transaccion dada de alta correctamente'
+                });
+              }
+            });
+
+            //con este query actualizare el stock (lo tenia en un procedimiento almacenado pero por alguna razon no actualizo)
+            let queryU = `UPDATE productos SET stockProducto = stockProducto - ${productos[i].cantidadProducto} WHERE idProducto = ${productos[i].idProducto};`;
+
+            database.query(queryU, function(error, success) {
+              if (error) {
+                reject({
+                  estatus: -1,
+                  respuesta: error
+                });
+              } else {
+                resolve({
+                  estatus: 1,
+                  respuesta: 'transaccion dada de alta correctamente'
+                });
+              }
+            });
+
+          } //FIN - GENERANDO INSERCION TRANSACCIONES_PRODUCTOS
+
+          //INICIO - GENERANDO INSERCION TRANSACCIONES_TIPOSDEPAGOS
+          for (var i = 0; i < tiposDePagos.length; i++) { //ciclo para asegurarme que se hayan insertado todos los productos.
+            let query = `INSERT INTO transacciones_tiposDePagos(idTransaccion,idTipoPago)
+                           VALUES(LAST_INSERT_ID(),'${tiposDePagos[i].idTipoPago}');`;
+
+            database.query(query, function(error, success) {
+              if (error) {
+                reject({
+                  estatus: -1,
+                  respuesta: error
+                });
+              } else {
+                resolve({
+                  estatus: 1,
+                  respuesta: 'transaccion dada de alta correctamente'
+                });
+              }
+            });
+          } //FIN - GENERANDO INSERCION TRANSACCIONES_TIPOSDEPAGOS
+
         },
         (error) => {
           console.log("error: ",error);
         });
-
-
-      //INICIO - GENERANDO INSERCION TRANSACCIONES_PRODUCTOS
-      for (var i = 0; i < productos.length; i++) { //ciclo para asegurarme que se hayan insertado todos los productos.
-        //con este query vamos agregando los productos a la transaccion
-        let queryI = `INSERT INTO transacciones_productos(idTransaccion,idProducto,numeroProductosEnTransaccion,subtotalTransaccionProducto,totalTransaccionProducto,ivaTransaccionProducto)
-                       VALUES(LAST_INSERT_ID(),${productos[i].idProducto},${productos[i].cantidadProducto},0,0,0);`;
-
-        database.query(queryI, function(error, success) {
-          if (error) {
-            reject({
-              estatus: -1,
-              respuesta: error
-            });
-          } else {
-            resolve({
-              estatus: 1,
-              respuesta: 'transaccion dada de alta correctamente'
-            });
-          }
-        });
-
-        //con este query actualizare el stock (lo tenia en un procedimiento almacenado pero por alguna razon no actualizo)
-        let queryU = `UPDATE productos SET stockProducto = stockProducto - ${productos[i].cantidadProducto} WHERE idProducto = ${productos[i].idProducto};`;
-
-        database.query(queryU, function(error, success) {
-          if (error) {
-            reject({
-              estatus: -1,
-              respuesta: error
-            });
-          } else {
-            resolve({
-              estatus: 1,
-              respuesta: 'transaccion dada de alta correctamente'
-            });
-          }
-        });
-
-      } //FIN - GENERANDO INSERCION TRANSACCIONES_PRODUCTOS
-
-      //INICIO - GENERANDO INSERCION TRANSACCIONES_TIPOSDEPAGOS
-      for (var i = 0; i < tiposDePagos.length; i++) { //ciclo para asegurarme que se hayan insertado todos los productos.
-        let query = `INSERT INTO transacciones_tiposDePagos(idTransaccion,idTipoPago)
-                       VALUES(LAST_INSERT_ID(),'${tiposDePagos[i].idTipoPago}');`;
-
-        database.query(query, function(error, success) {
-          if (error) {
-            reject({
-              estatus: -1,
-              respuesta: error
-            });
-          } else {
-            resolve({
-              estatus: 1,
-              respuesta: 'transaccion dada de alta correctamente'
-            });
-          }
-        });
-      } //FIN - GENERANDO INSERCION TRANSACCIONES_TIPOSDEPAGOS
-
     });
   });
 } //FIN - WS AGREGAR TRANSACCION

@@ -53,10 +53,9 @@ exports.listarTransacciones = function(req) {
 
 /* INICIO - WS AGREGAR TRANSACCION*/
 exports.agregarTransaccion = function(req) {
-  //regresaremos una promesa
   console.log("agregando...");
   return new Promise((resolve, reject) => {
-    /*web service para agregar*/
+
     let body = req.body;
     req.getConnection(function(error, database) {
       if (error) {
@@ -66,26 +65,30 @@ exports.agregarTransaccion = function(req) {
         });
         return;
       }
-
       let tiposDePagos = body.tiposDePagos; //recibe un array de objetos
       let productos = body.productos; //recibe un array de objetos
       let pagoTransaccion = body.pagoTransaccion;
       let idCliente = body.idCliente;
       let idVendedor = body.idVendedor;
+      let cantidadProductosTransaccion = 0; //suma de los diferentes productos de la transaccion
+      let montoNoIvaTransaccion = 0; //monto total sin iva
+      let ivaTransaccion = 0;
+      let montoConIvaTransaccion = 0; //monto con iva de la transaccion
+      let cambioTransaccion = 0 //cambio
+      let arregloOperaciones = []; //aqui se guardaran los resultados, para invocarlos despues
+
 
       /*INICIO - GENERANDO VALORES AUTOMATIVOS*/
-
-      /*cantidad de todos los productos de la transaccion*/
-      let cantidadProductosTransaccion = 0; //funje como acumulador
-      for (var j = 0; j < productos.length; j++) {
-        cantidadProductosTransaccion = cantidadProductosTransaccion + productos[j].cantidadProducto; //cantidadProducto definelo en el postman
-      }
-      /*monto total sin iva*/
-      let montoNoIvaTransaccion = 0;
-      function promesa(){
+      let operaciones = function(){
         return new Promise((resolve,reject) => {
+
+          /*cantidad de todos los productos de la transaccion*/
+          for (var j = 0; j < productos.length; j++) {
+            cantidadProductosTransaccion = cantidadProductosTransaccion + productos[j].cantidadProducto; //cantidadProducto definelo en el postman
+          }
+
+          //obtener precio unitario del producto en la posicion [i]
           for (let i = 0; i < productos.length; i++) {
-            //obtener precio unitario del producto en la posicion [i]
             let queryPU = `SELECT precioUnitarioProducto FROM productos WHERE idProducto = ${productos[i].idProducto}`;
             database.query(queryPU, function(error, success) {
               if (error) {
@@ -96,66 +99,55 @@ exports.agregarTransaccion = function(req) {
                 });
                 return;
               }
+              //acumulando el precio de los  productos por su cantidad y sumando el monto
               montoNoIvaTransaccion = montoNoIvaTransaccion + (success[0].precioUnitarioProducto * productos[i].cantidadProducto)
-              //console.log("valor i","[",i,"]",":",montoNoIvaTransaccion);
 
               //me aseguro de que sea la ultima iteracion del ciclo para que pueda resolverse la promesa y mande el valor correcto
               if (i == productos.length -1) {
-                resolve(montoNoIvaTransaccion);
+                ivaTransaccion = montoNoIvaTransaccion * .16;
+                montoConIvaTransaccion = montoNoIvaTransaccion + ivaTransaccion;
+                cambioTransaccion = pagoTransaccion - montoConIvaTransaccion;
+                resolve(
+                  arregloOperaciones = [cantidadProductosTransaccion, montoNoIvaTransaccion, ivaTransaccion, montoConIvaTransaccion, cambioTransaccion]
+                );
               }
             });
           }
-        });
+        });/*FIN - GENERANDO VALORES AUTOMATICOS*/
       }
-      promesa().then(
+
+      //hacemos uso de la promesa para meter lo valores del success en el insert
+      operaciones().then(
         (success) => {
-          /*en este punto ya saque de la promesa el valor del monto no iva transaccion
-            el pedo es que se veria bien asquerosa la programacion si hago las operaciones dentro
-            de este then, puesto que el valor success no lo puedo sacar de este then*/
-          console.log("valor succes: ", success);
+          console.log("valor success: ", success);
+          //INICIO - GENERANDO INSERCION TRANSACCIONES
+          let query = `INSERT INTO transacciones(montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,cantidadProductosTransaccion,pagoTransaccion,cambioTransaccion,idCliente,idVendedor)
+                         VALUES('${montoNoIvaTransaccion}','${ivaTransaccion}','${montoConIvaTransaccion}','${cantidadProductosTransaccion}','${pagoTransaccion}','${cambioTransaccion}','${idCliente}','${idVendedor}');`;
+
+          database.query(query, function(error, success) {
+            if (error) {
+              reject({
+                estatus: -1,
+                respuesta: error
+              });
+            } else {
+              resolve({
+                estatus: 1,
+                respuesta: 'transaccion dada de alta correctamente'
+              });
+            }
+          }); //FIN - GENERANDO INSERCION TRANSACCIONES
         },
         (error) => {
           console.log("error: ",error);
         });
 
-      /*iva*/
-      let ivaTransaccion = 0;
-      ivaTransaccion = montoNoIvaTransaccion * .16;
-      /*monto total con iva*/
-      let montoConIvaTransaccion = montoNoIvaTransaccion + ivaTransaccion;
-      /*cambio*/
-      let cambioTransaccion = pagoTransaccion - montoConIvaTransaccion;
-
-      /*pendiente*/
-      let subtotalTransaccionProducto = 0;
-      let totalTransaccionProducto = 0;
-      let ivaTransaccionProducto = 0;
-
-      /*FIN - GENERANDO VALORES AUTOMATICOS*/
-
-      //INICIO - GENERANDO INSERCION TRANSACCIONES
-      let query = `INSERT INTO transacciones(montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,cantidadProductosTransaccion,pagoTransaccion,cambioTransaccion,idCliente,idVendedor)
-                     VALUES('${montoNoIvaTransaccion}','${ivaTransaccion}','${montoConIvaTransaccion}','${cantidadProductosTransaccion}','${pagoTransaccion}','${cambioTransaccion}','${idCliente}','${idVendedor}');`;
-
-      database.query(query, function(error, success) {
-        if (error) {
-          reject({
-            estatus: -1,
-            respuesta: error
-          });
-        } else {
-          resolve({
-            estatus: 1,
-            respuesta: 'transaccion dada de alta correctamente'
-          });
-        }
-      }); //FIN - GENERANDO INSERCION TRANSACCIONES
 
       //INICIO - GENERANDO INSERCION TRANSACCIONES_PRODUCTOS
       for (var i = 0; i < productos.length; i++) { //ciclo para asegurarme que se hayan insertado todos los productos.
         //con este query vamos agregando los productos a la transaccion
         let queryI = `INSERT INTO transacciones_productos(idTransaccion,idProducto,numeroProductosEnTransaccion,subtotalTransaccionProducto,totalTransaccionProducto,ivaTransaccionProducto)
-                       VALUES(LAST_INSERT_ID(),${productos[i].idProducto},${productos[i].cantidadProducto},'${subtotalTransaccionProducto}','${totalTransaccionProducto}','${ivaTransaccionProducto}');`;
+                       VALUES(LAST_INSERT_ID(),${productos[i].idProducto},${productos[i].cantidadProducto},0,0,0);`;
 
         database.query(queryI, function(error, success) {
           if (error) {

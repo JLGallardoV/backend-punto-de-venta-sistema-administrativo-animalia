@@ -21,7 +21,7 @@ exports.listarTransacciones = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'SELECT * FROM transacciones;';
+        var query = 'SELECT transacciones.idTransaccion, transacciones.montoNoIvaTransaccion, transacciones.ivaTransaccion, transacciones.montoConIvaTransaccion,transacciones.fechaTransaccion,productos.nombreProducto,transacciones_productos.numeroProductosEnTransaccion,vendedores.nombreVendedor,clientes.nombreCliente,tiposDePagos.tipoPago FROM transacciones  INNER JOIN transacciones_productos ON transacciones.idTransaccion = transacciones_productos.idTransaccion INNER JOIN productos ON transacciones_productos.idProducto = productos.idProducto INNER JOIN vendedores  ON transacciones.idVendedor = vendedores.idVendedor INNER JOIN clientes  ON transacciones.idCliente = clientes.idCliente INNER JOIN transacciones_tiposDePagos ON transacciones.idTransaccion = transacciones_tiposDePagos.idTransaccion INNER JOIN tiposDePagos ON transacciones_tiposDePagos.idTipoPago = tiposDePagos.idTipoPago WHERE transacciones.estatusBL = 1;';
 
         //ejecutamos el query
         database.query(query, function(error, success) {
@@ -141,9 +141,8 @@ exports.agregarTransaccion = function(req) {
           //INICIO - GENERANDO INSERCION TRANSACCIONES_PRODUCTOS
           for (var i = 0; i < productos.length; i++) { //ciclo para asegurarme que se hayan insertado todos los productos.
             //con este query vamos agregando los productos a la transaccion
-            console.log("\n valor i",i,"\n valor productos[i]",productos[i],"\n producto longitud: ",productos.length);
             let queryI = `INSERT INTO transacciones_productos(idTransaccion,idProducto,numeroProductosEnTransaccion,subtotalTransaccionProducto,totalTransaccionProducto,ivaTransaccionProducto)
-                           VALUES(LAST_INSERT_ID(),${productos[i].idProducto},${productos[i].cantidadProducto},0,0,0);`;
+                           VALUES(LAST_INSERT_ID(),${productos[i].idProducto},${productos[i].cantidadProducto});`;
 
             database.query(queryI, function(error, success) {
               if (error) {

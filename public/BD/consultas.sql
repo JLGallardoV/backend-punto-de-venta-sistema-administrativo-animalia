@@ -45,13 +45,15 @@ group by nombreCliente;
 --A CONTINUACION SE MUESTRAN LOS INNER JOINS ADECUADOS PARA ESPECIFICAR LAS ENTIDADES DE LOS VALORES DE ID EN LAS RELACIONES:
 
 --TRANSACCIONES_PRODUCTOS_CLIENTES:
-    SELECT transacciones_productos.idTransaccion, productos.nombreProducto, transacciones.montoConIvaTransaccion, transacciones.fechaTransaccion, transacciones_productos.numeroProductosEnTransaccion, vendedores.nombreVendedor, clientes.nombreCliente
-    FROM transacciones_productos
-    INNER JOIN productos ON transacciones_productos.idProducto = productos.idProducto
-    INNER JOIN transacciones ON transacciones_productos.idTransaccion = transacciones.idTransaccion
-    INNER JOIN vendedores ON transacciones.idTransaccion = vendedores.idVendedor
-    INNER JOIN transacciones_clientes ON transacciones_productos.idTransaccion = transacciones_clientes.idTransaccion
-    INNER JOIN clientes ON transacciones_clientes.idCliente = clientes.idCliente;
+SELECT transacciones.idTransaccion, transacciones.montoNoIvaTransaccion, transacciones.ivaTransaccion, transacciones.montoConIvaTransaccion,transacciones.fechaTransaccion,productos.nombreProducto,transacciones_productos.numeroProductosEnTransaccion,vendedores.nombreVendedor,clientes.nombreCliente,tiposDePagos.tipoPago
+FROM transacciones  INNER JOIN transacciones_productos ON transacciones.idTransaccion = transacciones_productos.idTransaccion
+INNER JOIN productos ON transacciones_productos.idProducto = productos.idProducto
+INNER JOIN vendedores  ON transacciones.idVendedor = vendedores.idVendedor
+INNER JOIN clientes  ON transacciones.idCliente = clientes.idCliente
+INNER JOIN transacciones_tiposDePagos ON transacciones.idTransaccion = transacciones_tiposDePagos.idTransaccion
+INNER JOIN tiposDePagos ON transacciones_tiposDePagos.idTipoPago = tiposDePagos.idTipoPago
+WHERE transacciones.estatusBL = 1;
+
 
 --ACCESOS - ¿QUIEN ACCEDIO?
 SELECT accesos.idAcceso, accesos.fechaAcceso, accesos.accionAcceso, usuarios.nombreUsuario
@@ -86,12 +88,6 @@ INNER JOIN categorias ON productos.idCategoria = categorias.idCategoria
 INNER JOIN almacenes ON productos.idAlmacen = almacenes.idAlmacen
 WHERE productos.estatusBL = 1;
 
---TRANSACCIONES - ¿QUIEN FUE EL VENDEDOR?
-SELECT transacciones.idTransaccion, transacciones.montoNoIvaTransaccion, transacciones.ivaTransaccion, transacciones.montoConIvaTransaccion, transacciones.fechaTransaccion, vendedores.nombreVendedor
-FROM transacciones
-INNER JOIN vendedores ON transacciones.idVendedor = vendedores.idVendedor
-WHERE vendedores.estatusBL = 1;
-
 --USUARIOS - ¿A QUE VENDEDOR LE PERTENECE LA CUENTA? ¿QUE TIPO DE USUARIO ES?
 SELECT usuarios.idUsuario, usuarios.nombreUsuario, usuarios.emailUsuario, usuarios.idVendedor, tiposDeUsuarios.tipoUsuario
 FROM usuarios
@@ -103,19 +99,11 @@ FROM envios
 INNER JOIN mediosDeEntrega ON envios.idMedioEntrega = mediosDeEntrega.idMedioEntrega;
 
 
-/*COMPRAS - ¿QUIEN HIZO LA COMPRA? ¿A QUIEN SE LE REALIZO LA COMPRA?: PROCESO
-OPC 1: ALTERNATIVA
-SELECT compras_productos.idCompra, productos.nombreProducto, usuarios.nombreUsuario, compras_productos.numeroProductosEnCompra
-FROM compras_productos
-INNER JOIN productos ON compras_productos.idProducto = productos.idProducto
-INNER JOIN
-(compras INNER JOIN usuarios ON compras.idUsuario = usuarios.idUsuario)
-GROUP BY idCompra;*/
-
---OPC 2: EN USO
-  SELECT compras.idCompra, productos.nombreProducto, usuarios.nombreUsuario, compras_productos.numeroProductosEnCompra, proveedores.nombreProveedor
-  FROM compras
-  INNER JOIN proveedores ON compras.idProveedor = proveedores.idProveedor
-  INNER JOIN usuarios ON compras.idUsuario = usuarios.idUsuario
-  INNER JOIN compras_productos ON compras.idCompra = compras_productos.idCompra
-  INNER JOIN productos ON compras_productos.idCompra = productos.idProducto;
+--COMPRAS - ¿QUIEN HIZO LA COMPRA? ¿A QUIEN SE LE REALIZO LA COMPRA?
+SELECT compras.idCompra,compras.montoCompra,compras.fechaCompra,proveedores.nombreProveedor, usuarios.nombreUsuario, productos.nombreProducto, compras_productos.numeroProductosEnCompra
+FROM compras
+INNER JOIN proveedores ON compras.idProveedor = proveedores.idProveedor
+INNER  JOIN usuarios   ON compras.idUsuario = usuarios.idUsuario
+INNER JOIN compras_productos ON compras.idCompra= compras_productos.idCompra
+INNER JOIN  productos ON compras_productos.idProducto=productos.idProducto
+WHERE compras.estatusBL=1

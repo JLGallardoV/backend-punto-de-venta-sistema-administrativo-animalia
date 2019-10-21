@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var accesosModelo = require('../modelo/accesosModelo');
+var jwt = require('../../../public/servicios/jwt');
+var jsonWebToken = require('jsonwebtoken');
+
 
 //CABECERAS
 router.use(function(req,res,next){
@@ -11,34 +14,50 @@ router.use(function(req,res,next){
 });
 
 // LISTAR ACCESOS- EXPORTANDO RUTA
-router.get('/listarAccesos', function(req, res, next) {
+router.get('/listarAccesos',jwt.verificarExistenciaToken,function(req, res, next) {
   try {
-    //web service
-    accesosModelo.listarAccesos(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				accesosModelo.listarAccesos(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+		});
   } catch (error) {
     return next(error);
   }
 });
 
 // AGREGAR ACCESOS- EXPORTANDO RUTA
-router.post('/agregarAcceso', function(req, res, next) {
+router.post('/agregarAcceso',jwt.verificarExistenciaToken,function(req, res, next) {
   try {
-    //web service
-    accesosModelo.agregarAcceso(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				accesosModelo.agregarAcceso(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+		});
   } catch (error) {
     return next(error);
   }

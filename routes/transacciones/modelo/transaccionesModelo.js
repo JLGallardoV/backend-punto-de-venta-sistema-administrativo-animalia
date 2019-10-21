@@ -1,3 +1,4 @@
+var test = require('./promesa');
 /*
 Estructura de respuesta del modelo
 {
@@ -20,7 +21,7 @@ exports.listarTransacciones = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'SELECT * FROM transacciones;';
+        var query = 'SELECT transacciones.idTransaccion, transacciones.montoNoIvaTransaccion, transacciones.ivaTransaccion, transacciones.montoConIvaTransaccion,transacciones.fechaTransaccion,productos.nombreProducto,transacciones_productos.numeroProductosEnTransaccion,vendedores.nombreVendedor,clientes.nombreCliente,tiposDePagos.tipoPago FROM transacciones  INNER JOIN transacciones_productos ON transacciones.idTransaccion = transacciones_productos.idTransaccion INNER JOIN productos ON transacciones_productos.idProducto = productos.idProducto INNER JOIN vendedores  ON transacciones.idVendedor = vendedores.idVendedor INNER JOIN clientes  ON transacciones.idCliente = clientes.idCliente INNER JOIN transacciones_tiposDePagos ON transacciones.idTransaccion = transacciones_tiposDePagos.idTransaccion INNER JOIN tiposDePagos ON transacciones_tiposDePagos.idTipoPago = tiposDePagos.idTipoPago WHERE transacciones.estatusBL = 1;';
 
         //ejecutamos el query
         database.query(query, function(error, success) {
@@ -52,10 +53,9 @@ exports.listarTransacciones = function(req) {
 
 /* INICIO - WS AGREGAR TRANSACCION*/
 exports.agregarTransaccion = function(req) {
-  //regresaremos una promesa
   console.log("agregando...");
   return new Promise((resolve, reject) => {
-    /*web service para agregar*/
+
     let body = req.body;
     req.getConnection(function(error, database) {
       if (error) {
@@ -63,99 +63,66 @@ exports.agregarTransaccion = function(req) {
           estatus: -1,
           respuesta: error
         });
-      } else {
+        return;
+      }
+      let tiposDePagos = body.tiposDePagos; //recibe un array de objetos
+      let productos = body.productos; //recibe un array de objetos
+      let pagoTransaccion = body.pagoTransaccion;
+      let idCliente = body.idCliente;
+      let idVendedor = body.idVendedor;
+      let cantidadProductosTransaccion = 0; //suma de los diferentes productos de la transaccion
+      let montoNoIvaTransaccion = 0; //monto total sin iva
+      let ivaTransaccion = 0;
+      let montoConIvaTransaccion = 0; //monto con iva de la transaccion
+      let cambioTransaccion = 0 //cambio
+      let arregloOperaciones = []; //aqui se guardaran los resultados, para invocarlos despues
 
-        let tiposDePagos = body.tiposDePagos;//recibe un array de objetos
-        let productos = body.productos;//recibe un array de objetos
-        let pagoTransaccion = body.pagoTransaccion;
-        let idCliente = body.idCliente;
-        let idVendedor = body.idVendedor;
 
-        /*INICIO - GENERANDO VALORES AUTOMATIVOS*/
-        /*cantidad de todos los productos de la transaccion*/
-        let cantidadProductosTransaccion = 0; //funje como acumulador
-        for (var i = 0; i < productos.length; i++) {
-          cantidadProductosTransaccion = cantidadProductosTransaccion + productos[i].cantidadProducto; //cantidadProducto definelo en el postman
-        }
-        /*monto total sin iva*/
-        let montoNoIvaTransaccion = 0;
-        for (var i = 0; i < productos.length; i++) {
-          montoNoIvaTransaccion = montoNoIvaTransaccion + (productos[i].precioUnitarioProducto * productos[i].cantidadProducto);
-        }
-        /*iva*/
-        let ivaTransaccion = 0;
-        ivaTransaccion = montoNoIvaTransaccion * .16;
-        /*monto total con iva*/
-        let montoConIvaTransaccion = montoNoIvaTransaccion + ivaTransaccion;
-        /*cambio*/
-        let cambioTransaccion = pagoTransaccion - montoConIvaTransaccion;
-        /*pendiente*/
-        let subtotalTransaccionProducto = 0;
-        let totalTransaccionProducto = 0;
-        let ivaTransaccionProducto = 0;
-        /*FIN - GENERANDO VALORES AUTOMATICOS*/
+      /*INICIO - GENERANDO VALORES AUTOMATIVOS*/
+      let operaciones = function(){
+        return new Promise((resolve,reject) => {
 
-        //INICIO - GENERANDO INSERCION TRANSACCIONES
-        let query = `INSERT INTO transacciones(montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,cantidadProductosTransaccion,pagoTransaccion,cambioTransaccion,idCliente,idVendedor)
-                     VALUES('${montoNoIvaTransaccion}','${ivaTransaccion}','${montoConIvaTransaccion}','${cantidadProductosTransaccion}','${pagoTransaccion}','${cambioTransaccion}','${idCliente}','${idVendedor}');`;
+          /*cantidad de todos los productos de la transaccion*/
+          for (var j = 0; j < productos.length; j++) {
+            cantidadProductosTransaccion = cantidadProductosTransaccion + productos[j].cantidadProducto; //cantidadProducto definelo en el postman
+          }
 
-        database.query(query, function(error, success) {
-          if (error) {
-            reject({
-              estatus: -1,
-              respuesta: error
-            });
-          } else {
-            resolve({
-              estatus: 1,
-              respuesta: 'transaccion dada de alta correctamente'
+          //obtener precio unitario y su id del producto en la posicion [i]
+          for (let i = 0; i < productos.length; i++) {
+            let queryPU = `SELECT precioUnitarioProducto FROM productos WHERE idProducto = ${productos[i].idProducto}`;
+            database.query(queryPU, function(error, success) {
+              if (error) {
+                console.log("error: ", error);
+                reject({
+                  estatus: -1,
+                  respuesta: error
+                });
+                return;
+              }
+              //acumulando el precio de los  productos por su cantidad y sumando el monto
+              montoNoIvaTransaccion = montoNoIvaTransaccion + (success[0].precioUnitarioProducto * productos[i].cantidadProducto)
+
+              //me aseguro de que sea la ultima iteracion del ciclo para que pueda resolverse la promesa y mande el valor correcto
+              if (i == productos.length -1) {
+                ivaTransaccion = montoNoIvaTransaccion * .16;
+                montoConIvaTransaccion = montoNoIvaTransaccion + ivaTransaccion;
+                cambioTransaccion = pagoTransaccion - montoConIvaTransaccion;
+                resolve(
+                  arregloOperaciones = [cantidadProductosTransaccion, montoNoIvaTransaccion, ivaTransaccion, montoConIvaTransaccion, cambioTransaccion]
+                );
+              }
             });
           }
-        });//FIN - GENERANDO INSERCION TRANSACCIONES
+        });/*FIN - GENERANDO VALORES AUTOMATICOS*/
+      }
 
-        //INICIO - GENERANDO INSERCION TRANSACCIONES_PRODUCTOS
-        for (var i = 0; i < productos.length; i++) { //ciclo para asegurarme que se hayan insertado todos los productos.
-          //con este query vamos agregando los productos a la transaccion
-          let queryI = `INSERT INTO transacciones_productos(idTransaccion,idProducto,numeroProductosEnTransaccion,subtotalTransaccionProducto,totalTransaccionProducto,ivaTransaccionProducto)
-                       VALUES(LAST_INSERT_ID(),${productos[i].idProducto},${productos[i].cantidadProducto},'${subtotalTransaccionProducto}','${totalTransaccionProducto}','${ivaTransaccionProducto}');`;
-
-          database.query(queryI, function(error, success) {
-            if (error) {
-              reject({
-                estatus: -1,
-                respuesta: error
-              });
-            } else {
-              resolve({
-                estatus: 1,
-                respuesta: 'transaccion dada de alta correctamente'
-              });
-            }
-          });
-
-          //con este query actualizare el stock (lo tenia en un procedimiento almacenado pero por alguna razon no actualizo)
-          let queryU = `UPDATE productos SET stockProducto = stockProducto - ${productos[i].cantidadProducto} WHERE idProducto = ${productos[i].idProducto};`;
-
-          database.query(queryU, function(error, success) {
-            if (error) {
-              reject({
-                estatus: -1,
-                respuesta: error
-              });
-            } else {
-              resolve({
-                estatus: 1,
-                respuesta: 'transaccion dada de alta correctamente'
-              });
-            }
-          });
-
-        }//FIN - GENERANDO INSERCION TRANSACCIONES_PRODUCTOS
-
-        //INICIO - GENERANDO INSERCION TRANSACCIONES_TIPOSDEPAGOS
-        for (var i = 0; i < tiposDePagos.length; i++) { //ciclo para asegurarme que se hayan insertado todos los productos.
-          let query = `INSERT INTO transacciones_tiposDePagos(idTransaccion,idTipoPago)
-                       VALUES(LAST_INSERT_ID(),'${tiposDePagos[i].idTipoPago}');`;
+      //hacemos uso de la promesa para meter lo valores del success en el insert
+      operaciones().then(
+        (success) => {//COMPORTAMIENTO: Al ser exitosa la resolucion de la promesa los valores de las variables globales toman el valor que tomaron en la creacion de la promesa
+          console.log("valor success: ", success);
+          //INICIO - GENERANDO INSERCION TRANSACCIONES
+          let query = `INSERT INTO transacciones(montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,cantidadProductosTransaccion,pagoTransaccion,cambioTransaccion,idCliente,idVendedor)
+                         VALUES('${montoNoIvaTransaccion}','${ivaTransaccion}','${montoConIvaTransaccion}','${cantidadProductosTransaccion}','${pagoTransaccion}','${cambioTransaccion}','${idCliente}','${idVendedor}');`;
 
           database.query(query, function(error, success) {
             if (error) {
@@ -169,10 +136,71 @@ exports.agregarTransaccion = function(req) {
                 respuesta: 'transaccion dada de alta correctamente'
               });
             }
-          });
-        }//FIN - GENERANDO INSERCION TRANSACCIONES_TIPOSDEPAGOS
+          }); //FIN - GENERANDO INSERCION TRANSACCIONES
 
-      }
+          //INICIO - GENERANDO INSERCION TRANSACCIONES_PRODUCTOS
+          for (var i = 0; i < productos.length; i++) { //ciclo para asegurarme que se hayan insertado todos los productos.
+            //con este query vamos agregando los productos a la transaccion
+            let queryI = `INSERT INTO transacciones_productos(idTransaccion,idProducto,numeroProductosEnTransaccion,subtotalTransaccionProducto,totalTransaccionProducto,ivaTransaccionProducto)
+                           VALUES(LAST_INSERT_ID(),${productos[i].idProducto},${productos[i].cantidadProducto});`;
+
+            database.query(queryI, function(error, success) {
+              if (error) {
+                reject({
+                  estatus: -1,
+                  respuesta: error
+                });
+              } else {
+                resolve({
+                  estatus: 1,
+                  respuesta: 'transaccion dada de alta correctamente'
+                });
+              }
+            });
+
+            //con este query actualizare el stock (lo tenia en un procedimiento almacenado pero por alguna razon no actualizo)
+            let queryU = `UPDATE productos SET stockProducto = stockProducto - ${productos[i].cantidadProducto} WHERE idProducto = ${productos[i].idProducto};`;
+
+            database.query(queryU, function(error, success) {
+              if (error) {
+                reject({
+                  estatus: -1,
+                  respuesta: error
+                });
+              } else {
+                resolve({
+                  estatus: 1,
+                  respuesta: 'transaccion dada de alta correctamente'
+                });
+              }
+            });
+
+          } //FIN - GENERANDO INSERCION TRANSACCIONES_PRODUCTOS
+
+          //INICIO - GENERANDO INSERCION TRANSACCIONES_TIPOSDEPAGOS
+          for (var i = 0; i < tiposDePagos.length; i++) { //ciclo para asegurarme que se hayan insertado todos los productos.
+            let query = `INSERT INTO transacciones_tiposDePagos(idTransaccion,idTipoPago)
+                           VALUES(LAST_INSERT_ID(),'${tiposDePagos[i].idTipoPago}');`;
+
+            database.query(query, function(error, success) {
+              if (error) {
+                reject({
+                  estatus: -1,
+                  respuesta: error
+                });
+              } else {
+                resolve({
+                  estatus: 1,
+                  respuesta: 'transaccion dada de alta correctamente'
+                });
+              }
+            });
+          } //FIN - GENERANDO INSERCION TRANSACCIONES_TIPOSDEPAGOS
+
+        },
+        (error) => {
+          console.log("error: ",error);
+        });
     });
   });
 } //FIN - WS AGREGAR TRANSACCION

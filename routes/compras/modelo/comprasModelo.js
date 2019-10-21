@@ -19,7 +19,7 @@ exports.listarCompras = function(req) {
         });
       } else {
         //muestra las diferentes compras existentes, quien fue el proveedor, que producto se compro y quien lo compro
-        var query = 'SELECT compras.idCompra,productos.nombreProducto, usuarios.nombreUsuario, compras_productos.numeroProductosEnCompra, proveedores.nombreProveedor FROM compras INNER JOIN proveedores ON compras.idProveedor = proveedores.idProveedor INNER JOIN usuarios ON compras.idUsuario = usuarios.idUsuario INNER JOIN compras_productos ON compras.idCompra = compras_productos.idCompra INNER JOIN productos ON compras_productos.idCompra = productos.idProducto;';
+        var query = 'SELECT compras.idCompra,compras.montoCompra,compras.fechaCompra,proveedores.nombreProveedor, usuarios.nombreUsuario, productos.nombreProducto, compras_productos.numeroProductosEnCompra FROM compras INNER JOIN proveedores ON compras.idProveedor = proveedores.idProveedor INNER  JOIN usuarios ON compras.idUsuario = usuarios.idUsuario INNER JOIN compras_productos ON compras.idCompra= compras_productos.idCompra INNER JOIN  productos ON compras_productos.idProducto=productos.idProducto WHERE compras.estatusBL=1';
 
         //ejecutamos el query
         database.query(query, function(error, success) {
@@ -88,7 +88,7 @@ exports.agregarCompra = function(req) {
         for (var i = 0; i < productos.length; i++) {//con esto me aseguro de que se hayan insertado todos los productos
           //agregando...
           let queryI = `INSERT INTO compras_productos(idCompra,idProducto,numeroProductosEnCompra,subtotalCompraProducto,totalCompraProducto,ivaCompraProducto)
-                       VALUES(LAST_INSERT_ID(),'${productos[i].idProducto}','${productos[i].cantidadProducto}',0,0,0);`;
+                       VALUES(LAST_INSERT_ID(),'${productos[i].idProducto}','${productos[i].cantidadProducto}');`;
           database.query(queryI, function(error, success) {
             if (error) {
               reject({

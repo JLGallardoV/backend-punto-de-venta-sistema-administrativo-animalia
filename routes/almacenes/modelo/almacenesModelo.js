@@ -109,18 +109,20 @@ exports.actualizarAlmacen = function(req) {
           respuesta: error
         });
       } else {
-        let query = `update almacenes set ? where idAlmacen = ${idAlmacen}`; //las comillas son diferentes
 
-        let requestBody = {
-          ciudadAlmacen: body.ciudadAlmacen,
-          estadoAlmacen: body.estadoAlmacen,
-          paisAlmacen: body.paisAlmacen,
-          direccionAlmacen: body.direccionAlmacen,
-          referenciaAlmacen: body.referenciaAlmacen,
-          telefonoAlmacen: body.telefonoAlmacen
-        };
+        let ciudadAlmacen = body.ciudadAlmacen;
+        let estadoAlmacen = body.estadoAlmacen;
+        let paisAlmacen = body.paisAlmacen;
+        let direccionAlmacen = body.direccionAlmacen;
+        let referenciaAlmacen = body.referenciaAlmacen;
+        let telefonoAlmacen = body.telefonoAlmacen;
 
-        database.query(query, requestBody, function(error, success) {
+        let query = `update almacenes set ciudadAlmacen = '${ciudadAlmacen}', estadoAlmacen = '${estadoAlmacen}', paisAlmacen = '${paisAlmacen}', direccionAlmacen = '${direccionAlmacen}', referenciaAlmacen = '${referenciaAlmacen}', telefonoAlmacen = '${telefonoAlmacen}', fechaActualizacionAlmacen = now() where idAlmacen = ${idAlmacen}`; //las comillas son diferentes
+
+
+
+
+        database.query(query,function(error, success) {
           if (error) {
             reject({
               estatus: -1,

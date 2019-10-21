@@ -7,7 +7,9 @@ USE tiendaMascotas_JLGallardoV;
 CREATE TABLE premios(
 	idPremio INT UNSIGNED AUTO_INCREMENT,
 	premio VARCHAR(100),
-	descripcionPremio VARCHAR(70),
+	descripcionPremio VARCHAR(100),
+	fechaRegistroPremio DATETIME DEFAULT NOW(),
+	fechaActualizacionPremio DATETIME DEFAULT NOW(),
 	estatusBL tinyint(2) default 1,
 	PRIMARY KEY (idPremio)
 );
@@ -17,6 +19,8 @@ CREATE TABLE tiposDeClientes(
 	idTipoCliente INT UNSIGNED AUTO_INCREMENT,
 	tipoCliente VARCHAR(100),
 	descripcionTipoCliente VARCHAR(70),
+	fechaRegistroTipoCliente DATETIME DEFAULT NOW(),
+	fechaActualizacionTipoCliente DATETIME DEFAULT NOW(),
 	estatusBL tinyint(2) default 1,
 	PRIMARY KEY (idTipoCliente)
 );
@@ -36,9 +40,9 @@ CREATE TABLE clientes(
 	emailCliente VARCHAR(40),
 	contraseniaCliente BLOB,
 	puntuajeCliente INT(5) UNSIGNED,
-	estatusBL tinyint(2) default 1,
 	fechaRegistroCliente DATETIME DEFAULT NOW(),
 	fechaActualizacionCliente DATETIME DEFAULT NOW(),
+	estatusBL tinyint(2) default 1,
 	idTipoCliente INT UNSIGNED NOT NULL,
 	PRIMARY KEY (idCliente),
 	FOREIGN KEY (idTipoCliente) REFERENCES tiposDeClientes (idTipoCliente) ON DELETE CASCADE
@@ -50,6 +54,8 @@ CREATE TABLE carritos(
 	numeroProductosCarrito INT(4) UNSIGNED,
 	montoTotalCarrito NUMERIC(7,2) UNSIGNED,
 	estatusBL tinyint(2) default 1,
+	fechaRegistroCarrito DATETIME DEFAULT NOW(),
+	fechaActualizacionCarrito DATETIME DEFAULT NOW(),
 	idCliente INT UNSIGNED NOT NULL,
 	PRIMARY KEY (idCarrito),
 	FOREIGN KEY (idCliente) REFERENCES clientes (idCliente) ON DELETE CASCADE
@@ -78,6 +84,8 @@ CREATE TABLE tiposDeUsuarios(
 	idTipoUsuario INT UNSIGNED AUTO_INCREMENT,
 	tipoUsuario VARCHAR(100),
 	descripcionTipoUsuario VARCHAR(100),
+	fechaRegistroTipoUsuario DATETIME DEFAULT NOW(),
+	fechaActualizacionTipoUsuario DATETIME DEFAULT NOW(),
 	estatusBL tinyint(2) default 1,
 	PRIMARY KEY (idTipoUsuario)
 );
@@ -146,6 +154,8 @@ CREATE TABLE almacenes(
 	direccionAlmacen VARCHAR(100),
 	referenciaAlmacen VARCHAR(100),
 	telefonoAlmacen VARCHAR(40),
+	fechaRegistroAlmacen DATETIME DEFAULT NOW(),
+	fechaActualizacionAlmacen DATETIME DEFAULT NOW(),
 	estatusBL tinyint(2) default 1,
 	PRIMARY KEY (idAlmacen)
 );
@@ -156,6 +166,8 @@ CREATE TABLE tiposDePagos(
 	tipoPago VARCHAR(100),
 	viaTipoPago VARCHAR(100),
 	descripcionTipoPago VARCHAR(100),
+	fechaRegistroTipoPago DATETIME DEFAULT NOW(),
+	fechaActualizacionTipoPago DATETIME DEFAULT NOW(),
 	estatusBL tinyint(2) default 1,
 	PRIMARY KEY (idTipoPago)
 );
@@ -182,6 +194,8 @@ CREATE TABLE mediosDeEntrega(
 	idMedioEntrega INT UNSIGNED AUTO_INCREMENT,
 	viaMedioEntrega VARCHAR(100),
 	descripcionMedioEntrega VARCHAR(100),
+	fechaRegistroMedioEntrega DATETIME DEFAULT NOW(),
+	fechaActualizacionMedioEntrega DATETIME DEFAULT NOW(),
 	estatusBL tinyint(2) default 1,
 	PRIMARY KEY (idMedioEntrega)
 );
@@ -207,6 +221,8 @@ CREATE TABLE categorias(
 	nombreCategoria VARCHAR(100),
 	subCategoria VARCHAR(100),
 	descripcionCategoria VARCHAR(100),
+	fechaRegistroCategoria DATETIME DEFAULT NOW(),
+	fechaActualizacionCategoria DATETIME DEFAULT NOW(),
 	estatusBL tinyint(2) default 1,
 	PRIMARY KEY (idCategoria)
 );
@@ -215,6 +231,8 @@ CREATE TABLE categorias(
 CREATE TABLE tiposDeProblemas(
 	idTipoProblema INT UNSIGNED AUTO_INCREMENT,
 	tipoProblema VARCHAR(100),
+	fechaRegistroTipoProblema DATETIME DEFAULT NOW(),
+	fechaActualizacionTipoProblema DATETIME DEFAULT NOW(),
 	estatusBL tinyint(2) default 1,
 	PRIMARY KEY (idTipoProblema)
 );
@@ -222,6 +240,8 @@ CREATE TABLE compensaciones(
 	idCompensacion INT UNSIGNED AUTO_INCREMENT,
 	tipoCompensacion VARCHAR(100),
 	descripcionCompensacion VARCHAR(100),
+	fechaRegistroCompensacion DATETIME DEFAULT NOW(),
+	fechaActualizacionCompensacion DATETIME DEFAULT NOW(),
 	estatusBL tinyint(2) default 1,
 	PRIMARY KEY (idCompensacion)
 );
@@ -288,9 +308,6 @@ CREATE TABLE transacciones_productos(
 	idTransaccion INT UNSIGNED NOT NULL,
 	idProducto INT UNSIGNED NOT NULL,
 	numeroProductosEnTransaccion INT(6),
-	subtotalTransaccionProducto NUMERIC(7,2) UNSIGNED,
-	totalTransaccionProducto NUMERIC(7,2) UNSIGNED,
-	ivaTransaccionProducto NUMERIC(7,2) UNSIGNED,
 	estatusBL tinyint(2) default 1,
 	PRIMARY KEY (idTransaccion, idProducto),
 	FOREIGN KEY (idTransaccion) REFERENCES transacciones (idTransaccion) ON DELETE CASCADE,
@@ -301,9 +318,6 @@ CREATE TABLE compras_productos(
 	idCompra INT UNSIGNED NOT NULL,
 	idProducto INT UNSIGNED NOT NULL,
 	numeroProductosEnCompra INT(6),
-	subtotalCompraProducto NUMERIC(7,2) UNSIGNED,
-	totalCompraProducto NUMERIC(7,2) UNSIGNED,
-	ivaCompraProducto NUMERIC(7,2) UNSIGNED,
 	estatusBL tinyint(2) default 1,
 	PRIMARY KEY (idCompra, idProducto),
 	FOREIGN KEY (idCompra) REFERENCES compras (idCompra) ON DELETE CASCADE,

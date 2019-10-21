@@ -1,5 +1,6 @@
 ### PENDIENTES
 - poner el campo de actualizacion registro de tipo now para diferenciar cuando un registro es modificado:
+  - almacenes
   - carritos
   - categorias
   - clientes
@@ -14,4 +15,4 @@
   - usuarios
   - vendedores
 
-- faltan los JWT 
+- faltan los JWT

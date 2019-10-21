@@ -41,17 +41,26 @@ router.get('/listarCategorias', jwt.verificarExistenciaToken, function(req,res,n
 });
 
 // AGREGAR CATEGORIA - EXPORTANDO RUTA
-router.post('/agregarCategoria', function(req, res, next) {
+router.post('/agregarCategoria', jwt.verificarExistenciaToken, function(req, res, next) {
   try {
-    //web service
-    categoriasModelo.agregarCategoria(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				categoriasModelo.agregarCategoria(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+		});
   } catch (error) {
     return next(error);
   }
@@ -59,34 +68,52 @@ router.post('/agregarCategoria', function(req, res, next) {
 
 
 // ACTUALIZAR CATEGORIA - EXPORTANDO RUTA
-router.put('/actualizarCategoria/:idCategoria', function(req, res, next) {
+router.put('/actualizarCategoria/:idCategoria', jwt.verificarExistenciaToken, function(req, res, next) {
   try {
-    //web service
-    categoriasModelo.actualizarCategoria(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				categoriasModelo.actualizarCategoria(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+		});
   } catch (error) {
     return next(error);
   }
 });
 
 // ELIMINAR CATEGORIA - EXPORTANDO RUTA
-router.delete('/eliminarCategoria/:idCategoria', function(req, res, next) {
+router.delete('/eliminarCategoria/:idCategoria', jwt.verificarExistenciaToken, function(req, res, next) {
   try {
-    //web service
-    categoriasModelo.eliminarCategoria(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				categoriasModelo.eliminarCategoria(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+		});
   } catch (error) {
     return next(error);
   }

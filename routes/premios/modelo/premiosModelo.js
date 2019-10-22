@@ -105,14 +105,13 @@ exports.actualizarPremio = function(req) {
           respuesta: error
         });
       } else {
-        let query = `update premios set ? where idPremio = ${idPremio}`; //las comillas son diferentes
+        let premio = body.premio;
+        let descripcionPremio = body.descripcionPremio;
 
-        let requestBody = {
-          premio: body.premio,
-          descripcionPremio: body.descripcionPremio,
-        };
+        let query = `update premios set premio = '${premio}', descripcionPremio = '${descripcionPremio}', fechaActualizacionPremio = now() where idPremio = ${idPremio}`; //las comillas son diferentes
 
-        database.query(query, requestBody, function(error, success) {
+
+        database.query(query, function(error, success) {
           if (error) {
             reject({
               estatus: -1,

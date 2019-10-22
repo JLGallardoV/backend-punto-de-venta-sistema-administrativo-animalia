@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var tiposPagosModelo = require('../modelo/tiposPagosModelo');
+var jwt = require('../../../public/servicios/jwt');
+var jsonWebToken = require('jsonwebtoken');
+
 
 //CABECERAS
 router.use(function(req,res,next){
@@ -11,34 +14,54 @@ router.use(function(req,res,next){
 });
 
 // LISTAR TIPOS DE PAGOS - EXPORTANDO RUTA
-router.get('/listarTiposPagos', function(req, res, next) {
+router.get('/listarTiposPagos',jwt.verificarExistenciaToken,function(req, res, next) {
   try {
-    //web service
-    tiposPagosModelo.listarTiposPagos(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				tiposPagosModelo.listarTiposPagos(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+
+		});
   } catch (error) {
     return next(error);
   }
 });
 
 // AGREGAR TIPOS DE PAGOS - EXPORTANDO RUTA
-router.post('/agregarTipoPago', function(req, res, next) {
+router.post('/agregarTipoPago',jwt.verificarExistenciaToken,function(req, res, next) {
   try {
-    //web service
-    tiposPagosModelo.agregarTipoPago(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				tiposPagosModelo.agregarTipoPago(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+
+		});
   } catch (error) {
     return next(error);
   }
@@ -46,34 +69,54 @@ router.post('/agregarTipoPago', function(req, res, next) {
 
 
 // ACTUALIZAR TIPOS DE PAGOS - EXPORTANDO RUTA
-router.put('/actualizarTipoPago/:idTipoPago', function(req, res, next) {
+router.put('/actualizarTipoPago/:idTipoPago',jwt.verificarExistenciaToken,function(req, res, next) {
   try {
-    //web service
-    tiposPagosModelo.actualizarTipoPago(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				tiposPagosModelo.actualizarTipoPago(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+
+		});
   } catch (error) {
     return next(error);
   }
 });
 
 // ELIMINAR TIPOS DE PAGOS - EXPORTANDO RUTA
-router.delete('/eliminarTipoPago/:idTipoPago', function(req, res, next) {
+router.delete('/eliminarTipoPago/:idTipoPago',jwt.verificarExistenciaToken,function(req, res, next) {
   try {
-    //web service
-    tiposPagosModelo.eliminarTipoPago(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				tiposPagosModelo.eliminarTipoPago(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+
+		});
   } catch (error) {
     return next(error);
   }

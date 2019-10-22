@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var enviosModelo = require('../modelo/enviosModelo');
+var jwt = require('../../../public/servicios/jwt');
+var jsonWebToken = require('jsonwebtoken');
 
 //CABECERAS
 router.use(function(req,res,next){
@@ -12,69 +14,82 @@ router.use(function(req,res,next){
 
 
 // LISTAR ENVIOS - EXPORTANDO RUTA
-router.get('/listarEnvios', function(req, res, next) {
+router.get('/listarEnvios',jwt.verificarExistenciaToken,function(req, res, next) {
   try {
-    //web service
-    enviosModelo.listarEnvios(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				enviosModelo.listarEnvios(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+
+		});
   } catch (error) {
     return next(error);
   }
 });
 
 // AGREGAR ENVIOS - EXPORTANDO RUTA
-router.post('/agregarEnvio', function(req, res, next) {
+router.post('/agregarEnvio',jwt.verificarExistenciaToken,function(req, res, next) {
   try {
-    //web service
-    enviosModelo.agregarEnvio(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				enviosModelo.agregarEnvio(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+
+		});
   } catch (error) {
     return next(error);
   }
 });
 
-
-// ACTUALIZAR ENVIOS - EXPORTANDO RUTA
-router.put('/actualizarEnvio/:idEnvio', function(req, res, next) {
-  try {
-    //web service
-    enviosModelo.actualizarEnvio(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
-  } catch (error) {
-    return next(error);
-  }
-});
 
 // ELIMINAR ENVIOS - EXPORTANDO RUTA
-router.delete('/eliminarEnvio/:idEnvio', function(req, res, next) {
+router.delete('/eliminarEnvio/:idEnvio',jwt.verificarExistenciaToken, function(req, res, next) {
   try {
-    //web service
-    enviosModelo.eliminarEnvio(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				enviosModelo.eliminarEnvio(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+
+		});
   } catch (error) {
     return next(error);
   }

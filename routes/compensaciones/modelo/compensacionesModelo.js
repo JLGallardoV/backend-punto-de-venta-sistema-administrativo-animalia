@@ -105,14 +105,14 @@ exports.actualizarCompensacion = function(req) {
           respuesta: error
         });
       } else {
-        let query = `update compensaciones set ? where idCompensacion = ${idCompensacion}`; //las comillas son diferentes
+        let tipoCompensacion = body.tipoCompensacion;
+        let descripcionCompensacion = body.descripcionCompensacion;
 
-        let requestBody = {
-          tipoCompensacion: body.tipoCompensacion,
-          descripcionCompensacion: body.descripcionCompensacion
-        };
+        let query = `update compensaciones set tipoCompensacion = '${tipoCompensacion}', descripcionCompensacion = '${descripcionCompensacion}', fechaActualizacionCompensacion = now() where idCompensacion = ${idCompensacion}`; //las comillas son diferentes
 
-        database.query(query, requestBody, function(error, success) {
+
+
+        database.query(query, function(error, success) {
           if (error) {
             reject({
               estatus: -1,

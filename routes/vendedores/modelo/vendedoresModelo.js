@@ -112,22 +112,22 @@ exports.actualizarVendedor = function(req) {
           respuesta: error
         });
       } else {
-          let query = `update vendedores set ? where idVendedor = ${idVendedor}`; //las comillas son diferentes
 
-        let requestBody = {
-          nombreVendedor: body.nombreVendedor,
-          ciudadVendedor: body.ciudadVendedor,
-          estadoVendedor: body.estadoVendedor,
-          direccionVendedor: body.direccionVendedor,
-          telefonoVendedor: body.telefonoVendedor,
-          emailVendedor: body.emailVendedor,
-          fechaNacimientoVendedor: body.fechaNacimientoVendedor,
-          rfcVendedor: body.rfcVendedor,
-          numeroSeguroSocialVendedor: body.numeroSeguroSocialVendedor,
-          antiguedadVendedor: body.antiguedadVendedor
-        };
+        let nombreVendedor = body.nombreVendedor;
+        let ciudadVendedor = body.ciudadVendedor;
+        let estadoVendedor = body.estadoVendedor;
+        let direccionVendedor = body.direccionVendedor;
+        let telefonoVendedor = body.telefonoVendedor;
+        let emailVendedor = body.emailVendedor;
+        let fechaNacimientoVendedor = body.fechaNacimientoVendedor;
+        let rfcVendedor = body.rfcVendedor;
+        let numeroSeguroSocialVendedor = body.numeroSeguroSocialVendedor;
+        let antiguedadVendedor = body.antiguedadVendedor;
 
-        database.query(query, requestBody, function(error, success) {
+        let query = `update vendedores set nombreVendedor='${nombreVendedor}',ciudadVendedor='${ciudadVendedor}',estadoVendedor='${estadoVendedor}',direccionVendedor='${direccionVendedor}',telefonoVendedor='${telefonoVendedor}',emailVendedor='${emailVendedor}',fechaNacimientoVendedor='${fechaNacimientoVendedor}',numeroSeguroSocialVendedor='${numeroSeguroSocialVendedor}',antiguedadVendedor='${antiguedadVendedor}',fechaActualizacionVendedor = now() where idVendedor = ${idVendedor}`; //las comillas son diferentes
+
+
+        database.query(query, function(error, success) {
           if (error) {
             reject({
               estatus: -1,

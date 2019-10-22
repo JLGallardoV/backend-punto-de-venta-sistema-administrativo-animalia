@@ -12,7 +12,6 @@ var almacenesRouter = require('./routes/almacenes/controlador/almacenesControlad
 var carritosRouter = require('./routes/carritos/controlador/carritosControlador');
 var categoriasRouter = require('./routes/categorias/controlador/categoriasControlador');
 var clientesRouter = require('./routes/clientes/controlador/clientesControlador');
-var clientesPuntosRouter = require('./routes/clientes/controlador/puntosClientesControlador');
 var compensacionesRouter = require('./routes/compensaciones/controlador/compensacionesControlador');
 var comprasRouter = require('./routes/compras/controlador/comprasControlador');
 var enviosRouter = require('./routes/envios/controlador/enviosControlador');
@@ -75,7 +74,6 @@ app.use('/almacenesWS', almacenesRouter);
 app.use('/carritosWS', carritosRouter);
 app.use('/categoriasWS', categoriasRouter);
 app.use('/clientesWS', clientesRouter);
-app.use('/clientesWS', clientesPuntosRouter);
 app.use('/compensacionesWS', compensacionesRouter);
 app.use('/comprasWS', comprasRouter);
 app.use('/enviosWS', enviosRouter);

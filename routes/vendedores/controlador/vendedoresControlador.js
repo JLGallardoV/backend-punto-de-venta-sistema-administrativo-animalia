@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var vendedoresModelo = require('../modelo/vendedoresModelo');
+var jwt = require('../../../public/servicios/jwt');
+var jsonWebToken = require('jsonwebtoken');
+
 
 //CABECERAS
 router.use(function(req,res,next){
@@ -11,34 +14,54 @@ router.use(function(req,res,next){
 });
 
 // LISTAR VENDEDORES - EXPORTANDO RUTA
-router.get('/listarVendedores', function(req, res, next) {
+router.get('/listarVendedores',jwt.verificarExistenciaToken, function(req, res, next) {
   try {
-    //web service
-    vendedoresModelo.listarVendedores(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				vendedoresModelo.listarVendedores(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+
+		});
   } catch (error) {
     return next(error);
   }
 });
 
 // AGREGAR VENDEDORES - EXPORTANDO RUTA
-router.post('/agregarVendedor', function(req, res, next) {
+router.post('/agregarVendedor',jwt.verificarExistenciaToken, function(req, res, next) {
   try {
-    //web service
-    vendedoresModelo.agregarVendedor(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				vendedoresModelo.agregarVendedor(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+
+		});
   } catch (error) {
     return next(error);
   }
@@ -46,34 +69,55 @@ router.post('/agregarVendedor', function(req, res, next) {
 
 
 // ACTUALIZAR VENDEDORES - EXPORTANDO RUTA
-router.put('/actualizarVendedor/:idVendedor', function(req, res, next) {
+router.put('/actualizarVendedor/:idVendedor',jwt.verificarExistenciaToken, function(req, res, next) {
   try {
-    //web service
-    vendedoresModelo.actualizarVendedor(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				vendedoresModelo.actualizarVendedor(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+
+		});
   } catch (error) {
     return next(error);
   }
 });
 
 // ELIMINAR VENDEDORES - EXPORTANDO RUTA
-router.delete('/eliminarVendedor/:idVendedor', function(req, res, next) {
+router.delete('/eliminarVendedor/:idVendedor',jwt.verificarExistenciaToken, function(req, res, next) {
   try {
-    //web service
-    vendedoresModelo.eliminarVendedor(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				vendedoresModelo.eliminarVendedor(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+
+
+
+		});
   } catch (error) {
     return next(error);
   }

@@ -105,14 +105,14 @@ exports.actualizarMedioEntrega = function(req) {
           respuesta: error
         });
       } else {
-        let query = `update mediosDeEntrega set ? where idMedioEntrega = ${idMedioEntrega}`; //las comillas son diferentes
+        let viaMedioEntrega = body.viaMedioEntrega;
+        let descripcionMedioEntrega = body.descripcionMedioEntrega;
 
-        let requestBody = {
-          viaMedioEntrega: body.viaMedioEntrega,
-          descripcionMedioEntrega: body.descripcionMedioEntrega
-        };
 
-        database.query(query, requestBody, function(error, success) {
+        let query = `update mediosDeEntrega set viaMedioEntrega = '${viaMedioEntrega}', descripcionMedioEntrega = '${descripcionMedioEntrega}',fechaActualizacionMedioEntrega = now() where idMedioEntrega = ${idMedioEntrega}`; //las comillas son diferentes
+
+
+        database.query(query, function(error, success) {
           if (error) {
             reject({
               estatus: -1,

@@ -124,14 +124,13 @@ exports.actualizarTipoUsuario = function(req) {
           respuesta: error
         });
       } else {
-        let query = `update tiposDeUsuarios set ? where idTipoUsuario = ${idTipoUsuario}`; //las comillas son diferentes
+        let tipoUsuario= body.tipoUsuario;
+        let descripcionTipoUsuario= body.descripcionTipoUsuario;
 
-        let requestBody = {
-          tipoUsuario: body.tipoUsuario,
-          privilegiosTipoUsuario: body.privilegiosTipoUsuario
-        };
+        let query = `update tiposDeUsuarios set tipoUsuario = '${tipoUsuario}', descripcionTipoUsuario = '${descripcionTipoUsuario}', fechaActualizacionTipoUsuario = now() where idTipoUsuario = ${idTipoUsuario}`; //las comillas son diferentes
 
-        database.query(query, requestBody, function(error, success) {
+
+        database.query(query, function(error, success) {
           if (error) {
             reject({
               estatus: -1,

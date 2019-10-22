@@ -2,15 +2,15 @@
 - poner el campo de actualizacion registro de tipo now para diferenciar cuando un registro es modificado y JWT's:
   - almacenes(x)
   - carritos(x)
-  - categorias
-  - clientes
-  - compensaciones
-  - mediosDeEntrega
-  - premios
-  - productos
-  - proveedores
-  - tiposDeClientes
-  - tiposDePagos
-  - tiposDeUsuarios
-  - usuarios
-  - vendedores
+  - categorias(x)
+  - clientes(x)
+  - compensaciones(x)
+  - mediosDeEntrega(x)
+  - premios (x)
+  - productos(x)
+  - proveedores(x)
+  - tiposDeClientes(x)
+  - tiposDePagos(x)
+  - tiposDeUsuarios(x)
+  - usuarios(x)
+  - vendedores(x)

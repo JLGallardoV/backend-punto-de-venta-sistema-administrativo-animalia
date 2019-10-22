@@ -128,17 +128,16 @@ exports.actualizarUsuario = function(req) {
           respuesta: error
         });
       } else {
-        let query = `update usuarios set ? where idUsuario = ${idUsuario}`; //las comillas son diferentes
+        let nombreUsuario = body.nombreUsuario;
+        let emailUsuario = body.emailUsuario;
+        let contraseniaUsuario = body.contraseniaUsuario;
+        let idVendedor = body.idVendedor;
+        let idTipoUsuario = body.idTipoUsuario;
 
-        let requestBody = {
-          nombreUsuario: body.nombreUsuario,
-          emailUsuario: body.emailUsuario,
-          contraseniaUsuario: body.contraseniaUsuario,
-          idVendedor: body.idVendedor,
-          idTipoUsuario: body.idTipoUsuario
-        };
+        let query = `update usuarios set nombreUsuario = '${nombreUsuario}', emailUsuario = '${emailUsuario}', contraseniaUsuario = '${contraseniaUsuario}', idVendedor = '${idVendedor}', idTipoUsuario = '${idTipoUsuario}', fechaActualizacionUsuario = now() where idUsuario = ${idUsuario}`; //las comillas son diferentes
 
-        database.query(query, requestBody, function(error, success) {
+
+        database.query(query, function(error, success) {
           if (error) {
             reject({
               estatus: -1,

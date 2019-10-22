@@ -19,7 +19,7 @@ exports.listarProductos = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'SELECT productos.idProducto,productos.nombreProducto,productos.detalleProducto,productos.contenidoProducto,productos.fechaCaducidadProducto,productos.paisOrigenProducto,productos.stockProducto,productos.puntosProducto,productos.precioUnitarioProducto,productos.precioMayoreoProducto,categorias.nombreCategoria,almacenes.ciudadAlmacen,almacenes.telefonoAlmacen FROM productos INNER JOIN categorias ON productos.idCategoria = categorias.idCategoria INNER JOIN almacenes ON productos.idAlmacen = almacenes.idAlmacen WHERE productos.estatusBL = 1;';
+        var query = 'SELECT productos.idProducto,productos.nombreProducto,productos.detalleProducto,productos.contenidoProducto,productos.fechaCaducidadProducto,productos.paisOrigenProducto,productos.stockProducto,productos.puntosProducto,productos.precioUnitarioProducto,categorias.nombreCategoria,almacenes.ciudadAlmacen,almacenes.telefonoAlmacen FROM productos INNER JOIN categorias ON productos.idCategoria = categorias.idCategoria INNER JOIN almacenes ON productos.idAlmacen = almacenes.idAlmacen WHERE productos.estatusBL = 1;';
 
         //ejecutamos el query
         database.query(query, function(error, success) {
@@ -74,7 +74,6 @@ exports.agregarProducto = function(req) {
           stockProducto: body.stockProducto,
           puntosProducto: body.puntosProducto,
           precioUnitarioProducto: body.precioUnitarioProducto,
-          precioMayoreoProducto: body.precioMayoreoProducto,
           idCategoria: body.idCategoria,
           idAlmacen: body.idAlmacen
         };
@@ -113,23 +112,21 @@ exports.actualizarProducto = function(req) {
           respuesta: error
         });
       } else {
-        let query = `update productos set ? where idProducto = ${idProducto}`; //las comillas son diferentes
+        let nombreProducto = body.nombreProducto;
+        let detalleProducto = body.detalleProducto;
+        let contenidoProducto = body.contenidoProducto;
+        let fechaCaducidadProducto = body.fechaCaducidadProducto;
+        let paisOrigenProducto = body.paisOrigenProducto;
+        let stockProducto = body.stockProducto;
+        let puntosProducto = body.puntosProducto;
+        let precioUnitarioProducto = body.precioUnitarioProducto;
+        let idCategoria = body.idCategoria;
+        let idAlmacen = body.idAlmacen;
 
-        let requestBody = {
-          nombreProducto: body.nombreProducto,
-          detalleProducto: body.detalleProducto,
-          contenidoProducto: body.contenidoProducto,
-          fechaCaducidadProducto: body.fechaCaducidadProducto,
-          paisOrigenProducto: body.paisOrigenProducto,
-          stockProducto: body.stockProducto,
-          puntosProducto: body.puntosProducto,
-          precioUnitarioProducto: body.precioUnitarioProducto,
-          precioMayoreoProducto: body.precioMayoreoProducto,
-          idCategoria: body.idCategoria,
-          idAlmacen: body.idAlmacen
-        };
+        let query = `update productos set nombreProducto = '${nombreProducto}',detalleProducto = '${detalleProducto}',contenidoProducto = '${contenidoProducto}',fechaCaducidadProducto ='${fechaCaducidadProducto}',paisOrigenProducto = '${paisOrigenProducto}',stockProducto = '${stockProducto}',puntosProducto = '${puntosProducto}',precioUnitarioProducto = '${precioUnitarioProducto}',idCategoria = '${idCategoria}',idAlmacen = '${idAlmacen}',fechaActualizacionProducto = now() where idProducto = ${idProducto}`;
 
-        database.query(query, requestBody, function(error, success) {
+
+        database.query(query,function(error, success) {
           if (error) {
             reject({
               estatus: -1,

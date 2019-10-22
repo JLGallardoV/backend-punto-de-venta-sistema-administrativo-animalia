@@ -123,14 +123,13 @@ exports.actualizarTipoCliente = function(req) {
           respuesta: error
         });
       } else {
-        let query = `update tiposDeClientes set ? where idTipoCliente = ${idTipoCliente}`; //las comillas son diferentes
+        let tipoCliente = body.tipoCliente;
+        let descripcionTipoCliente = body.descripcionTipoCliente;
 
-        let requestBody = {
-          tipoCliente: body.tipoCliente,
-          descripcionTipoCliente: body.descripcionTipoCliente
-        };
+        let query = `update tiposDeClientes set tipoCliente='${tipoCliente}',descripcionTipoCliente='${descripcionTipoCliente}',fechaActualizacionTipoCliente = now() where idTipoCliente = ${idTipoCliente}`; //las comillas son diferentes
 
-        database.query(query, requestBody, function(error, success) {
+
+        database.query(query,function(error, success) {
           if (error) {
             reject({
               estatus: -1,

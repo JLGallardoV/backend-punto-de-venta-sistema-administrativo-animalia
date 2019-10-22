@@ -124,15 +124,13 @@ exports.actualizarTipoPago = function(req) {
           respuesta: error
         });
       } else {
-        let query = `update tiposDePagos set ? where idTipoPago = ${idTipoPago}`; //las comillas son diferentes
+        let tipoPago = body.tipoPago;
+        let viaTipoPago = body.viaTipoPago;
+        let descripcionTipoPago = body.descripcionTipoPago;
 
-        let requestBody = {
-          tipoPago: body.tipoPago,
-          viaTipoPago: body.viaTipoPago,
-          descripcionTipoPago: body.descripcionTipoPago
-        };
+        let query = `update tiposDePagos set tipoPago='${tipoPago}',viaTipoPago='${viaTipoPago}',descripcionTipoPago ='${descripcionTipoPago}',fechaActualizacionTipoPago = now() where idTipoPago = ${idTipoPago}`; //las comillas son diferentes
 
-        database.query(query, requestBody, function(error, success) {
+        database.query(query, function(error, success) {
           if (error) {
             reject({
               estatus: -1,

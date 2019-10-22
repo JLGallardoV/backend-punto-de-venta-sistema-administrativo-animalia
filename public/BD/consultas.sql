@@ -24,14 +24,6 @@ INNER JOIN vendedores ON transacciones.idVendedor = vendedores.idVendedor
 WHERE fechaTransaccion between '2019-09-23 00:00:00' and '2019-09-26 23:59:59'
 group by nombreVendedor order by vendidos DESC;
 
---PUNTOS POR NUMERO DE COMPRAS A CLIENTES - ALTERNATIVA:
-SELECT clientes.nombreCliente, clientes.idCliente, clientes.puntuajeCliente, count(*) as compras
-FROM transacciones_clientes
-INNER JOIN clientes ON transacciones_clientes.idCliente = clientes.idCliente
-INNER JOIN transacciones ON transacciones_clientes.idTransaccion = transacciones.idTransaccion
-WHERE fechaTransaccion between '2019-09-23 00:00:00' and '2019-10-28 23:59:59'
-group by nombreCliente order by compras DESC;
-
 
 /*PUNTOS POR PRODUCTO: MULTIPLICA EL NUMERO DE PRODUCTOS COMPRADOS Y DESPUES LOS SUMA PARA DAR EL "VALOR TOTAL" DE PUNTOS
 POR USUARIO:*/

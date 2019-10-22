@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var mediosEntregaModelo = require('../modelo/mediosEntregaModelo');
+var jwt = require('../../../public/servicios/jwt');
+var jsonWebToken = require('jsonwebtoken');
 
 //CABECERAS
 router.use(function(req,res,next){
@@ -11,34 +13,54 @@ router.use(function(req,res,next){
 });
 
 // LISTAR CMEDIOS DE ENTREGA - EXPORTANDO RUTA
-router.get('/listarMediosEntrega', function(req, res, next) {
+router.get('/listarMediosEntrega',jwt.verificarExistenciaToken, function(req, res, next) {
   try {
-    //web service
-    mediosEntregaModelo.listarMediosEntrega(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				mediosEntregaModelo.listarMediosEntrega(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})	
+			}
+
+		});
   } catch (error) {
     return next(error);
   }
 });
 
 // AGREGAR MEDIOS DE ENTREGA - EXPORTANDO RUTA
-router.post('/agregarMedioEntrega', function(req, res, next) {
+router.post('/agregarMedioEntrega',jwt.verificarExistenciaToken, function(req, res, next) {
   try {
-    //web service
-    mediosEntregaModelo.agregarMedioEntrega(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				mediosEntregaModelo.agregarMedioEntrega(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+
+		});
   } catch (error) {
     return next(error);
   }
@@ -46,34 +68,54 @@ router.post('/agregarMedioEntrega', function(req, res, next) {
 
 
 // ACTUALIZAR MEDIOS DE ENTREGA - EXPORTANDO RUTA
-router.put('/actualizarMedioEntrega/:idMedioEntrega', function(req, res, next) {
+router.put('/actualizarMedioEntrega/:idMedioEntrega',jwt.verificarExistenciaToken, function(req, res, next) {
   try {
-    //web service
-    mediosEntregaModelo.actualizarMedioEntrega(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				mediosEntregaModelo.actualizarMedioEntrega(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+
+		});
   } catch (error) {
     return next(error);
   }
 });
 
 // ELIMINAR MEDIOS DE ENTREGA - EXPORTANDO RUTA
-router.delete('/eliminarMedioEntrega/:idMedioEntrega', function(req, res, next) {
+router.delete('/eliminarMedioEntrega/:idMedioEntrega',jwt.verificarExistenciaToken, function(req, res, next) {
   try {
-    //web service
-    mediosEntregaModelo.eliminarMedioEntrega(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				mediosEntregaModelo.eliminarMedioEntrega(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+
+		});
   } catch (error) {
     return next(error);
   }

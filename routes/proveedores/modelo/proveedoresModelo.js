@@ -110,22 +110,19 @@ exports.actualizarProveedor = function(req) {
           respuesta: error
         });
       } else {
-        let query = `update proveedores set ? where idProveedor = ${idProveedor}`; //las comillas son diferentes
+        let nombreProveedor = body.nombreProveedor;
+        let ciudadProveedor = body.ciudadProveedor;
+        let estadoProveedor = body.estadoProveedor;
+        let paisProveedor = body.paisProveedor;
+        let direccionProveedor = body.direccionProveedor;
+        let telefonoProveedor = body.telefonoProveedor;
+        let emailProveedor = body.emailProveedor;
+        let descripcionProveedor = body.descripcionProveedor;
 
-        //var now = 'now()'
-        let requestBody = {
-          nombreProveedor: body.nombreProveedor,
-          ciudadProveedor: body.ciudadProveedor,
-          estadoProveedor: body.estadoProveedor,
-          paisProveedor: body.paisProveedor,
-          direccionProveedor: body.direccionProveedor,
-          telefonoProveedor: body.telefonoProveedor,
-          emailProveedor: body.emailProveedor,
-          descripcionProveedor: body.descripcionProveedor,
-          //fechaActualizacionProveedor: `${now}`
-        };
+        let query = `update proveedores set nombreProveedor = '${nombreProveedor}',ciudadProveedor= '${ciudadProveedor}',estadoProveedor= '${estadoProveedor}',paisProveedor= '${paisProveedor}',direccionProveedor= '${direccionProveedor}',telefonoProveedor= '${telefonoProveedor}',emailProveedor= '${emailProveedor}',descripcionProveedor= '${descripcionProveedor}', fechaActualizacionProveedor = now() where idProveedor = ${idProveedor}`; //las comillas son diferentes
 
-        database.query(query, requestBody, function(error, success) {
+
+        database.query(query,function(error, success) {
           if (error) {
             reject({
               estatus: -1,

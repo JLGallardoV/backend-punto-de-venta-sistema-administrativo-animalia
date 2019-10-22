@@ -87,7 +87,7 @@ exports.agregarCompra = function(req) {
         // INICIO - GENERANDO INSERCION COMPRAS_PRODUCTOS
         for (var i = 0; i < productos.length; i++) {//con esto me aseguro de que se hayan insertado todos los productos
           //agregando...
-          let queryI = `INSERT INTO compras_productos(idCompra,idProducto,numeroProductosEnCompra,subtotalCompraProducto,totalCompraProducto,ivaCompraProducto)
+          let queryI = `INSERT INTO compras_productos(idCompra,idProducto,numeroProductosEnCompra)
                        VALUES(LAST_INSERT_ID(),'${productos[i].idProducto}','${productos[i].cantidadProducto}');`;
           database.query(queryI, function(error, success) {
             if (error) {

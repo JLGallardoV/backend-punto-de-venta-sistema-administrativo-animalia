@@ -168,15 +168,14 @@ exports.actualizarCarrito = function(req) {
           respuesta: error
         });
       } else {
-        let query = `update carritos set ? where idCarrito = ${idCarrito}`; //las comillas son diferentes
 
-        let requestBody = {
-          numeroProductosCarrito: body.numeroProductosCarrito,
-          montoTotalCarrito: body.montoTotalCarrito,
-          idCliente: body.idCliente
-        };
+        let numeroProductosCarrito = body.numeroProductosCarrito;
+        let montoTotalCarrito = body.montoTotalCarrito;
 
-        database.query(query, requestBody, function(error, success) {
+        let query = `update carritos set numeroProductosCarrito = '${numeroProductosCarrito}', montoTotalCarrito = '${montoTotalCarrito}', fechaActualizacionCarrito = now() where idCarrito = ${idCarrito}`; //las comillas son diferentes
+
+
+        database.query(query, function(error, success) {
           if (error) {
             reject({
               estatus: -1,

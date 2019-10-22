@@ -106,15 +106,16 @@ exports.actualizarCategoria = function(req) {
           respuesta: error
         });
       } else {
-        let query = `update categorias set ? where idCategoria = ${idCategoria}`; //las comillas son diferentes
 
-        let requestBody = {
-          nombreCategoria: body.nombreCategoria,
-          subCategoria: body.subCategoria,
-          descripcionCategoria: body.descripcionCategoria
-        };
+        let nombreCategoria = body.nombreCategoria;
+        let subCategoria = body.subCategoria;
+        let descripcionCategoria = body.descripcionCategoria;
 
-        database.query(query, requestBody, function(error, success) {
+        let query = `update categorias set nombreCategoria = '${nombreCategoria}',subCategoria = '${subCategoria}',descripcionCategoria = '${descripcionCategoria}',fechaActualizacionCategoria = now() where idCategoria = ${idCategoria}`; //las comillas son diferentes
+
+        
+
+        database.query(query, function(error, success) {
           if (error) {
             reject({
               estatus: -1,

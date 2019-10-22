@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var compensacionesModelo = require('../modelo/compensacionesModelo');
+var jwt = require('../../../public/servicios/jwt');
+var jsonWebToken = require('jsonwebtoken');
 
 //CABECERAS
 router.use(function(req,res,next){
@@ -11,34 +13,52 @@ router.use(function(req,res,next){
 });
 
 // LISTAR COMPENSACIONES - EXPORTANDO RUTA
-router.get('/listarCompensaciones', function(req, res, next) {
+router.get('/listarCompensaciones',jwt.verificarExistenciaToken, function(req, res, next) {
   try {
-    //web service
-    compensacionesModelo.listarCompensaciones(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				compensacionesModelo.listarCompensaciones(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+		});
   } catch (error) {
     return next(error);
   }
 });
 
 // AGREGAR COMPENSACIONES - EXPORTANDO RUTA
-router.post('/agregarCompensacion', function(req, res, next) {
+router.post('/agregarCompensacion',jwt.verificarExistenciaToken, function(req, res, next) {
   try {
-    //web service
-    compensacionesModelo.agregarCompensacion(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				compensacionesModelo.agregarCompensacion(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+		});
   } catch (error) {
     return next(error);
   }
@@ -46,34 +66,52 @@ router.post('/agregarCompensacion', function(req, res, next) {
 
 
 // ACTUALIZAR COMPENSACIONES - EXPORTANDO RUTA
-router.put('/actualizarCompensacion/:idCompensacion', function(req, res, next) {
+router.put('/actualizarCompensacion/:idCompensacion',jwt.verificarExistenciaToken, function(req, res, next) {
   try {
-    //web service
-    compensacionesModelo.actualizarCompensacion(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				compensacionesModelo.actualizarCompensacion(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+		});
   } catch (error) {
     return next(error);
   }
 });
 
 // ELIMINAR COMPENSACIONES - EXPORTANDO RUTA
-router.delete('/eliminarCompensacion/:idCompensacion', function(req, res, next) {
+router.delete('/eliminarCompensacion/:idCompensacion',jwt.verificarExistenciaToken, function(req, res, next) {
   try {
-    //web service
-    compensacionesModelo.eliminarCompensacion(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				compensacionesModelo.eliminarCompensacion(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+		});
   } catch (error) {
     return next(error);
   }

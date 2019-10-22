@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var premiosModelo = require('../modelo/premiosModelo');
+var jwt = require('../../../public/servicios/jwt');
+var jsonWebToken = require('jsonwebtoken');
 
 //CABECERAS
 router.use(function(req,res,next){
@@ -11,34 +13,54 @@ router.use(function(req,res,next){
 });
 
 // LISTAR PREMIOS - EXPORTANDO RUTA
-router.get('/listarPremios', function(req, res, next) {
+router.get('/listarPremios',jwt.verificarExistenciaToken, function(req, res, next) {
   try {
-    //web service
-    premiosModelo.listarPremios(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				premiosModelo.listarPremios(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+
+		});
   } catch (error) {
     return next(error);
   }
 });
 
 // AGREGAR PREMIO - EXPORTANDO RUTA
-router.post('/agregarPremio', function(req, res, next) {
+router.post('/agregarPremio',jwt.verificarExistenciaToken, function(req, res, next) {
   try {
-    //web service
-    premiosModelo.agregarPremio(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				premiosModelo.agregarPremio(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+
+		});
   } catch (error) {
     return next(error);
   }
@@ -46,34 +68,54 @@ router.post('/agregarPremio', function(req, res, next) {
 
 
 // ACTUALIZAR PREMIO - EXPORTANDO RUTA
-router.put('/actualizarPremio/:idPremio', function(req, res, next) {
+router.put('/actualizarPremio/:idPremio',jwt.verificarExistenciaToken, function(req, res, next) {
   try {
-    //web service
-    premiosModelo.actualizarPremio(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				premiosModelo.actualizarPremio(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+
+		});
   } catch (error) {
     return next(error);
   }
 });
 
 // ELIMINAR PREMIO - EXPORTANDO RUTA
-router.delete('/eliminarPremio/:idPremio', function(req, res, next) {
+router.delete('/eliminarPremio/:idPremio',jwt.verificarExistenciaToken, function(req, res, next) {
   try {
-    //web service
-    premiosModelo.eliminarPremio(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				premiosModelo.eliminarPremio(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+
+		});
   } catch (error) {
     return next(error);
   }

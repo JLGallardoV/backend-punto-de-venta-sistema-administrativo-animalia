@@ -12,7 +12,14 @@
 					"name": "GET listarPremios",
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
 						"header": [
@@ -36,13 +43,24 @@
 								"premiosWS",
 								"listarPremios"
 							]
-						}
+						},
+						"description": "> Este WS funge como catalogo de los premios que pueden recibir los clientes segun sus puntos acumulados.\n\n\n>**NOTA:** *se requiere token*"
 					},
 					"response": []
 				},
 				{
 					"name": "POST agregarPremio",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -73,6 +91,16 @@
 				{
 					"name": "PUT actualizarPremio",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [
 							{
@@ -175,7 +203,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJwZWRyaXRvIiwiYXBlbGxpZG9zIjoidmFjYSIsImNvcnJlbyI6InBlZHJpdG9AZ3J1cG8zNzUuY29tIiwiaWF0IjoxNTY5OTY4NzEyfQ.VNSZz1xMnJMtjLqsQHsyr8Be0GjAcr5K1rv_QmTyDiI",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
 									"type": "string"
 								}
 							]
@@ -203,13 +231,23 @@
 								"listarCategorias"
 							]
 						},
-						"description": ">Este modulo pretende estandarizar los productos, si bien puede haber distintos tipos de productos, este WS se encarga de clasificarlos ya que esta relacionado con la entidad productos."
+						"description": ">Este modulo pretende estandarizar los productos, si bien puede haber distintos tipos de productos, este WS se encarga de clasificarlos ya que esta relacionado con la entidad productos.\n\n>**NOTAS:** *se requiere token*"
 					},
 					"response": []
 				},
 				{
 					"name": "POST agregarCategoria",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -234,13 +272,23 @@
 								"agregarCategoria"
 							]
 						},
-						"description": ">Las categorias son definidas segun el crecimiento de la tienda, pero por lo pronto las categorias son las siguientes:\n\n- nombre categoria: mascotas\n\t- subcategoria: perros,gatos,reptiles,roedores,aves.\n\n- nombre categoria: alimentos\n\t- subcategoria: alimento seco, alimento humedo, semillas, premios.\n\n- nombre categoria: juguetes\n\t- subcategoria: pelotas, peluches, sogas.\n\n- nombre categoria: accesorios\n\t- subcategoria: ropa, arneses, tazones."
+						"description": ">Las categorias son definidas segun el crecimiento de la tienda, pero por lo pronto las categorias son las siguientes:\n\n- nombre categoria: mascotas\n\t- subcategoria: perros,gatos,reptiles,roedores,aves.\n\n- nombre categoria: alimentos\n\t- subcategoria: alimento seco, alimento humedo, semillas, premios.\n\n- nombre categoria: juguetes\n\t- subcategoria: pelotas, peluches, sogas.\n\n- nombre categoria: accesorios\n\t- subcategoria: ropa, arneses, tazones.\n\n>**NOTAS:** *se requiere token*"
 					},
 					"response": []
 				},
 				{
 					"name": "PUT actualizarCategoria",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [
 							{
@@ -382,7 +430,14 @@
 					"name": "GET listarMediosEntrega",
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
 						"header": [
@@ -406,13 +461,24 @@
 								"mediosEntregaWS",
 								"listarMediosEntrega"
 							]
-						}
+						},
+						"description": "> Lista los diferentes medios de entrega que son utilizados para realizar un envio, este WS funje como catalogo\n\n> **NOTA:** *se require token*"
 					},
 					"response": []
 				},
 				{
 					"name": "POST agregarMedioEntrega",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -444,6 +510,16 @@
 				{
 					"name": "PUT actualizarMedioEntrega",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [
 							{
@@ -505,7 +581,14 @@
 					"name": "GET listarAlmacenes",
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
 						"header": [
@@ -530,13 +613,23 @@
 								"listarAlmacenes"
 							]
 						},
-						"description": ">Este modulo simplemente es para en dado caso de que productos no se encuentren en la tienda. Este ws solo muestra una descripcion de la ubicación y el producto esta relacionado con esta."
+						"description": ">Este modulo simplemente es para en dado caso de que productos no se encuentren en la tienda. Este ws solo muestra una descripcion de la ubicación y el producto esta relacionado con esta.\n\n>**NOTA:** *token requerido.*"
 					},
 					"response": []
 				},
 				{
 					"name": "POST agregarAlmacen",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -568,6 +661,16 @@
 				{
 					"name": "PUT actualizarAlmacen",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [
 							{
@@ -579,7 +682,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"ciudadAlmacen\":\"silao\",\n\t\"estadoAlmacen\":\"gto\",\n\t\"paisAlmacen\":\"mexico\",\n\t\"direccionAlmacen\":\"potreros 234\",\n\t\"referenciaAlmacen\":\"almacen/sucursal\",\n\t\"telefonoAlmacen\":\"4291991010\"\n}"
+							"raw": "{\n\t\"ciudadAlmacen\":\"abasolo\",\n\t\"estadoAlmacen\":\"gto\",\n\t\"paisAlmacen\":\"mexico\",\n\t\"direccionAlmacen\":\"potreros 234\",\n\t\"referenciaAlmacen\":\"almacen/sucursal\",\n\t\"telefonoAlmacen\":\"4291991010\"\n}"
 						},
 						"url": {
 							"raw": "localhost:3000/almacenesWS/actualizarAlmacen/3",
@@ -682,7 +785,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "localhost:3000/reportesEconomicosWS/listarReportesEconomicos/2019-08-11/2019-09-28/2019-09-23/2019-10-28",
+							"raw": "localhost:3000/reportesEconomicosWS/listarReportesEconomicos/2019-08-11/2019-10-28",
 							"host": [
 								"localhost"
 							],
@@ -691,81 +794,10 @@
 								"reportesEconomicosWS",
 								"listarReportesEconomicos",
 								"2019-08-11",
-								"2019-09-28",
-								"2019-09-23",
 								"2019-10-28"
 							]
 						},
-						"description": ">Este WS muestra la utilidad que se consiguio entre determinadas fechas A y B."
-					},
-					"response": []
-				},
-				{
-					"name": "GET filtrarxFechaTransacciones",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "localhost:3000/transaccionesWS/filtrarxFechaTransacciones/2019-08-11/2019-10-27",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"transaccionesWS",
-								"filtrarxFechaTransacciones",
-								"2019-08-11",
-								"2019-10-27"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET filtrarxFechaCompras",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "localhost:3000/comprasWS/filtrarxFechaCompras/2019-09-23/2019-10-24",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"comprasWS",
-								"filtrarxFechaCompras",
-								"2019-09-23",
-								"2019-10-24"
-							]
-						},
-						"description": ">Este WS calcula el monto total de todas las compras entre una fecha A y una fecha B"
+						"description": ">Este WS muestra la utilidad que se consiguio entre determinadas fechas A y B. También muestra los datos que llevan a la utilidad, la utilidad se calculo:\n\n- monto de las transaccion - monto de las compras"
 					},
 					"response": []
 				}
@@ -778,7 +810,14 @@
 					"name": "GET listarTiposClientes",
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
 						"header": [
@@ -803,13 +842,23 @@
 								"listarTiposClientes"
 							]
 						},
-						"description": ">Describe los diferentes tipos de clientes permitidos en el sistema, esto para dar uso de promociones, premiaciones o descuentos segun su tipo."
+						"description": ">Describe los diferentes tipos de clientes permitidos en el sistema, esto para dar uso de promociones, premiaciones o descuentos segun su tipo.\n\n\n>**NOTA:** *token necesario*"
 					},
 					"response": []
 				},
 				{
 					"name": "POST agregarTipoCliente",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -841,6 +890,16 @@
 				{
 					"name": "PUT actualizarTipoCliente",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [
 							{
@@ -896,13 +955,112 @@
 			]
 		},
 		{
+			"name": "envios",
+			"item": [
+				{
+					"name": "GET listarEnvios",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/enviosWS/listarEnvios",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"enviosWS",
+								"listarEnvios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST agregarEnvio",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"ciudadEnvio\": \"abasolo\",\n    \"estadoEnvio\": \"gto\",\n    \"paisEnvio\": \"mexico\",\n    \"observacionesEnvio\": \"sin descripcion\",\n    \"idTransaccion\":\"2\",\n    \"idMedioEntrega\":\"2\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/enviosWS/agregarEnvio",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"enviosWS",
+								"agregarEnvio"
+							]
+						},
+						"description": ">Este modulo especifica direcciones que hacen referencia a un envio dada una transaccion."
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE eliminarEnvio",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/enviosWS/eliminarEnvio/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"enviosWS",
+								"eliminarEnvio",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "tiposPagos",
 			"item": [
 				{
 					"name": "GET listarTiposPagos",
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
 						"header": [
@@ -933,6 +1091,16 @@
 				{
 					"name": "POST agregarTipoPago",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -964,6 +1132,16 @@
 				{
 					"name": "PUT actualizarTipoPago",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [
 							{
@@ -975,10 +1153,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"tipoPago\": \"tarjeta debito\",\n    \"viaTipoPago\": \"master card\",\n    \"descripcionTipoPago\": \"sin descripcion\"\n}"
+							"raw": "{\n\t\"tipoPago\": \"tarjeta debito\",\n    \"viaTipoPago\": \"american express\",\n    \"descripcionTipoPago\": \"sin descripcion\"\n}"
 						},
 						"url": {
-							"raw": "localhost:3000/tiposPagosWS/actualizarTipoPago/3",
+							"raw": "localhost:3000/tiposPagosWS/actualizarTipoPago/2",
 							"host": [
 								"localhost"
 							],
@@ -986,7 +1164,7 @@
 							"path": [
 								"tiposPagosWS",
 								"actualizarTipoPago",
-								"3"
+								"2"
 							]
 						}
 					},
@@ -1025,7 +1203,14 @@
 					"name": "GET listarTiposProblemas",
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
 						"header": [
@@ -1049,13 +1234,24 @@
 								"tiposProblemasWS",
 								"listarTiposProblemas"
 							]
-						}
+						},
+						"description": "> Este WS funge como un catalogo para listar los difentes problemas que pudieron surgir en un producto dada una devolucion\n\n\n> **NOTA:** *token requerido*"
 					},
 					"response": []
 				},
 				{
 					"name": "POST agregarTipoProblema",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -1087,6 +1283,16 @@
 				{
 					"name": "PUT actualizarTipoProblema",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [
 							{
@@ -1190,7 +1396,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"montoNoIvaTransaccion\": \"40\",\n    \"ivaTransaccion\": \"16\",\n    \"montoConIvaTransaccion\": \"44.8\",\n    \"idVendedor\": \"2\",\n    \"idTipoPago\": \"2\",\n    \"idTransaccion\":\"2\",\n    \"idProducto\":\"2\",\n    \"numeroProductosEnTransaccion\":\"1\",\n    \"idCliente\":\"1\"\n}\n"
+							"raw": "{\n\t\"idCliente\": 1,\n    \"idVendedor\": 1,\n    \"pagoTransaccion\": 1500,\n    \"productos\": \n    [\n    \t{\n    \t\t\"idProducto\":1,\n    \t\t\"cantidadProducto\":3\n    \t\n    \t},\n    \t\n    \t{\n    \t\t\"idProducto\":2,\n    \t\t\"cantidadProducto\":2\n    \t\n    \t},\n    \t\n    \t{\n    \t\t\"idProducto\":3,\n    \t\t\"cantidadProducto\":1\n    \t\t\n    \t}\n    ],\n    \"tiposDePagos\":\n    [\n    \t{\n    \t\t\"idTipoPago\":1\n    \t}\n    ]\n}\n"
 						},
 						"url": {
 							"raw": "localhost:3000/transaccionesWS/agregarTransaccion",
@@ -1210,136 +1416,20 @@
 			]
 		},
 		{
-			"name": "envios",
-			"item": [
-				{
-					"name": "GET listarEnvios",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "localhost:3000/enviosWS/listarEnvios",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"enviosWS",
-								"listarEnvios"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "POST agregarEnvio",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"ciudadEnvio\": \"abasolo\",\n    \"estadoEnvio\": \"gto\",\n    \"paisEnvio\": \"mexico\",\n    \"observacionesEnvio\": \"sin descripcion\",\n    \"idTransaccion\":\"2\",\n    \"idMedioEntrega\":\"2\"\n}"
-						},
-						"url": {
-							"raw": "localhost:3000/enviosWS/agregarEnvio",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"enviosWS",
-								"agregarEnvio"
-							]
-						},
-						"description": ">Este modulo especifica direcciones que hacen referencia a un envio dada una transaccion."
-					},
-					"response": []
-				},
-				{
-					"name": "PUT actualizarEnvio",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"ciudadEnvio\": \"silao\",\n    \"estadoEnvio\": \"gto\",\n    \"paisEnvio\": \"mexico\",\n    \"observacionesEnvio\": \"sin descripcion\",\n    \"idTransaccion\":\"2\",\n    \"idMedioEntrega\":\"2\"\n}"
-						},
-						"url": {
-							"raw": "localhost:3000/enviosWS/actualizarEnvio/1",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"enviosWS",
-								"actualizarEnvio",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DELETE eliminarEnvio",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "localhost:3000/enviosWS/eliminarEnvio/1",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"enviosWS",
-								"eliminarEnvio",
-								"1"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "devoluciones",
 			"item": [
 				{
 					"name": "GET listarDevoluciones",
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
 						"header": [
@@ -1363,13 +1453,24 @@
 								"devolucionesWS",
 								"listarDevoluciones"
 							]
-						}
+						},
+						"description": "> WS para listar las devoluciones en productos\n> *token requerido*"
 					},
 					"response": []
 				},
 				{
 					"name": "POST agregarDevolucion",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -1394,62 +1495,7 @@
 								"agregarDevolucion"
 							]
 						},
-						"description": ">Este modulo esta orientado para el dado caso de una devolucion, los campos que contienen idCliente, idTipoProblema, idProducto y idCompensacion estan definidos en sus respectivos modulos, como prueba existen los siguientes registros:\n\n- idCliente: 1 (cliente1), 2 (cliente2)\n- idTipoProblema: 1 (caducado), 2 (mal estado)\n- idProducto: 1(collar castigo), 2 (collar de entrenar), 3 (bto croquetas)"
-					},
-					"response": []
-				},
-				{
-					"name": "PUT actualizarDevolucion",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"ivaDevolucion\": 16,\n    \"montoConIvaDevolucion\": 44.8,\n    \"motivoDevolucion\": \"mal estado,engusanada\",\n    \"idCliente\": 1,\n    \"idTipoProblema\": 1\n}"
-						},
-						"url": {
-							"raw": "localhost:3000/devolucionesWS/actualizarDevolucion/3",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"devolucionesWS",
-								"actualizarDevolucion",
-								"3"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DELETE eliminarDevolucion",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "localhost:3000/devolucionesWS/eliminarDevolucion/3",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"devolucionesWS",
-								"eliminarDevolucion",
-								"3"
-							]
-						}
+						"description": ">Este modulo esta orientado para el dado caso de una devolucion, los campos que contienen idCliente, idTipoProblema, idProducto y idCompensacion estan definidos en sus respectivos modulos, como prueba existen los siguientes registros:\n\n- idCliente: 1 (cliente1), 2 (cliente2)\n- idTipoProblema: 1 (caducado), 2 (mal estado)\n- idProducto: 1(collar castigo), 2 (collar de entrenar), 3 (bto croquetas)\n\n>El motivo devolucion es para que el cliente pueda expresar mas a detalle el motivo de la devolucion.\n\n> **NOTA:** *token requerido*"
 					},
 					"response": []
 				}
@@ -1462,7 +1508,14 @@
 					"name": "GET listarCompensaciones",
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
 						"header": [
@@ -1487,13 +1540,23 @@
 								"listarCompensaciones"
 							]
 						},
-						"description": ">Este WS unicamente define los tipos de compensaciones que se darán en caso de tener una devolución."
+						"description": ">Este WS unicamente define los tipos de compensaciones que se darán en caso de tener una devolución.\n\n>**NOTA:** *token requerido*"
 					},
 					"response": []
 				},
 				{
 					"name": "POST agregarCompensacion",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -1518,13 +1581,23 @@
 								"agregarCompensacion"
 							]
 						},
-						"description": "> Este modulo tiene como fin catalogar las compensaciones las cuales estan ligadas a una devolucion. Los datos pueden llenarse de tal manera:\n\n- tipoCompensacion: cupon, descuento, envio gratis, devolucion dinero.\n\n> DescripcionCompensacion: es el detalle de la compensacion"
+						"description": "> Este modulo tiene como fin catalogar las compensaciones las cuales estan ligadas a una devolucion. Los datos pueden llenarse de tal manera:\n\n- tipoCompensacion: cupon, descuento, envio gratis, devolucion dinero.\n\n> DescripcionCompensacion: es el detalle de la compensacion\n\n>**NOTA:** *token requerido*"
 					},
 					"response": []
 				},
 				{
 					"name": "PUT actualizarCompensacion",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [
 							{
@@ -1536,7 +1609,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"tipoCompensacion\": \"cupon\",\n    \"descripcionCompensacion\": \"compras 2x1 en toda la tienda\"\n}"
+							"raw": "{\n    \"tipoCompensacion\": \"cupon\",\n    \"descripcionCompensacion\": \"compras 3x1 en toda la tienda\"\n}"
 						},
 						"url": {
 							"raw": "localhost:3000/compensacionesWS/actualizarCompensacion/3",
@@ -1586,7 +1659,14 @@
 					"name": "GET listarTiposUsuarios",
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
 						"header": [
@@ -1617,6 +1697,16 @@
 				{
 					"name": "POST agregarTipoUsuario",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -1628,7 +1718,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"tipoUsuario\": \"administrador\",\n\t\"privilegiosTipoUsuario\": \"*\"\n}"
+							"raw": "{\n\t\"tipoUsuario\": \"administrador\",\n\t\"descripcionTipoUsuario\": \"*\"\n}"
 						},
 						"url": {
 							"raw": "localhost:3000/tiposUsuariosWS/agregarTipoUsuario",
@@ -1648,6 +1738,16 @@
 				{
 					"name": "PUT actualizarTipoUsuario",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [
 							{
@@ -1709,7 +1809,14 @@
 					"name": "GET listarUsuarios",
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
 						"header": [
@@ -1733,13 +1840,24 @@
 								"usuariosWS",
 								"listarUsuarios"
 							]
-						}
+						},
+						"description": ">Lista lo usuarios del sistema, haciendo referencia al rol administrativo/punto de venta.\n\n\n>**NOTA:** *Token necesario*"
 					},
 					"response": []
 				},
 				{
 					"name": "POST agregarUsuario",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -1764,13 +1882,23 @@
 								"agregarUsuario"
 							]
 						},
-						"description": ">Este WS esta dedicado principalmente a la insercion de un nuevo usuario (en el rol de punto de venta del sistema).\n\n>**NOTA:** No puede haber mas de 1 usuario con el mismo nombre de Usuario, de ser asi, lanzara msj de usuario registrado.\n\n> *si el vendedor es el gerente se pone un null*"
+						"description": ">Este WS esta dedicado principalmente a la insercion de un nuevo usuario (en el rol de punto de venta del sistema).\n\n>**NOTA:** No puede haber mas de 1 usuario con el mismo nombre de Usuario, de ser asi, lanzara msj de usuario registrado.\n\n> *si el vendedor es el gerente se pone un null | token requerido*"
 					},
 					"response": []
 				},
 				{
 					"name": "PUT actualizarUsuario",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [
 							{
@@ -1832,7 +1960,14 @@
 					"name": "GET listarAccesos",
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
 						"header": [
@@ -1857,13 +1992,23 @@
 								"listarAccesos"
 							]
 						},
-						"description": ">Este modulo tiene la funcionde una bitacora de accesos, y sirve para verificar\nel acceso de cada usuario al sistema, asi como sus acciones."
+						"description": ">Este modulo tiene la funcionde una bitacora de accesos, y sirve para verificar\nel acceso de cada usuario al sistema, asi como sus acciones.\n\n>**NOTA:** *Se requiere token*"
 					},
 					"response": []
 				},
 				{
 					"name": "POST agregarAcceso",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -1901,7 +2046,14 @@
 					"name": "GET listarCompras",
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
 						"header": [
@@ -1926,13 +2078,23 @@
 								"listarCompras"
 							]
 						},
-						"description": ">Este WS muestra las diferentes compras existentes, quien fue el proveedor, que producto se compro y quien lo compro"
+						"description": ">Este WS muestra las diferentes compras existentes, quien fue el proveedor, que producto se compro y quien lo compro\n\n>**NOTA:** *token requerido*"
 					},
 					"response": []
 				},
 				{
 					"name": "POST agregarCompra",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -1944,7 +2106,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n \"montoCompra\": \"200.00\",\n \"idCompra\":\"3\",\n \"idProducto\":\"2\",\n \"numeroProductosEnCompra\":\"2\",\n \"idUsuario\":\"1\",\n \"idProveedor\":\"1\"\n}"
+							"raw": "{\n\t\"idUsuario\": 1,\n    \"idProveedor\": 1,\n    \"montoCompra\": 1500,\n    \"productos\": \n    [\n    \t{\n    \t\t\"idProducto\":1,\n    \t\t\"cantidadProducto\":3\n    \t},\n    \t\n    \t{\n    \t\t\"idProducto\":2,\n    \t\t\"cantidadProducto\":2\n    \t\n    \t},\n    \t\n    \t{\n    \t\t\"idProducto\":3,\n    \t\t\"cantidadProducto\":1\n    \t\t\n    \t}\n    ]\n}\n"
 						},
 						"url": {
 							"raw": "localhost:3000/comprasWS/agregarCompra",
@@ -1957,7 +2119,7 @@
 								"agregarCompra"
 							]
 						},
-						"description": "> idProducto,idUsuario,idProveedor provienen de sus respectivos modulos.\n\n> **¿como funciona idCompra?** si se coloca un numero diferente al numero siguiente auntomaticamente pone el id siguiente para evitar un error debido al autoincrement de la compra, si se pone el mismo id en el que permanece la compra es simular que se esta agregando un producto y esto se ve reflejado al listar las compras."
+						"description": "> idProducto,idUsuario,idProveedor provienen de sus respectivos modulos.\n\n>**NOTA:** *token requerido*"
 					},
 					"response": []
 				}
@@ -1970,7 +2132,14 @@
 					"name": "GET listarClientes",
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
 						"header": [
@@ -1995,41 +2164,7 @@
 								"listarClientes"
 							]
 						},
-						"description": ">En este WS se muestran todas las propiedades de un cliente a excepcion de su contraseña."
-					},
-					"response": []
-				},
-				{
-					"name": "GET listarPuntosClientes",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "localhost:3000/clientesWS/listarPuntosClientes/",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"clientesWS",
-								"listarPuntosClientes",
-								""
-							]
-						},
-						"description": ">Este WS muestra los puntos que tiene cada cliente, puntos que se canjearan posteriormente por premios. Para poder sacar los el total de puntos se hizo la siguiente operacion:\n\n- puntosTotales = puntosTotales + (puntosProducto * numeroDeProductosEnTransaccion)\n\n>Donde puntosTotales funje como un acumulador cada que uno o varios productos del mismo tipo son comprados se van acumulando en esta variable con el valor que ya se tenia. En SQL:\n\n- SUM(puntosProductos * numeroDeProductosEnTransaccion) GROUP BY nombreCliente"
+						"description": ">En este WS se muestran todas las propiedades de un cliente a excepcion de su contraseña.\n\n>**NOTA:** *requiere token*"
 					},
 					"response": []
 				},
@@ -2060,13 +2195,23 @@
 								"agregarCliente"
 							]
 						},
-						"description": ">El campo tipoCliente es forzoso y hace referencia a si el cliente es:\n\n- Premium : idTipoCliente = 1\n- Premiado : idTipoCliente = 2\n- Normal : idTipoCliente = 3\n\n>**NOTA:** Un cliente no se puede dar de alta mas de 1 vez, para esto se valido por email debido a:\n- Sera la manera de loguearse por parte de los clientes.\n- Es muy dificil que un distinto usuarios coincidan en su email, la primer validación viene desde el servidor de correo de este."
+						"description": ">El campo tipoCliente es forzoso y hace referencia a si el cliente es:\n\n- Premium : idTipoCliente = 1\n- Premiado : idTipoCliente = 2\n- Normal : idTipoCliente = 3\n\n>**NOTA:** Un cliente no se puede dar de alta mas de 1 vez, para esto se valido por email debido a:\n- Sera la manera de loguearse por parte de los clientes.\n- Es muy dificil que un distinto usuarios coincidan en su email, la primer validación viene desde el servidor de correo de este.\n- **NO** *requiere token, para que un cliente se pueda dar de alta en el sistema*"
 					},
 					"response": []
 				},
 				{
 					"name": "PUT actualizarCliente",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [
 							{
@@ -2125,43 +2270,17 @@
 			"name": "carritos",
 			"item": [
 				{
-					"name": "GET listarCarritos",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "localhost:3000/carritosWS/listarCarritos",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"carritosWS",
-								"listarCarritos"
-							]
-						},
-						"description": ">Es buena idea dejar un select * from de carritos, esto por parte del administrador del sistema, asi se puede dar cuenta de forma mas detallada los montos, numero de productos y clientes (en relacion con el carrito) y de alguna u otra forma la actividad de sus clientes por medio de sus gustos o proximas compras."
-					},
-					"response": []
-				},
-				{
 					"name": "GET listarCarritoUsuario",
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
 						"header": [
@@ -2187,7 +2306,7 @@
 								"1"
 							]
 						},
-						"description": ">De igual manera se requiere select * from where para cada usuario con su respectivo carrito, es decir, este WS prentede mostrar unicamente el carrito del usuario en sesion."
+						"description": ">De igual manera se requiere select * from where para cada usuario con su respectivo carrito, es decir, este WS prentede mostrar unicamente el carrito del usuario en sesion.\n\n>**NOTA:** *se requiere token*"
 					},
 					"response": []
 				},
@@ -2235,7 +2354,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"numeroProductosCarrito\": \"5\",\n    \"montoTotalCarrito\": \"450.00\",\n    \"idCliente\": \"1\"\n}"
+							"raw": "{\n\t\"numeroProductosCarrito\": \"5\",\n    \"montoTotalCarrito\": \"450.00\"\n}"
 						},
 						"url": {
 							"raw": "localhost:3000/carritosWS/actualizarCarrito/1",
@@ -2285,7 +2404,14 @@
 					"name": "GET listarVendedores",
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
 						"header": [
@@ -2317,6 +2443,16 @@
 				{
 					"name": "POST agregarVendedor",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -2348,6 +2484,16 @@
 				{
 					"name": "PUT actualizarVendedor",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [
 							{
@@ -2359,7 +2505,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"nombreVendedor\": \"vendedor3\",\n    \"ciudadVendedor\": \"xichu\",\n    \"estadoVendedor\": \"gto\",\n    \"direccionVendedor\": \"primavera 217\",\n    \"telefonoVendedor\": \"4291226929\",\n    \"emailVendedor\": \"vendedor1@vendedor1.com\",\n    \"fechaNacimientoVendedor\": \"2019-08-13T05:00:00.000Z\",\n    \"rfcVendedor\": \"JKSLEOR\",\n    \"numeroSeguroSocialVendedor\": \"234211\",\n    \"antiguedadVendedor\": \"4\"\n}"
+							"raw": "{\n\t\"nombreVendedor\": \"vendedor3\",\n    \"ciudadVendedor\": \"xichu\",\n    \"estadoVendedor\": \"gto\",\n    \"direccionVendedor\": \"primavera 217\",\n    \"telefonoVendedor\": \"4291226929\",\n    \"emailVendedor\": \"vendedor1@vendedor1.com\",\n    \"fechaNacimientoVendedor\": \"2019-08-13\",\n    \"rfcVendedor\": \"JKSLEOR\",\n    \"numeroSeguroSocialVendedor\": \"234211\",\n    \"antiguedadVendedor\": \"4\"\n}"
 						},
 						"url": {
 							"raw": "localhost:3000/vendedoresWS/actualizarVendedor/3",
@@ -2409,7 +2555,14 @@
 					"name": "GET listarProveedores",
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
 						"header": [
@@ -2433,13 +2586,24 @@
 								"proveedoresWS",
 								"listarProveedores"
 							]
-						}
+						},
+						"description": "> lista los proveedores\n\n\n> **NOTA:** *token requerido*"
 					},
 					"response": []
 				},
 				{
 					"name": "POST agregarProveedor",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -2451,7 +2615,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"nombreProveedor\": \"proveedor3\",\n    \"ciudadProveedor\": \"abdul\",\n    \"estadoProveedor\": \"guato\",\n    \"paisProveedor\": \"india\",\n    \"direccionProveedor\": \"alaa 210\",\n    \"telefonoProveedor\": \"2121230987\",\n    \"emailProveedor\": \"proveedor1@proveedor\",\n    \"descripcionProveedor\": \"croquetas premium ba\"\n}"
+							"raw": "{\n\t\"nombreProveedor\": \"proveedor3\",\n    \"ciudadProveedor\": \"abdul\",\n    \"estadoProveedor\": \"guato\",\n    \"paisProveedor\": \"malasia\",\n    \"direccionProveedor\": \"alaa 210\",\n    \"telefonoProveedor\": \"2121230987\",\n    \"emailProveedor\": \"proveedor1@proveedor\",\n    \"descripcionProveedor\": \"croquetas premium ba\"\n}"
 						},
 						"url": {
 							"raw": "localhost:3000/proveedoresWS/agregarProveedor",
@@ -2471,6 +2635,16 @@
 				{
 					"name": "PUT actualizarProveedor",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [
 							{
@@ -2532,7 +2706,14 @@
 					"name": "GET listarProductos",
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
 						"header": [
@@ -2557,13 +2738,23 @@
 								"listarProductos"
 							]
 						},
-						"description": ">Este WS muestra los productos que existen en el sistema, la mayoria de datos de de tipo varchar a excepcion de:\n- stock: entero\n- puntos: entero\n- precioUnitario: flotante\n- precioMayoreo: flotante\n- fechaCaducidad: data (formato: año - mes -dia)\n\n>**Nota:** En caso de que un producto no tenga fecha de caducidad se dejará valor nulo"
+						"description": ">Este WS muestra los productos que existen en el sistema, la mayoria de datos de de tipo varchar a excepcion de:\n- stock: entero\n- puntos: entero\n- precioUnitario: flotante\n- precioMayoreo: flotante\n- fechaCaducidad: data (formato: año - mes -dia)\n\n>**Nota:** En caso de que un producto no tenga fecha de caducidad se dejará valor nulo, *token requerido*"
 					},
 					"response": []
 				},
 				{
 					"name": "POST agregarProducto",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -2575,7 +2766,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\"nombreProducto\": \"collar de castigo\",\n\"detalleProducto\": \"marca granpet\",\n\"contenidoProducto\": \"1 costal arena gato\",\n\"fechaCaducidadProducto\": null,\n\"paisOrigenProducto\": \"mexico\",\n\"stockProducto\": 20,\n\"puntosProducto\":200,\n\"precioUnitarioProducto\": 30,\n\"precioMayoreoProducto\": 23.22,\n\"idCategoria\": 1,\n\"idAlmacen\": 1\n}"
+							"raw": "{\n\"nombreProducto\": \"correa de cuero\",\n\"detalleProducto\": \"marca granpet\",\n\"contenidoProducto\": \"1 costal arena gato\",\n\"fechaCaducidadProducto\": null,\n\"paisOrigenProducto\": \"mexico\",\n\"stockProducto\": 20,\n\"puntosProducto\":200,\n\"precioUnitarioProducto\": 30,\n\"idCategoria\": 1,\n\"idAlmacen\": 1\n}"
 						},
 						"url": {
 							"raw": "localhost:3000/productosWS/agregarProducto",
@@ -2595,6 +2786,16 @@
 				{
 					"name": "PUT actualizarProducto",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbWV0cm8xIjoiSDAxNCIsInBhcmFtZXRybzIiOiJOMEQzSjUiLCJwYXJhbWV0cm8zIjoiSkxHYWxsYXJkb1YiLCJpYXQiOjE1NzE2Nzk5MTB9.clW2q76d3BzSbeOdSVcpWrEBt-14lopP2v50E9_AkzY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [
 							{
@@ -2606,7 +2807,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"nombreProducto\": \"collar de castigo\",\n\t\"detalleProducto\": \"marca granpet\",\n\t\"contenidoProducto\": \"1 corrar de castigo mediano\",\n\t\"fechaCaducidadProducto\": null,\n\t\"paisOrigenProducto\": \"mexico\",\n\t\"stockProducto\": 20,\n\t\"precioUnitarioProducto\": 30,\n\t\"precioMayoreoProducto\": 23.22,\n\t\"idCategoria\": 1,\n\t\"idAlmacen\": 1\n}"
+							"raw": "{\n\t\"nombreProducto\": \"collar de castigo\",\n\t\"detalleProducto\": \"marca granpet\",\n\t\"contenidoProducto\": \"1 corrar de castigo mediano\",\n\t\"fechaCaducidadProducto\":\"2019-12-12\",\n\t\"paisOrigenProducto\": \"china\",\n\t\"stockProducto\": 20,\n\t\"puntosProducto\":30,\n\t\"precioUnitarioProducto\": 30,\n\t\"idCategoria\": 1,\n\t\"idAlmacen\": 1\n}"
 						},
 						"url": {
 							"raw": "localhost:3000/productosWS/actualizarProducto/1",

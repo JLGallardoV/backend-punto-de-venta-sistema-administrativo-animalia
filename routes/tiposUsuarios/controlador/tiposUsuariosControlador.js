@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var tiposUsuariosModelo = require('../modelo/tiposUsuariosModelo');
+var jwt = require('../../../public/servicios/jwt');
+var jsonWebToken = require('jsonwebtoken');
 
 //CABECERAS
 router.use(function(req,res,next){
@@ -11,34 +13,56 @@ router.use(function(req,res,next){
 });
 
 // LISTAR TIPOS DE USUARIOS - EXPORTANDO RUTA
-router.get('/listarTiposUsuarios', function(req, res, next) {
+router.get('/listarTiposUsuarios',jwt.verificarExistenciaToken, function(req, res, next) {
   try {
-    //web service
-    tiposUsuariosModelo.listarTiposUsuarios(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				tiposUsuariosModelo.listarTiposUsuarios(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+
+
+		});
   } catch (error) {
     return next(error);
   }
 });
 
 // AGREGAR TIPOS DE USUARIOS - EXPORTANDO RUTA
-router.post('/agregarTipoUsuario', function(req, res, next) {
+router.post('/agregarTipoUsuario',jwt.verificarExistenciaToken, function(req, res, next) {
   try {
-    //web service
-    tiposUsuariosModelo.agregarTipoUsuario(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				tiposUsuariosModelo.agregarTipoUsuario(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+
+
+		});
   } catch (error) {
     return next(error);
   }
@@ -46,34 +70,56 @@ router.post('/agregarTipoUsuario', function(req, res, next) {
 
 
 // ACTUALIZAR TIPOS DE USUARIOS - EXPORTANDO RUTA
-router.put('/actualizarTipoUsuario/:idTipoUsuario', function(req, res, next) {
+router.put('/actualizarTipoUsuario/:idTipoUsuario',jwt.verificarExistenciaToken, function(req, res, next) {
   try {
-    //web service
-    tiposUsuariosModelo.actualizarTipoUsuario(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				tiposUsuariosModelo.actualizarTipoUsuario(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+
+
+		});
   } catch (error) {
     return next(error);
   }
 });
 
 // ELIMINAR TIPOS DE USUARIOS - EXPORTANDO RUTA
-router.delete('/eliminarTipoUsuario/:idTipoUsuario', function(req, res, next) {
+router.delete('/eliminarTipoUsuario/:idTipoUsuario',jwt.verificarExistenciaToken, function(req, res, next) {
   try {
-    //web service
-    tiposUsuariosModelo.eliminarTipoUsuario(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				tiposUsuariosModelo.eliminarTipoUsuario(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+
+
+		});
   } catch (error) {
     return next(error);
   }

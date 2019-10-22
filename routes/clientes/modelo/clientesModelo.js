@@ -137,26 +137,27 @@ exports.actualizarCliente = function(req) {
           respuesta: error
         });
       } else {
-        let query = `update clientes set ? where idCliente = ${idCliente}`; //las comillas son diferentes
 
-        let requestBody = {
-          nombreCliente: body.nombreCliente,
-          apellidoPaternoCliente: body.apellidoPaternoCliente,
-          apellidoMaternoCliente: body.apellidoMaternoCliente,
-          ciudadCliente: body.ciudadCliente,
-          estadoCliente: body.estadoCliente,
-          paisCliente: body.paisCliente,
-          direccionCliente: body.direccionCliente,
-          coloniaCliente: body.coloniaCliente,
-          cpCliente: body.cpCliente,
-          telefonoCliente: body.telefonoCliente,
-          emailCliente: body.emailCliente,
-          contraseniaCliente: body.contraseniaCliente,
-          puntuajeCliente: body.puntuajeCliente,
-          idTipoCliente: body.idTipoCliente
-        };
+        let nombreCliente = body.nombreCliente;
+        let apellidoPaternoCliente = body.apellidoPaternoCliente;
+        let apellidoMaternoCliente = body.apellidoMaternoCliente;
+        let ciudadCliente = body.ciudadCliente;
+        let estadoCliente = body.estadoCliente;
+        let paisCliente = body.paisCliente;
+        let direccionCliente = body.direccionCliente;
+        let coloniaCliente = body.coloniaCliente;
+        let cpCliente = body.cpCliente;
+        let telefonoCliente = body.telefonoCliente;
+        let emailCliente = body.emailCliente;
+        let contraseniaCliente = body.contraseniaCliente;
+        let puntuajeCliente = body.puntuajeCliente;
+        let idTipoCliente = body.idTipoCliente;
 
-        database.query(query, requestBody, function(error, success) {
+
+        let query = `update clientes set nombreCliente = '${nombreCliente}', apellidoPaternoCliente = '${apellidoPaternoCliente}',apellidoMaternoCliente = '${apellidoMaternoCliente}',ciudadCliente = '${ciudadCliente}',estadoCliente = '${estadoCliente}', paisCliente = '${paisCliente}',direccionCliente = '${direccionCliente}',coloniaCliente = '${coloniaCliente}',cpCliente = '${cpCliente}', telefonoCliente ='${telefonoCliente}',emailCliente = '${emailCliente}',contraseniaCliente = '${contraseniaCliente}',puntuajeCliente = '${puntuajeCliente}',idTipoCliente = '${idTipoCliente}', fechaActualizacionCliente = now() where idCliente = ${idCliente}`; //las comillas son diferentes
+
+
+        database.query(query,function(error, success) {
           if (error) {
             reject({
               estatus: -1,

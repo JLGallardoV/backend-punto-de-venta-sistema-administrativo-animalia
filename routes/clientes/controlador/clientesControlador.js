@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var clientesModelo = require('../modelo/clientesModelo');
+var jwt = require('../../../public/servicios/jwt');
+var jsonWebToken = require('jsonwebtoken');
+
 
 //CABECERAS
 router.use(function(req,res,next){
@@ -11,17 +14,27 @@ router.use(function(req,res,next){
 });
 
 // LISTAR CLIENTES - EXPORTANDO RUTA
-router.get('/listarClientes', function(req, res, next) {
+router.get('/listarClientes',jwt.verificarExistenciaToken,function(req, res, next) {
   try {
-    //web service
-    clientesModelo.listarClientes(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				clientesModelo.listarClientes(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+
+		});
   } catch (error) {
     return next(error);
   }
@@ -30,7 +43,7 @@ router.get('/listarClientes', function(req, res, next) {
 // AGREGAR CLIENTES - EXPORTANDO RUTA
 router.post('/agregarCliente', function(req, res, next) {
   try {
-    //web service
+    //no lleva autorizacion por jwt porque si no como se daria de alta un cliente.
     clientesModelo.agregarCliente(req).then(
       (success) => {
         res.json(success);
@@ -46,34 +59,54 @@ router.post('/agregarCliente', function(req, res, next) {
 
 
 // ACTUALIZAR CLIENTES - EXPORTANDO RUTA
-router.put('/actualizarCliente/:idCliente', function(req, res, next) {
+router.put('/actualizarCliente/:idCliente',jwt.verificarExistenciaToken,function(req, res, next) {
   try {
-    //web service
-    clientesModelo.actualizarCliente(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				clientesModelo.actualizarCliente(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+
+		});
   } catch (error) {
     return next(error);
   }
 });
 
 // ELIMINAR CLIENTES - EXPORTANDO RUTA
-router.delete('/eliminarCliente/:idCliente', function(req, res, next) {
+router.delete('/eliminarCliente/:idCliente',jwt.verificarExistenciaToken,function(req, res, next) {
   try {
-    //web service
-    clientesModelo.eliminarCliente(req).then(
-      (success) => {
-        res.json(success);
-      },
-      (error) => {
-        res.json(error);
-      }
-    );
+		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
+			if (decoded) {
+				clientesModelo.eliminarCliente(req).then(
+					(success) => {
+						res.json(success);
+					},
+					(error) => {
+						res.json(error);
+					}
+				);
+
+			}else if (error) {
+				res.json({
+					estatus: -1,
+					respuesta: "lo siento, token incorrecto"
+				})
+			}
+
+		});
   } catch (error) {
     return next(error);
   }

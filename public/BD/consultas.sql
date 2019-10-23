@@ -27,11 +27,11 @@ group by nombreVendedor order by vendidos DESC;
 
 /*PUNTOS POR PRODUCTO: MULTIPLICA EL NUMERO DE PRODUCTOS COMPRADOS Y DESPUES LOS SUMA PARA DAR EL "VALOR TOTAL" DE PUNTOS
 POR USUARIO:*/
-SELECT transacciones_clientes.idCliente, clientes.nombreCliente, productos.nombreProducto, SUM(productos.puntosProducto * transacciones_productos.numeroProductosEnTransaccion) AS puntosTotales
-FROM transacciones_clientes
-INNER JOIN clientes ON transacciones_clientes.idCliente = clientes.idCliente
-INNER JOIN productos ON transacciones_clientes.idTransaccion = productos.idProducto
-INNER JOIN transacciones_productos ON transacciones_clientes.idTransaccion = transacciones_productos.idTransaccion
+SELECT transacciones.idCliente, clientes.nombreCliente, SUM(productos.puntosProducto * transacciones_productos.numeroProductosEnTransaccion) AS puntosTotales
+FROM transacciones
+INNER JOIN clientes ON transacciones.idCliente = clientes.idCliente
+INNER JOIN productos ON transacciones.idTransaccion = productos.idProducto
+INNER JOIN transacciones_productos ON transacciones.idTransaccion = transacciones_productos.idTransaccion
 group by nombreCliente;
 
 --A CONTINUACION SE MUESTRAN LOS INNER JOINS ADECUADOS PARA ESPECIFICAR LAS ENTIDADES DE LOS VALORES DE ID EN LAS RELACIONES:

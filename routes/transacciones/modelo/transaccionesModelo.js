@@ -80,18 +80,13 @@ exports.agregarTransaccion = function(req) {
       let transaccionInsertada = false; //valor bandera para asegurarme que no se realize una operacion + de 1 vez
 
 
-      /*INICIO - GENERANDO VALORES AUTOMATIVOS*/
+      //INICIO - GENERANDO VALORES AUTOMATIVOS (CREANDO PROMESA)
       let operaciones = function(){
         return new Promise((resolve,reject) => {
 
-          /*cantidad de todos los productos de la transaccion*/
-          for (let i = 0; i < productos.length; i++) {
-            cantidadProductosTransaccion = cantidadProductosTransaccion + productos[i].cantidadProducto; //cantidadProducto definelo en el postman
-          }
-
-          //obtener precio unitario y su id del producto en la posicion [i]
+          //obtener precio unitario y su id del producto en la posicion [i] y stockProducto
           for (let j = 0; j < productos.length; j++) {
-            let queryPU = `SELECT precioUnitarioProducto FROM productos WHERE idProducto = ${productos[j].idProducto}`;
+            let queryPU = `SELECT precioUnitarioProducto,stockProducto FROM productos WHERE idProducto = ${productos[j].idProducto}`;
             database.query(queryPU, function(error, success) {
               if (error) {
                 console.log("error: ", error);
@@ -101,9 +96,13 @@ exports.agregarTransaccion = function(req) {
                 });
                 return;
               }
-              //acumulando el precio de los  productos por su cantidad y sumando el monto
-              //los productos ya contienen iva
-              montoConIvaTransaccion = montoConIvaTransaccion + (success[0].precioUnitarioProducto * productos[j].cantidadProducto)
+              //acumulando el precio de los  productos por su cantidad y sumando el monto asi tambien la cantidad de productos de la transaccion
+              //NOTA: los productos ya contienen iva
+              if (productos[j].cantidadProducto < success[0].stockProducto) {
+                montoConIvaTransaccion = montoConIvaTransaccion + (success[0].precioUnitarioProducto * productos[j].cantidadProducto);
+                cantidadProductosTransaccion = cantidadProductosTransaccion + productos[j].cantidadProducto; //cantidadProducto definelo en el postman
+
+              }
 
               //me aseguro de que sea la ultima iteracion del ciclo para que pueda resolverse la promesa y mande el valor correcto
               if (j == productos.length -1) {
@@ -116,10 +115,13 @@ exports.agregarTransaccion = function(req) {
               }
             });
           }
-        });/*FIN - GENERANDO VALORES AUTOMATICOS*/
+        });//FIN - GENERANDO VALORES AUTOMATICOS (CREANDO PROMESA)
       }
 
-      //INICIO - PROMESA OPERACIONES
+
+
+
+      //INICIO - RESOLVIENDO PROMESA OPERACIONES
       operaciones().then(//hacemos uso de la promesa para meter lo valores del success a los insert
         (success) => {//COMPORTAMIENTO: Al ser exitosa la resolucion de la promesa los valores de las variables globales toman el valor que tomaron en la creacion de la promesa
 
@@ -237,7 +239,7 @@ exports.agregarTransaccion = function(req) {
         },
         (error) => {
           console.log("error: ",error);
-        }); //FIN - PROMESA OPERACIONES
+        }); //FIN - REOLVIENDO PROMESA OPERACIONES
     });
   });
 } //FIN - WS AGREGAR TRANSACCION

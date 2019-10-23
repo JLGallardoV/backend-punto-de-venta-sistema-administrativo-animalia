@@ -83,13 +83,13 @@ exports.agregarTransaccion = function(req) {
         return new Promise((resolve,reject) => {
 
           /*cantidad de todos los productos de la transaccion*/
-          for (var j = 0; j < productos.length; j++) {
-            cantidadProductosTransaccion = cantidadProductosTransaccion + productos[j].cantidadProducto; //cantidadProducto definelo en el postman
+          for (let i = 0; i < productos.length; i++) {
+            cantidadProductosTransaccion = cantidadProductosTransaccion + productos[i].cantidadProducto; //cantidadProducto definelo en el postman
           }
 
           //obtener precio unitario y su id del producto en la posicion [i]
-          for (let i = 0; i < productos.length; i++) {
-            let queryPU = `SELECT precioUnitarioProducto FROM productos WHERE idProducto = ${productos[i].idProducto}`;
+          for (let j = 0; j < productos.length; j++) {
+            let queryPU = `SELECT precioUnitarioProducto FROM productos WHERE idProducto = ${productos[j].idProducto}`;
             database.query(queryPU, function(error, success) {
               if (error) {
                 console.log("error: ", error);
@@ -101,10 +101,10 @@ exports.agregarTransaccion = function(req) {
               }
               //acumulando el precio de los  productos por su cantidad y sumando el monto
               //los productos ya contienen iva
-              montoConIvaTransaccion = montoConIvaTransaccion + (success[0].precioUnitarioProducto * productos[i].cantidadProducto)
+              montoConIvaTransaccion = montoConIvaTransaccion + (success[0].precioUnitarioProducto * productos[j].cantidadProducto)
 
               //me aseguro de que sea la ultima iteracion del ciclo para que pueda resolverse la promesa y mande el valor correcto
-              if (i == productos.length -1) {
+              if (j == productos.length -1) {
                 ivaTransaccion = montoConIvaTransaccion * .16;
                 montoNoIvaTransaccion = montoConIvaTransaccion - ivaTransaccion;
                 cambioTransaccion = pagoTransaccion - montoConIvaTransaccion;
@@ -117,10 +117,13 @@ exports.agregarTransaccion = function(req) {
         });/*FIN - GENERANDO VALORES AUTOMATICOS*/
       }
 
-      //hacemos uso de la promesa para meter lo valores del success en el insert
-      operaciones().then(
+      //INICIO - PROMESA OPERACIONES
+      operaciones().then(//hacemos uso de la promesa para meter lo valores del success a los insert
         (success) => {//COMPORTAMIENTO: Al ser exitosa la resolucion de la promesa los valores de las variables globales toman el valor que tomaron en la creacion de la promesa
-          console.log("valor success: ", success);
+
+          for (let i = 0; i < productos.length; i++) {//verificando stock del producto en determinada posicion del array
+            let queryStock = `SELECT stockProducto FROM productos WHERE idProducto = ${productos[i].idProducto}`;
+          }
           //INICIO - GENERANDO INSERCION TRANSACCIONES
           let query = `INSERT INTO transacciones(montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,cantidadProductosTransaccion,pagoTransaccion,cambioTransaccion,idCliente,idVendedor)
                          VALUES('${montoNoIvaTransaccion}','${ivaTransaccion}','${montoConIvaTransaccion}','${cantidadProductosTransaccion}','${pagoTransaccion}','${cambioTransaccion}','${idCliente}','${idVendedor}');`;
@@ -140,10 +143,10 @@ exports.agregarTransaccion = function(req) {
           }); //FIN - GENERANDO INSERCION TRANSACCIONES
 
           //INICIO - GENERANDO INSERCION TRANSACCIONES_PRODUCTOS
-          for (var i = 0; i < productos.length; i++) { //ciclo para asegurarme que se hayan insertado todos los productos.
+          for (let j= 0; j < productos.length; j++) { //ciclo para asegurarme que se hayan insertado todos los productos.
             //con este query vamos agregando los productos a la transaccion
             let queryI = `INSERT INTO transacciones_productos(idTransaccion,idProducto,numeroProductosEnTransaccion)
-                           VALUES(LAST_INSERT_ID(),${productos[i].idProducto},${productos[i].cantidadProducto});`;
+                           VALUES(LAST_INSERT_ID(),${productos[j].idProducto},${productos[j].cantidadProducto});`;
 
             database.query(queryI, function(error, success) {
               if (error) {
@@ -160,7 +163,7 @@ exports.agregarTransaccion = function(req) {
             });
 
             //con este query actualizare el stock (lo tenia en un procedimiento almacenado pero por alguna razon no actualizo)
-            let queryU = `UPDATE productos SET stockProducto = stockProducto - ${productos[i].cantidadProducto} WHERE idProducto = ${productos[i].idProducto};`;
+            let queryU = `UPDATE productos SET stockProducto = stockProducto - ${productos[j].cantidadProducto} WHERE idProducto = ${productos[j].idProducto};`;
 
             database.query(queryU, function(error, success) {
               if (error) {
@@ -179,9 +182,9 @@ exports.agregarTransaccion = function(req) {
           } //FIN - GENERANDO INSERCION TRANSACCIONES_PRODUCTOS
 
           //INICIO - GENERANDO INSERCION TRANSACCIONES_TIPOSDEPAGOS
-          for (var i = 0; i < tiposDePagos.length; i++) { //ciclo para asegurarme que se hayan insertado todos los productos.
+          for (let k = 0; k < tiposDePagos.length; k++) { //ciclo para asegurarme que se hayan insertado todos los productos.
             let query = `INSERT INTO transacciones_tiposDePagos(idTransaccion,idTipoPago)
-                           VALUES(LAST_INSERT_ID(),'${tiposDePagos[i].idTipoPago}');`;
+                           VALUES(LAST_INSERT_ID(),'${tiposDePagos[k].idTipoPago}');`;
 
             database.query(query, function(error, success) {
               if (error) {
@@ -201,7 +204,7 @@ exports.agregarTransaccion = function(req) {
         },
         (error) => {
           console.log("error: ",error);
-        });
+        }); //FIN - PROMESA OPERACIONES
     });
   });
 } //FIN - WS AGREGAR TRANSACCION

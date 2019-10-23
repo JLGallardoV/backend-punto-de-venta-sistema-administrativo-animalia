@@ -100,12 +100,13 @@ exports.agregarTransaccion = function(req) {
                 return;
               }
               //acumulando el precio de los  productos por su cantidad y sumando el monto
-              montoNoIvaTransaccion = montoNoIvaTransaccion + (success[0].precioUnitarioProducto * productos[i].cantidadProducto)
+              //los productos ya contienen iva
+              montoConIvaTransaccion = montoConIvaTransaccion + (success[0].precioUnitarioProducto * productos[i].cantidadProducto)
 
               //me aseguro de que sea la ultima iteracion del ciclo para que pueda resolverse la promesa y mande el valor correcto
               if (i == productos.length -1) {
-                ivaTransaccion = montoNoIvaTransaccion * .16;
-                montoConIvaTransaccion = montoNoIvaTransaccion + ivaTransaccion;
+                ivaTransaccion = montoConIvaTransaccion * .16;
+                montoNoIvaTransaccion = montoConIvaTransaccion - ivaTransaccion;
                 cambioTransaccion = pagoTransaccion - montoConIvaTransaccion;
                 resolve(
                   arregloOperaciones = [cantidadProductosTransaccion, montoNoIvaTransaccion, ivaTransaccion, montoConIvaTransaccion, cambioTransaccion]
@@ -141,7 +142,7 @@ exports.agregarTransaccion = function(req) {
           //INICIO - GENERANDO INSERCION TRANSACCIONES_PRODUCTOS
           for (var i = 0; i < productos.length; i++) { //ciclo para asegurarme que se hayan insertado todos los productos.
             //con este query vamos agregando los productos a la transaccion
-            let queryI = `INSERT INTO transacciones_productos(idTransaccion,idProducto,numeroProductosEnTransaccion,subtotalTransaccionProducto,totalTransaccionProducto,ivaTransaccionProducto)
+            let queryI = `INSERT INTO transacciones_productos(idTransaccion,idProducto,numeroProductosEnTransaccion)
                            VALUES(LAST_INSERT_ID(),${productos[i].idProducto},${productos[i].cantidadProducto});`;
 
             database.query(queryI, function(error, success) {

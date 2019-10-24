@@ -78,8 +78,8 @@ exports.agregarTransaccion = function(req) {
       let arregloOperaciones = []; //aqui se guardaran los resultados, para invocarlos despues
       let arregloProductosInsuficientes = []; //para los productos los cuales se pedian mas de los que habia en el stock
       let transaccionInsertada = false; //valor bandera para asegurarme que no se realize una operacion + de 1 vez
-
-
+      let msjProductoInsuficiente = false; // permite recordar insertar transaccion que tuvimos productos insufientes
+      let msjTransaccionCompleta = false // permite recordar a productos insufientes que tuvimos productos exitosos
       //INICIO - GENERANDO VALORES AUTOMATIVOS (CREANDO PROMESA)
       let operaciones = function(){
         return new Promise((resolve,reject) => {
@@ -142,6 +142,7 @@ exports.agregarTransaccion = function(req) {
                   //validando que no se inserte una transaccion mas de una vez
                   if (transaccionInsertada == false) {
                     transaccionInsertada = true;
+                    msjTransaccionCompleta = true //recordando que se hizo una transaccion exitosa a productos insufientes (else)
                     //INICIO - GENERANDO INSERCION TRANSACCIONES
                     console.log("el producto con id: ", productos[i].idProducto, " SI fue insertado");
                     let queryIT = `INSERT INTO transacciones(montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,cantidadProductosTransaccion,pagoTransaccion,cambioTransaccion,idCliente,idVendedor)
@@ -154,9 +155,15 @@ exports.agregarTransaccion = function(req) {
                           respuesta: error
                         });
                       } else {
+                        let mensaje
+                        if (msjProductoInsuficiente == true) {
+                            mensaje = "transaccion exitosa pero hay un problema, unidades insufientes -> "+ arregloProductosInsuficientes;
+                        }else {
+                            mensaje = "transaccion dada de alta correctamente"
+                        }
                         resolve({
                           estatus: 1,
-                          respuesta: 'transaccion dada de alta correctamente'
+                          respuesta: mensaje
                         });
                       }
                     }); //FIN - GENERANDO INSERCION TRANSACCIONES
@@ -223,13 +230,23 @@ exports.agregarTransaccion = function(req) {
 
 
                 }else {
+                  //cambio valor aqui para que se vea reflejado en una transaccion con un ultimo producto exitoso (if)
+                  msjProductoInsuficiente = true;
                   //acumulo productos insufientes
                   arregloProductosInsuficientes[i] = " producto con id: "+productos[i].idProducto + " actualmente existen " + productosStock[0].stockProducto +" unidades disponibles";
+
+                  let mensaje;
+                  if (msjTransaccionCompleta == true) {
+                    mensaje = "transaccion exitosa pero hay un problema, unidades insuficientes ->"+arregloProductosInsuficientes;
+                  }else {
+                    mensaje = "unidades insufientes ->"+ arregloProductosInsuficientes;
+                  }
+
                   //me aseguro de que sea la ultima iteracion del ciclo para que pueda resolverse la promesa y mandar el msj
                   if (i == productos.length - 1) {
                     reject({
                       estatus: 1,
-                      respuesta:"unidades insufientes ->"+ arregloProductosInsuficientes
+                      respuesta: mensaje
                     });
                   }
                 } //FIN - VALIDACION CANTIDAD < STOCK

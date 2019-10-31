@@ -98,6 +98,7 @@ exports.agregarTransaccion = function(req) {
               }
               //acumulando el precio de los  productos por su cantidad y sumando el monto asi tambien la cantidad de productos de la transaccion
               //NOTA: los productos ya contienen iva
+              console.log("debug: ",productos[j].cantidadProducto," < ",success[0].stockProducto);
               if (productos[j].cantidadProducto < success[0].stockProducto) {
                 montoConIvaTransaccion = montoConIvaTransaccion + (success[0].precioUnitarioProducto * productos[j].cantidadProducto);
                 cantidadProductosTransaccion = cantidadProductosTransaccion + productos[j].cantidadProducto; //cantidadProducto definelo en el postman
@@ -235,19 +236,20 @@ exports.agregarTransaccion = function(req) {
                   //acumulo productos insufientes
                   arregloProductosInsuficientes[i] = " producto con id: "+productos[i].idProducto + " actualmente existen " + productosStock[0].stockProducto +" unidades disponibles";
 
-                  let mensaje;
-                  if (msjTransaccionCompleta == true) {
-                    mensaje = "transaccion exitosa pero hay un problema, unidades insuficientes ->"+arregloProductosInsuficientes;
-                  }else {
-                    mensaje = "unidades insufientes ->"+ arregloProductosInsuficientes;
-                  }
-
                   //me aseguro de que sea la ultima iteracion del ciclo para que pueda resolverse la promesa y mandar el msj
                   if (i == productos.length - 1) {
-                    reject({
-                      estatus: 1,
-                      respuesta: mensaje
-                    });
+                    let mensaje;
+                    if (msjTransaccionCompleta == true) {
+                      resolve({
+                        estatus: 1,
+                        respuesta: "transaccion exitosa pero hay un problema, unidades insuficientes ->"+arregloProductosInsuficientes
+                      });
+                    }else if(msjTransaccionCompleta == false) {
+                      reject({
+                        estatus: 0,
+                        respuesta: "unidades insufientes ->"+ arregloProductosInsuficientes
+                      });
+                    }
                   }
                 } //FIN - VALIDACION CANTIDAD < STOCK
               }

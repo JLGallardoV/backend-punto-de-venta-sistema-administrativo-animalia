@@ -11,7 +11,7 @@ router.use(function(req,res,next){
 });
 
 // LISTAR RENDIMIENTO VENDEDORES - EXPORTANDO RUTA
-router.get('/listarVentasVendedores', function(req, res, next) {
+router.get('/listarVentasVendedores/:inicioFechaTransacciones/:finalFechaTransacciones', function(req, res, next) {
   try {
     //web service
     ventasVendedoresModelo.listarVentasVendedores(req).then(

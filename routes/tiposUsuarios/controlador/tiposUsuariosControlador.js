@@ -11,35 +11,21 @@ router.use(function(req,res,next){
   res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 	next();
 });
-
 // LISTAR TIPOS DE USUARIOS - EXPORTANDO RUTA
-router.get('/listarTiposUsuarios',jwt.verificarExistenciaToken, function(req, res, next) {
+router.get('/listarTiposUsuarios', function(req, res, next) {
   try {
-		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
-			if (decoded) {
-				tiposUsuariosModelo.listarTiposUsuarios(req).then(
-					(success) => {
-						res.json(success);
-					},
-					(error) => {
-						res.json(error);
-					}
-				);
-
-			}else if (error) {
-				res.json({
-					estatus: -1,
-					respuesta: "lo siento, token incorrecto"
-				})
-			}
-
-
-		});
+    tiposUsuariosModelo.listarTiposUsuarios(req).then(
+      (success) => {
+        res.json(success);
+      },
+      (error) => {
+        res.json(error);
+      }
+    );
   } catch (error) {
     return next(error);
   }
 });
-
 // AGREGAR TIPOS DE USUARIOS - EXPORTANDO RUTA
 router.post('/agregarTipoUsuario',jwt.verificarExistenciaToken, function(req, res, next) {
   try {

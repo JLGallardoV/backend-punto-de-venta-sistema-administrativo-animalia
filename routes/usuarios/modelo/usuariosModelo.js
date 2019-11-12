@@ -20,7 +20,7 @@ exports.listarUsuarios = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'SELECT usuarios.idUsuario, usuarios.nombreUsuario, usuarios.emailUsuario, usuarios.idVendedor, tiposDeUsuarios.tipoUsuario FROM usuarios INNER JOIN tiposDeUsuarios ON usuarios.idTipoUsuario = tiposDeUsuarios.idTipoUsuario';
+        var query = 'SELECT usuarios.idUsuario, usuarios.nombreUsuario, usuarios.emailUsuario, usuarios.idVendedor, tiposDeUsuarios.tipoUsuario FROM usuarios INNER JOIN tiposDeUsuarios ON usuarios.idTipoUsuario = tiposDeUsuarios.idTipoUsuario WHERE usuarios.estatusBL = 1';
 
         //ejecutamos el query
         database.query(query, function(error, success) {

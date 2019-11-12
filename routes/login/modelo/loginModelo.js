@@ -25,8 +25,9 @@ exports.autenticarUsuarios = function(req) {
       } else {
         let nombreUsuario = body.nombreUsuario;
         let contraseniaUsuario = body.contraseniaUsuario;
+        let idTipoUsuario = body.idTipoUsuario;
 
-        var query = `select * from usuarios where nombreUsuario ='${nombreUsuario}' and contraseniaUsuario='${contraseniaUsuario}' and  estatusBL = 1`;
+        var query = `select * from usuarios where nombreUsuario ='${nombreUsuario}' and contraseniaUsuario='${contraseniaUsuario}' and idTipoUsuario = ${idTipoUsuario} and  estatusBL = 1`;
 
         //ejecutamos el query
         database.query(query, function(error, success) {

@@ -68,10 +68,10 @@ INSERT INTO carritos (numeroProductosCarrito,montoTotalCarrito,idCliente)
 VALUES ('10', '100.00','1');
 
 --PRODUCTOS:
-INSERT INTO productos (idProducto,nombreProducto,detalleProducto,contenidoProducto,fechaCaducidadProducto,paisOrigenProducto,stockProducto,puntosProducto,precioUnitarioProducto,idCategoria,idAlmacen)
-VALUES (NULL, 'collar de castigo', 'marca granpet','1 corrar de castigo mediano',NULL,'e.u.','20','100','30.00','1','1'),
-			 (NULL, 'collar de entrenar', 'marca grandog','1 corrar de entrenamiento mediano',NULL,'e.u.','20','100','30.00','1','1'),
-			 (NULL, 'bulto croqueta adulto', 'marca pedigrie','25 kg','2020-02-10','mexico.','20','100','30.00','1','1');
+INSERT INTO productos (idProducto,nombreProducto,detalleProducto,contenidoProducto,fechaCaducidadProducto,paisOrigenProducto,stockProducto,puntosProducto,precioUnitarioProducto,precioCompraProducto,idCategoria,idAlmacen)
+VALUES (NULL, 'collar de castigo', 'marca granpet','1 corrar de castigo mediano',NULL,'e.u.','20','100','30.00','20','1','1'),
+			 (NULL, 'collar de entrenar', 'marca grandog','1 corrar de entrenamiento mediano',NULL,'e.u.','20','100','30.00','20','1','1'),
+			 (NULL, 'bulto croqueta adulto', 'marca pedigrie','25 kg','2020-02-10','mexico.','20','100','30.00','20','1','1');
 
 
 --COMPENSACIONES:

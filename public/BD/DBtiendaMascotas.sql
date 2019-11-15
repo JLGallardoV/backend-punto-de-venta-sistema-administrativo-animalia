@@ -256,6 +256,7 @@ CREATE TABLE productos(
 	stockProducto INT(5) UNSIGNED,
 	puntosProducto INT(5) UNSIGNED,
 	precioUnitarioProducto NUMERIC(7,2) UNSIGNED,
+	precioCompraProducto NUMERIC(7,2) UNSIGNED,
 	estatusBL tinyint(2) default 1,
 	fechaRegistroProducto DATETIME DEFAULT NOW(),
 	fechaActualizacionProducto DATETIME DEFAULT NOW(),

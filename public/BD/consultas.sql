@@ -74,7 +74,7 @@ INNER JOIN productos ON devoluciones.idProducto = productos.idProducto
 INNER JOIN tiposDeProblemas ON devoluciones.idTipoProblema = tiposDeProblemas.idTipoProblema;
 
 --PRODUCTOS - ¿A QUE CATEGORIA PERTENECE? ¿EN CUAL ALMACEN ESTA?
-SELECT productos.idProducto,productos.nombreProducto,productos.detalleProducto,productos.contenidoProducto,productos.fechaCaducidadProducto,productos.paisOrigenProducto,productos.stockProducto,productos.puntosProducto,productos.precioUnitarioProducto,productos.precioMayoreoProducto,categorias.nombreCategoria,almacenes.ciudadAlmacen,almacenes.telefonoAlmacen
+SELECT productos.idProducto,productos.nombreProducto,productos.detalleProducto,productos.contenidoProducto,productos.fechaCaducidadProducto,productos.paisOrigenProducto,productos.stockProducto,productos.puntosProducto,productos.precioUnitarioProducto,productos.precioCompraProducto,categorias.nombreCategoria,almacenes.ciudadAlmacen,almacenes.telefonoAlmacen
 FROM productos
 INNER JOIN categorias ON productos.idCategoria = categorias.idCategoria
 INNER JOIN almacenes ON productos.idAlmacen = almacenes.idAlmacen
@@ -83,7 +83,7 @@ WHERE productos.estatusBL = 1;
 --USUARIOS - ¿A QUE VENDEDOR LE PERTENECE LA CUENTA? ¿QUE TIPO DE USUARIO ES?
 SELECT usuarios.idUsuario, usuarios.nombreUsuario, usuarios.emailUsuario, usuarios.idVendedor, tiposDeUsuarios.tipoUsuario
 FROM usuarios
-INNER JOIN tiposDeUsuarios ON usuarios.idTipoUsuario = tiposDeUsuarios.idTipoUsuario
+INNER JOIN tiposDeUsuarios ON usuarios.idTipoUsuario = tiposDeUsuarios.idTipoUsuario;
 
 --ENVIOS - ¿DE QUE VENTA ES EL ENVIO? ¿POR QUE MEDIO SE ENVIA?
 SELECT envios.idEnvio, envios.ciudadEnvio, envios.estadoEnvio, envios.paisEnvio, envios.observacionesEnvio, envios.fechaEnvio, envios.idTransaccion, mediosDeEntrega.viaMedioEntrega
@@ -92,10 +92,10 @@ INNER JOIN mediosDeEntrega ON envios.idMedioEntrega = mediosDeEntrega.idMedioEnt
 
 
 --COMPRAS - ¿QUIEN HIZO LA COMPRA? ¿A QUIEN SE LE REALIZO LA COMPRA?
-SELECT compras.idCompra,compras.montoCompra,compras.fechaCompra,proveedores.nombreProveedor, usuarios.nombreUsuario, productos.nombreProducto, compras_productos.numeroProductosEnCompra
+SELECT compras.idCompra,compras.montoCompra,compras.fechaCompra,proveedores.nombreProveedor, usuarios.nombreUsuario, productos.nombreProducto, productos.precioCompraProducto, compras_productos.numeroProductosEnCompra
 FROM compras
 INNER JOIN proveedores ON compras.idProveedor = proveedores.idProveedor
 INNER  JOIN usuarios   ON compras.idUsuario = usuarios.idUsuario
 INNER JOIN compras_productos ON compras.idCompra= compras_productos.idCompra
 INNER JOIN  productos ON compras_productos.idProducto=productos.idProducto
-WHERE compras.estatusBL=1
+WHERE compras.estatusBL=1;

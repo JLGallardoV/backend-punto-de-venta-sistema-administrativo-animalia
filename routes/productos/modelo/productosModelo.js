@@ -19,7 +19,7 @@ exports.listarProductos = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'SELECT productos.idProducto,productos.nombreProducto,productos.detalleProducto,productos.contenidoProducto,productos.fechaCaducidadProducto,productos.paisOrigenProducto,productos.stockProducto,productos.puntosProducto,productos.precioUnitarioProducto,categorias.nombreCategoria,almacenes.ciudadAlmacen,almacenes.telefonoAlmacen FROM productos INNER JOIN categorias ON productos.idCategoria = categorias.idCategoria INNER JOIN almacenes ON productos.idAlmacen = almacenes.idAlmacen WHERE productos.estatusBL = 1;';
+        var query = 'SELECT productos.idProducto,productos.nombreProducto,productos.detalleProducto,productos.contenidoProducto,productos.fechaCaducidadProducto,productos.paisOrigenProducto,productos.stockProducto,productos.puntosProducto,productos.precioUnitarioProducto,productos.precioCompraProducto,categorias.nombreCategoria,almacenes.ciudadAlmacen,almacenes.telefonoAlmacen FROM productos INNER JOIN categorias ON productos.idCategoria = categorias.idCategoria INNER JOIN almacenes ON productos.idAlmacen = almacenes.idAlmacen WHERE productos.estatusBL = 1;';
 
         //ejecutamos el query
         database.query(query, function(error, success) {
@@ -74,6 +74,7 @@ exports.agregarProducto = function(req) {
           stockProducto: body.stockProducto,
           puntosProducto: body.puntosProducto,
           precioUnitarioProducto: body.precioUnitarioProducto,
+          precioCompraProducto: body.precioCompraProducto,
           idCategoria: body.idCategoria,
           idAlmacen: body.idAlmacen
         };
@@ -120,10 +121,13 @@ exports.actualizarProducto = function(req) {
         let stockProducto = body.stockProducto;
         let puntosProducto = body.puntosProducto;
         let precioUnitarioProducto = body.precioUnitarioProducto;
+        let precioCompraProducto = body.precioCompraProducto;
         let idCategoria = body.idCategoria;
         let idAlmacen = body.idAlmacen;
 
-        let query = `update productos set nombreProducto = '${nombreProducto}',detalleProducto = '${detalleProducto}',contenidoProducto = '${contenidoProducto}',fechaCaducidadProducto ='${fechaCaducidadProducto}',paisOrigenProducto = '${paisOrigenProducto}',stockProducto = '${stockProducto}',puntosProducto = '${puntosProducto}',precioUnitarioProducto = '${precioUnitarioProducto}',idCategoria = '${idCategoria}',idAlmacen = '${idAlmacen}',fechaActualizacionProducto = now() where idProducto = ${idProducto}`;
+        let query = `UPDATE productos
+                     SET nombreProducto = '${nombreProducto}',detalleProducto = '${detalleProducto}',contenidoProducto = '${contenidoProducto}',fechaCaducidadProducto ='${fechaCaducidadProducto}',paisOrigenProducto = '${paisOrigenProducto}',stockProducto = '${stockProducto}',puntosProducto = '${puntosProducto}',precioUnitarioProducto = '${precioUnitarioProducto}',precioCompraProducto = '${precioCompraProducto}',idCategoria = '${idCategoria}',idAlmacen = '${idAlmacen}',fechaActualizacionProducto = now()
+                     WHERE idProducto = ${idProducto}`;
 
 
         database.query(query,function(error, success) {

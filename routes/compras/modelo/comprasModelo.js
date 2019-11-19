@@ -19,7 +19,7 @@ exports.listarCompras = function(req) {
         });
       } else {
         //muestra las diferentes compras existentes, quien fue el proveedor, que producto se compro y quien lo compro
-        var query = 'SELECT compras.idCompra,compras.montoCompra,compras.fechaCompra,proveedores.nombreProveedor, usuarios.nombreUsuario, productos.nombreProducto, compras_productos.numeroProductosEnCompra FROM compras INNER JOIN proveedores ON compras.idProveedor = proveedores.idProveedor INNER  JOIN usuarios ON compras.idUsuario = usuarios.idUsuario INNER JOIN compras_productos ON compras.idCompra= compras_productos.idCompra INNER JOIN  productos ON compras_productos.idProducto=productos.idProducto WHERE compras.estatusBL=1';
+        var query = 'SELECT compras.idCompra,compras.montoCompra,compras.fechaCompra,proveedores.nombreProveedor, usuarios.nombreUsuario, productos.nombreProducto, compras_productos.numeroProductosEnCompra FROM compras INNER JOIN proveedores ON compras.idProveedor = proveedores.idProveedor INNER  JOIN usuarios ON compras.idUsuario = usuarios.idUsuario INNER JOIN compras_productos ON compras.idCompra= compras_productos.idCompra INNER JOIN  productos ON compras_productos.idProducto=productos.idProducto WHERE compras.estatusBL=1 order by idCompra ASC;';
 
         //ejecutamos el query
         database.query(query, function(error, success) {

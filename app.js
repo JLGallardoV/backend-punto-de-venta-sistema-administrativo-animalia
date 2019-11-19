@@ -34,6 +34,7 @@ var transaccionesRouter = require('./routes/transacciones/controlador/transaccio
 var usuariosRouter = require('./routes/usuarios/controlador/usuariosControlador');
 var usuariosBuscarRouter = require('./routes/usuarios/controlador/buscarUsuarioControlador');
 var vendedoresRouter = require('./routes/vendedores/controlador/vendedoresControlador');
+var vendedoresBuscarRouter = require('./routes/vendedores/controlador/buscarVendedorControlador');
 var ventasVendedoresRouter = require('./routes/rendimientoVendedores/controlador/ventasVendedoresControlador');
 
 
@@ -98,6 +99,7 @@ app.use('/transaccionesWS', transacciones_productosRouter);
 app.use('/usuariosWS', usuariosRouter);
 app.use('/usuariosWS', usuariosBuscarRouter);
 app.use('/vendedoresWS', vendedoresRouter);
+app.use('/vendedoresWS', vendedoresBuscarRouter);
 
 
 

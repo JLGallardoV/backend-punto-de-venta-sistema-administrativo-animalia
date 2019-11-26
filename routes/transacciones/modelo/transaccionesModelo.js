@@ -22,7 +22,10 @@ exports.listarTransacciones = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = `SELECT * FROM transacciones;`;
+        var query = `SELECT transacciones.idTransaccion,clientes.nombreCliente,clientes.apellidoPaternoCliente,transacciones.fechaTransaccion
+                     FROM transacciones
+                     INNER JOIN clientes ON transacciones.idCliente = clientes.idCliente;
+                    `;
 
         //ejecutamos el query
         database.query(query, function(error, success) {

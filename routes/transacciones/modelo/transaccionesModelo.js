@@ -1,4 +1,3 @@
-var test = require('./promesa');
 /*
 Estructura de respuesta del modelo
 {
@@ -13,6 +12,8 @@ exports.listarTransacciones = function(req) {
   //regresaremos una promesa...
   return new Promise((resolve, reject) => {
     //conectar con la base de datos
+    let body = req.body;
+    let idTransaccion = req.params.idTransaccion;
     req.getConnection(function(error, database) {
       if (error) {
         reject({
@@ -21,7 +22,10 @@ exports.listarTransacciones = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'SELECT transacciones.idTransaccion, transacciones.montoNoIvaTransaccion, transacciones.ivaTransaccion, transacciones.montoConIvaTransaccion,transacciones.pagoTransaccion,transacciones.cambioTransaccion,transacciones.fechaTransaccion,productos.nombreProducto,transacciones_productos.numeroProductosEnTransaccion,vendedores.nombreVendedor,clientes.nombreCliente,tiposDePagos.tipoPago FROM transacciones  INNER JOIN transacciones_productos ON transacciones.idTransaccion = transacciones_productos.idTransaccion INNER JOIN productos ON transacciones_productos.idProducto = productos.idProducto INNER JOIN vendedores  ON transacciones.idVendedor = vendedores.idVendedor INNER JOIN clientes  ON transacciones.idCliente = clientes.idCliente INNER JOIN transacciones_tiposDePagos ON transacciones.idTransaccion = transacciones_tiposDePagos.idTransaccion INNER JOIN tiposDePagos ON transacciones_tiposDePagos.idTipoPago = tiposDePagos.idTipoPago WHERE transacciones.estatusBL = 1 order by idTransaccion ASC;';
+        var query = `SELECT transacciones.idTransaccion,clientes.nombreCliente,clientes.apellidoPaternoCliente,transacciones.fechaTransaccion
+                     FROM transacciones
+                     INNER JOIN clientes ON transacciones.idCliente = clientes.idCliente;
+                    `;
 
         //ejecutamos el query
         database.query(query, function(error, success) {

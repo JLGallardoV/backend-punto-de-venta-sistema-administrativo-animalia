@@ -25,9 +25,7 @@ exports.autenticarUsuarios = function(req) {
       } else {
         let nombreUsuario = body.nombreUsuario;
         let contraseniaUsuario = body.contraseniaUsuario;
-        let idTipoUsuario = body.idTipoUsuario;
-
-        var query = `select * from usuarios where nombreUsuario ='${nombreUsuario}' and contraseniaUsuario='${contraseniaUsuario}' and idTipoUsuario = ${idTipoUsuario} and  estatusBL = 1`;
+        var query = `select idUsuario,nombreUsuario,idTipoUsuario from usuarios where nombreUsuario ='${nombreUsuario}' and contraseniaUsuario='${contraseniaUsuario}' and  estatusBL = 1`;
 
         //ejecutamos el query
         database.query(query, function(error, success) {
@@ -46,9 +44,9 @@ exports.autenticarUsuarios = function(req) {
             } else if (success.length > 0) {
               console.log("generando token...");
               payload = {
-                parametro1: 'H014',
-                parametro2: 'N0D3J5',
-                parametro3: 'JLGallardoV'
+                idUsuario: success[0].idUsuario,
+                nombreUsuario: success[0].nombreUsuario,
+                idTipoUsuario: success[0].idTipoUsuario
               };
               jsonWebToken.sign(payload,jwt.claveSecreta, function(error, token){
                 if (token) {

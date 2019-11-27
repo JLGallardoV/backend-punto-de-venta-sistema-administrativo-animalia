@@ -21,7 +21,10 @@ exports.listarCompras = function(req) {
         });
       } else {
         //muestra las diferentes compras existentes, quien fue el proveedor, que producto se compro y quien lo compro
-        var query = `SELECT * FROM compras;`;
+        var query = `SELECT compras.idCompra,compras.fechaCompra,usuarios.nombreUsuario,proveedores.nombreProveedor
+                     FROM compras
+                     INNER JOIN usuarios ON compras.idUsuario = usuarios.idUsuario
+                     INNER JOIN proveedores ON compras.idProveedor = proveedores.idProveedor;`;
 
         //ejecutamos el query
         database.query(query, function(error, success) {

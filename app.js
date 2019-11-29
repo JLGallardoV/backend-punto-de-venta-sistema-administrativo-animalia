@@ -15,6 +15,7 @@ var clientesRouter = require('./routes/clientes/controlador/clientesControlador'
 var clientesDetallesRouter = require('./routes/clientes/controlador/detalleClienteControlador');
 var compensacionesRouter = require('./routes/compensaciones/controlador/compensacionesControlador');
 var comprasRouter = require('./routes/compras/controlador/comprasControlador');
+var comprasUltimaRouter = require('./routes/compras/controlador/ultimaCompraControlador');
 var comprasDetallesRouter = require('./routes/compras/controlador/detalleCompraControlador');
 var enviosRouter = require('./routes/envios/controlador/enviosControlador');
 var devolucionesRouter = require('./routes/devoluciones/controlador/devolucionesControlador');
@@ -88,6 +89,7 @@ app.use('/clientesWS', clientesRouter);
 app.use('/clientesWS', clientesDetallesRouter);
 app.use('/compensacionesWS', compensacionesRouter);
 app.use('/comprasWS', comprasRouter);
+app.use('/comprasWS', comprasUltimaRouter);
 app.use('/comprasWS', comprasDetallesRouter);
 app.use('/enviosWS', enviosRouter);
 app.use('/devolucionesWS', devolucionesRouter);

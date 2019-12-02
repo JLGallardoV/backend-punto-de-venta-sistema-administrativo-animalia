@@ -1,9 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var buscarUsuarioModelo = require('../modelo/buscarUsuarioModelo');
-var jwt = require('../../../public/servicios/jwt');
-var jsonWebToken = require('jsonwebtoken');
-
 
 //CABECERAS
 router.use(function(req,res,next){
@@ -15,10 +12,8 @@ router.use(function(req,res,next){
 
 
 // BUSCAR USUARIO X NOMBRE - EXPORTANDO RUTA
-router.get('/buscarUsuarioPorNombre/:nombreUsuario',jwt.verificarExistenciaToken, function(req, res, next) {
+router.get('/buscarUsuarioPorNombre/:nombreUsuario',function(req, res, next) {
   try {
-		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
-			if (decoded) {
 				buscarUsuarioModelo.buscarUsuario(req).then(
 					(success) => {
 						res.json(success);
@@ -27,16 +22,6 @@ router.get('/buscarUsuarioPorNombre/:nombreUsuario',jwt.verificarExistenciaToken
 						res.json(error);
 					}
 				);
-
-			}else if (error) {
-				res.json({
-					estatus: -1,
-					respuesta: "lo siento, token incorrecto"
-				})
-			}
-
-
-		});
   } catch (error) {
     return next(error);
   }

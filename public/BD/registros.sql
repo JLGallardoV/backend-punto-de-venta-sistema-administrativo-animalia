@@ -22,7 +22,7 @@ VALUES (NULL, 'gerente','opciones completas'),
 
 --TIPOS DE PAGO:
 INSERT INTO tiposDePagos (idTipoPago,tipoPago,viaTipoPago, descripcionTipoPago)
-VALUES (NULL, 'tarjeta credito','visa', '12 meses s/intereses'),
+VALUES (NULL, 'tarjeta','visa', '12 meses s/intereses'),
 			 (NULL, 'efectivo', 'caja', 'sin descripcion');
 
 --MEDIO DE ENTREGA:
@@ -48,10 +48,6 @@ VALUES (NULL, 'vendedor1', 'abasolo', 'gto', 'primavera 217', '4291226929', 'ven
 --USUARIOS:
 INSERT INTO usuarios (idUsuario,nombreUsuario,emailUsuario,contraseniaUsuario,idVendedor,idTipoUsuario)
 VALUES (NULL, 'prueba1', 'prueba1@prueba1.com', '12345',NULL, '1');
-
---ACCESOS:
-INSERT INTO accesos (accionAcceso,idUsuario)
-VALUES ('edicion', '1');
 
 --PROVEEDORES:
 INSERT INTO proveedores (idProveedor,nombreProveedor,ciudadProveedor,estadoProveedor,paisProveedor,direccionProveedor,telefonoProveedor,emailProveedor,descripcionProveedor)

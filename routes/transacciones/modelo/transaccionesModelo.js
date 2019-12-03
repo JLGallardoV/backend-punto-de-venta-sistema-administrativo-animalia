@@ -151,7 +151,7 @@ exports.agregarTransaccion = function(req) {
                     //INICIO - GENERANDO INSERCION TRANSACCIONES
                     console.log("el producto con id: ", productos[i].idProducto, " SI fue insertado");
                     let queryIT = `INSERT INTO transacciones(montoNoIvaTransaccion,ivaTransaccion,montoConIvaTransaccion,cantidadProductosTransaccion,pagoTransaccion,cambioTransaccion,idCliente,idVendedor)
-                    VALUES('${montoNoIvaTransaccion}','${ivaTransaccion}','${montoConIvaTransaccion}','${cantidadProductosTransaccion}','${pagoTransaccion}','${cambioTransaccion}','${idCliente}','${idVendedor}');`;
+                    VALUES('${montoNoIvaTransaccion}','${ivaTransaccion}','${montoConIvaTransaccion}','${cantidadProductosTransaccion}',${pagoTransaccion},'${cambioTransaccion}','${idCliente}','${idVendedor}');`;
 
                     database.query(queryIT, function(error, success) {
                       if (error) {

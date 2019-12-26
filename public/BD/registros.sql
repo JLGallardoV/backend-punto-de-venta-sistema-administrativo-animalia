@@ -76,6 +76,6 @@ VALUES (NULL, 'regreso dinero','devolucion total efectivo'),
 			 (NULL, 'cambio producto','otro producto del mismo precio');
 
 --DEVOLUCIONES:
-INSERT INTO devoluciones (idDevolucion,ivaDevolucion,montoConIvaDevolucion,motivoDevolucion,idCliente,idTipoProblema,idCompensacion,idProducto)
-VALUES (NULL, '16','34.80','mal estado, oxidado','1','1','1','1'),
-			 (NULL, '16','347.98','caducada','1','2','1','2');
+INSERT INTO devoluciones (idDevolucion,motivoDevolucion,idCliente,idTipoProblema,idCompensacion,idProducto,idTransaccion)
+VALUES (NULL,'mal estado, oxidado','1','1','1','1','1'),
+			 (NULL,'caducada','1','2','1','2','1');

@@ -269,20 +269,20 @@ CREATE TABLE productos(
 
 CREATE TABLE devoluciones(
 	idDevolucion INT UNSIGNED AUTO_INCREMENT,
-	ivaDevolucion INT(5) UNSIGNED,
-	montoConIvaDevolucion NUMERIC(7,2) UNSIGNED,
 	fechaDevolucion DATETIME DEFAULT NOW(),
-	motivoDevolucion VARCHAR(100),
+	motivoDevolucion VARCHAR(300),
 	estatusBL tinyint(2) default 1,
 	idCliente INT UNSIGNED NOT NULL,
 	idTipoProblema INT UNSIGNED NOT NULL,
 	idProducto INT UNSIGNED NOT NULL,
 	idCompensacion INT UNSIGNED NOT NULL,
+	idTransaccion INT UNSIGNED NOT NULL,
 	PRIMARY KEY (idDevolucion),
 	FOREIGN KEY (idCliente) REFERENCES clientes (idCliente) ON DELETE CASCADE,
 	FOREIGN KEY (idTipoProblema) REFERENCES tiposDeProblemas (idTipoProblema) ON DELETE CASCADE,
 	FOREIGN KEY (idProducto) REFERENCES productos (idProducto) ON DELETE CASCADE,
-	FOREIGN KEY (idCompensacion) REFERENCES compensaciones (idCompensacion) ON DELETE CASCADE
+	FOREIGN KEY (idCompensacion) REFERENCES compensaciones (idCompensacion) ON DELETE CASCADE,
+	FOREIGN KEY (idTransaccion) REFERENCES transacciones (idTransaccion) ON DELETE CASCADE
 );
 
 --AQUI COMIENZAN LAS TABLAS DE RELACIONES. CUANDO ES DE MUCHOS A MUCHOS EN CARDINALIDAD, GENERO UNA NUEVA TABLA PARA EVITAR REPETICION DE REGISTROS

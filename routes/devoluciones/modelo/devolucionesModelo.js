@@ -20,7 +20,14 @@ exports.listarDevoluciones = function(req) {
         });
       } else {
         //tenemos conexión
-        var query = 'SELECT devoluciones.idDevolucion,productos.nombreProducto,devoluciones.montoConIvaDevolucion,devoluciones.fechaDevolucion,devoluciones.motivoDevolucion,clientes.nombreCliente,tiposDeProblemas.tipoProblema,compensaciones.tipoCompensacion FROM devoluciones INNER JOIN clientes ON devoluciones.idCliente = clientes.idCliente INNER JOIN compensaciones ON devoluciones.idCompensacion = compensaciones.idCompensacion INNER JOIN productos ON devoluciones.idProducto = productos.idProducto INNER JOIN tiposDeProblemas ON devoluciones.idTipoProblema = tiposDeProblemas.idTipoProblema;';
+        var query = `
+        SELECT devoluciones.idDevolucion,productos.nombreProducto,devoluciones.fechaDevolucion,devoluciones.motivoDevolucion,clientes.nombreCliente,tiposDeProblemas.tipoProblema,compensaciones.tipoCompensacion,devoluciones.idTransaccion
+        FROM devoluciones
+        INNER JOIN clientes ON devoluciones.idCliente = clientes.idCliente
+        INNER JOIN compensaciones ON devoluciones.idCompensacion = compensaciones.idCompensacion
+        INNER JOIN productos ON devoluciones.idProducto = productos.idProducto
+        INNER JOIN tiposDeProblemas ON devoluciones.idTipoProblema = tiposDeProblemas.idTipoProblema;
+        `;
 
         //ejecutamos el query
         database.query(query, function(error, success) {
@@ -67,13 +74,12 @@ exports.agregarDevolucion = function(req) {
         let query = 'insert into devoluciones set ?';
 
         let requestBody = {
-          ivaDevolucion: body.ivaDevolucion,
-          montoConIvaDevolucion: body.montoConIvaDevolucion,
           motivoDevolucion: body.motivoDevolucion,
           idCliente : body.idCliente,
           idTipoProblema: body.idTipoProblema,
           idProducto: body.idProducto,
-          idCompensacion: body.idCompensacion
+          idCompensacion: body.idCompensacion,
+          idTransaccion: body.idTransaccion
         };
 
         database.query(query, requestBody, function(error, success) {

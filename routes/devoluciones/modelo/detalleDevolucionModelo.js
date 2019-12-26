@@ -15,7 +15,7 @@ exports.listarDetalleDevolucion = function(req) {
       } else {
         //tenemos conexión
         var query = `
-        SELECT devoluciones.idDevolucion,productos.nombreProducto,devoluciones.montoConIvaDevolucion,devoluciones.fechaDevolucion,devoluciones.motivoDevolucion,clientes.nombreCliente,tiposDeProblemas.tipoProblema,compensaciones.tipoCompensacion
+        SELECT devoluciones.idDevolucion,productos.nombreProducto,devoluciones.fechaDevolucion,devoluciones.motivoDevolucion,clientes.nombreCliente,tiposDeProblemas.tipoProblema,compensaciones.tipoCompensacion,devoluciones.idTransaccion
         FROM devoluciones
         INNER JOIN clientes ON devoluciones.idCliente = clientes.idCliente
         INNER JOIN compensaciones ON devoluciones.idCompensacion = compensaciones.idCompensacion

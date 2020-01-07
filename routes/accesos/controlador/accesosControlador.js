@@ -39,10 +39,8 @@ router.get('/listarAccesos',jwt.verificarExistenciaToken,function(req, res, next
 });
 
 // AGREGAR ACCESOS- EXPORTANDO RUTA
-router.post('/agregarAcceso',jwt.verificarExistenciaToken,function(req, res, next) {
+router.post('/agregarAcceso',function(req, res, next) {
   try {
-		jsonWebToken.verify(req.token, jwt.claveSecreta, function(error,decoded) {
-			if (decoded) {
 				accesosModelo.agregarAcceso(req).then(
 					(success) => {
 						res.json(success);
@@ -51,13 +49,6 @@ router.post('/agregarAcceso',jwt.verificarExistenciaToken,function(req, res, nex
 						res.json(error);
 					}
 				);
-			}else if (error) {
-				res.json({
-					estatus: -1,
-					respuesta: "lo siento, token incorrecto"
-				})
-			}
-		});
   } catch (error) {
     return next(error);
   }

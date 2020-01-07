@@ -47,7 +47,7 @@ VALUES (NULL, 'vendedor1', 'abasolo', 'gto', 'primavera 217', '4291226929', 'ven
 
 --USUARIOS:
 INSERT INTO usuarios (idUsuario,nombreUsuario,emailUsuario,contraseniaUsuario,idVendedor,idTipoUsuario)
-VALUES (NULL, 'prueba1', 'prueba1@prueba1.com', '12345',NULL, '1');
+VALUES (NULL, 'prueba1', 'prueba1@prueba1.com', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5',NULL, '1');
 
 --PROVEEDORES:
 INSERT INTO proveedores (idProveedor,nombreProveedor,ciudadProveedor,estadoProveedor,paisProveedor,direccionProveedor,telefonoProveedor,emailProveedor,descripcionProveedor)

@@ -72,7 +72,7 @@ exports.agregarProducto = function(req) {
           fechaCaducidadProducto: body.fechaCaducidadProducto,
           paisOrigenProducto: body.paisOrigenProducto,
           stockProducto: body.stockProducto,
-          puntosProducto: body.puntosProducto,
+          //puntosProducto: body.puntosProducto,
           precioUnitarioProducto: body.precioUnitarioProducto,
           precioCompraProducto: body.precioCompraProducto,
           idCategoria: body.idCategoria,
@@ -119,14 +119,14 @@ exports.actualizarProducto = function(req) {
         let fechaCaducidadProducto = body.fechaCaducidadProducto;
         let paisOrigenProducto = body.paisOrigenProducto;
         let stockProducto = body.stockProducto;
-        let puntosProducto = body.puntosProducto;
+        //let puntosProducto = body.puntosProducto;
         let precioUnitarioProducto = body.precioUnitarioProducto;
         let precioCompraProducto = body.precioCompraProducto;
         let idCategoria = body.idCategoria;
         let idAlmacen = body.idAlmacen;
 
         let query = `UPDATE productos
-                     SET nombreProducto = '${nombreProducto}',detalleProducto = '${detalleProducto}',contenidoProducto = '${contenidoProducto}',fechaCaducidadProducto ='${fechaCaducidadProducto}',paisOrigenProducto = '${paisOrigenProducto}',stockProducto = '${stockProducto}',puntosProducto = '${puntosProducto}',precioUnitarioProducto = '${precioUnitarioProducto}',precioCompraProducto = '${precioCompraProducto}',idCategoria = '${idCategoria}',idAlmacen = '${idAlmacen}',fechaActualizacionProducto = now()
+                     SET nombreProducto = '${nombreProducto}',detalleProducto = '${detalleProducto}',contenidoProducto = '${contenidoProducto}',fechaCaducidadProducto ='${fechaCaducidadProducto}',paisOrigenProducto = '${paisOrigenProducto}',stockProducto = '${stockProducto}',precioUnitarioProducto = '${precioUnitarioProducto}',precioCompraProducto = '${precioCompraProducto}',idCategoria = '${idCategoria}',idAlmacen = '${idAlmacen}',fechaActualizacionProducto = now()
                      WHERE idProducto = ${idProducto}`;
 
 

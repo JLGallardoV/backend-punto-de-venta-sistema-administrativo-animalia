@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var enviarMail = require('../modelo/recuperarContraseniaModelo');
+var recuperarContrasenia = require('../modelo/recuperarContraseniaModelo');
 
 //CABECERAS
 router.use(function(req,res,next){
@@ -14,7 +14,7 @@ router.use(function(req,res,next){
 router.post('/recuperarContrasenia', function(req, res, next) {
   try {
     //web service
-    enviarMail.recuperarContrasenia(req).then(
+    recuperarContrasenia.enviarCorreo(req).then(
       (success) => {
         res.json(success);
       },

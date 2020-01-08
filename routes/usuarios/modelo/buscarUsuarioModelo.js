@@ -14,7 +14,7 @@ exports.buscarUsuario = function(req) {
         });
       } else {
         //tenemos conexión
-         var query = `SELECT usuarios.idUsuario, usuarios.nombreUsuario, usuarios.idVendedor, tiposDeUsuarios.tipoUsuario
+         var query = `SELECT usuarios.idUsuario, usuarios.nombreUsuario, usuarios.idVendedor, tiposDeUsuarios.tipoUsuario, emailUsuario
                       FROM usuarios
                       INNER JOIN tiposDeUsuarios ON usuarios.idTipoUsuario = tiposDeUsuarios.idTipoUsuario
                       WHERE nombreUsuario = '${nombreUsuario}';`;

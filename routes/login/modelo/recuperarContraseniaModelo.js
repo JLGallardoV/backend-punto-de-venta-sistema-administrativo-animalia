@@ -14,11 +14,11 @@ exports.enviarCorreo = function(req) {
       emailUsuario: body.emailUsuario
     }
     expiracion = {
-     expiresIn: 60 * 60 * 24 // expira en 24 horas
+      expiresIn: 60 * 60 * 24 // expira en 24 horas
     }
 
     //generando el jwt configurados con los objetos anteriores
-    jsonWebToken.sign(payload, jwt.claveSecreta,expiracion,function(error, token) {
+    jsonWebToken.sign(payload, jwt.claveSecreta, expiracion, function(error, token) {
       if (token) {
 
         //informacion requerida para conectarnos a nuestro servicio de correo
@@ -34,8 +34,8 @@ exports.enviarCorreo = function(req) {
         var mailOptions = {
           from: 'JLGallardoV@yandex.com',
           to: body.emailUsuario,
-          subject: 'Prueba envio de correo desde nodejs',
-          text: 'Entra a este enlace para reestablecer tu contraseña: http://localhost:4200/login/'+token
+          subject: 'Restablece tu contraseña',
+          text: 'Entra a este enlace para reestablecer tu contraseña: http://localhost:4200/recuperarContrasenia?token='+token+'&idUsuario='+body.idUsuario
         };
 
         //console.log("esto es lo que se envia: ", body.emailUsuario,".",token);
@@ -49,7 +49,7 @@ exports.enviarCorreo = function(req) {
             });
           } else {
             resolve({
-              estatus: 0,
+              estatus: 1,
               respuesta: 'correo enviado satisfactoriamente'
             });
           }
@@ -66,4 +66,67 @@ exports.enviarCorreo = function(req) {
     });
   });
 
-}// FIN - ENVIAR CORREO
+} // FIN - ENVIAR CORREO
+
+
+//INICIO - VERIFICAR TOKEN
+
+//CON ESTE WS REGRESAREMOS AL CLIENTE SI EL USUARIO QUE ENVIO EL TOKEN FUE EL CORRECTO O NO
+exports.verificarJWT = function(req) {
+  return new Promise((resolve, reject) => {
+    let body = req.body;
+    jsonWebToken.verify(body.jwt, jwt.claveSecreta, function(error, decoded) {
+      if (decoded) {
+        console.log("entro a jwt correcto");
+        resolve({
+          estatus: 1,
+          respuesta: "Token correcto"
+        });
+      } else if (error) {
+        reject({
+          estatus: -1,
+          respuesta: "Token incorrecto, intenta generar de nuevo un link a tu email"
+        });
+      }
+    });
+  });
+}//FIN - VERIFICAR TOKEN
+
+
+
+//INICIO - NUEVA CONTRASEÑA
+//CON ESTE WS PRACTICAMENTE ACTUALIZAMOS LA CONTRASEÑA DEL USUARIO SOLICITANTE
+exports.cambiarContrasenia = function(req) {
+  return new Promise((resolve, reject) => {
+
+    let body = req.body;
+
+    req.getConnection(function(error, database) {
+      if (error) {
+        reject({
+          estatus: -1,
+          respuesta: error
+        });
+      } else {
+        let contraseniaUsuario = body.contraseniaUsuario;
+
+        let query = `update usuarios set contraseniaUsuario = '${contraseniaUsuario}', fechaActualizacionUsuario = now() where idUsuario = ${body.idUsuario}`; //las comillas son diferentes
+
+
+        database.query(query, function(error, success) {
+          if (error) {
+            reject({
+              estatus: -1,
+              respuesta: error
+            });
+          } else {
+            resolve({
+              estatus: 1,
+              respuesta: 'contraseña actualizada correctamente'
+            });
+          }
+        });
+      }
+    });
+  });//FIN - NUEVA CONTRASEÑA
+}

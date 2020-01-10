@@ -69,9 +69,12 @@ exports.enviarCorreo = function(req) {
                         Hemos detectado que perdiste tu contraseña, no te preocupes, podemos resolver tal problema, en el enlace que te dejamos abajo podras ingresar a un formulario exclusivo para ti el cual te permitirá crear una nueva contraseña, ojo, solo tienes 24 hrs, de lo contrario tendras que volver a generar un enlace:
                         <br>
                         <br>
-                        <a href="http://localhost:4200/recuperarContrasenia?token=${token}&idUsuario=${body.idUsuario}">
+                        <div style="text-align:center;">
+                          <a href="http://localhost:4200/recuperarContrasenia?token=${token}&idUsuario=${body.idUsuario}">
                           Entra a este enlace para restablecer tu contraseña
-                        </a>
+                          </a>
+                        </div>
+                        <br>
                       </p>
                     </div>
                     <br>

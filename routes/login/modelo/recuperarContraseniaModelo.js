@@ -40,6 +40,7 @@ exports.enviarCorreo = function(req) {
                 <!doctype html>
                 <html>
                 <head>
+                  <link href="https://fonts.googleapis.com/css?family=Darker+Grotesque&display=swap" rel="stylesheet">
                   <meta charset="utf-8">
                     <style>
                       .fondo{
@@ -49,11 +50,36 @@ exports.enviarCorreo = function(req) {
                         background:white;
                         margin: auto;
                         margin-top: 20px;
-                        border-radius: 10px;
                         height: auto;
-                        width: 600px;
+                        width: 70%;
                         border-radius: 6px;
                         box-shadow: #353434 0px 1px 4px 0px;
+                      }
+                      .boton {
+                        text-align: center;
+                        background: #0479d9;
+                        padding-top: 12px;
+                        padding-bottom: 10px;
+                        border-radius: 4px;
+                        font-family: 'Darker Grotesque',sans-serif;
+                        font-size: 15px;
+                        color: white!important;
+                        letter-spacing: 0.5px;
+                        border: none;
+                        text-decoration: blink;
+                        padding-left: 32%;
+                        padding-right: 32%;
+                      }
+                      .parrafo{
+                        padding: 25px;
+                        text-align: justify;
+                        font-family: 'Darker Grotesque', sans-serif;
+                      }
+                      @media screen and (max-width: 800px) {
+                        .boton{
+                          padding-left: 28%;
+                          padding-right: 28%;
+                        }
                       }
                     </style>
                 </head>
@@ -65,15 +91,15 @@ exports.enviarCorreo = function(req) {
                         <br>
                         <img src="https://live.staticflickr.com/65535/49363892277_79568ebe79_m.jpg" alt="logo" style="height: 145px;width: 150px;">
                       </div>
-                      <p style="padding:10px;">
-                        Hemos detectado que perdiste tu contraseña, no te preocupes, podemos resolver tal problema, en el enlace que te dejamos abajo podras ingresar a un formulario exclusivo para ti el cual te permitirá crear una nueva contraseña, ojo, solo tienes 24 hrs, de lo contrario tendras que volver a generar un enlace:
+                      <p class="parrafo">
+                        ¡Hola! Detectamos que perdiste tu contraseña, no te preocupes, podemos resolver tal problema, en el enlace que te dejamos abajo podras ingresar a un formulario exclusivo para ti, el cual te permitirá crear una nueva contraseña, ojo, solo tienes 24 hrs para dar uso de este, de lo contrario tendras que volver a generar un nuevo enlace para recuperar tu contraseña, oprime el botón para enlazarte al formulario de restablecimiento de contraseña:
                         <br>
                         <br>
-                        <div style="text-align:center;">
-                          <a href="http://localhost:4200/recuperarContrasenia?token=${token}&idUsuario=${body.idUsuario}">
-                          Entra a este enlace para restablecer tu contraseña
-                          </a>
+                        <div style="text-align: center;width: 100%;">
+                          <a type="button" href="http://localhost:4200/recuperarContrasenia?token=${token}&idUsuario=${body.idUsuario}" class="boton" value="Recuperar Contraseña">Recuperar Contraseña</a>
                         </div>
+                        <br>
+                        <br>
                         <br>
                       </p>
                     </div>
